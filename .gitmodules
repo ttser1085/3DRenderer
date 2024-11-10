@@ -1,0 +1,9 @@
+[submodule "submodules/Library"]
+	path = submodules/Library
+	url = https://github.com/DimaTrushin/Library
+[submodule "submodules/eigen"]
+	path = submodules/eigen
+	url = https://gitlab.com/libeigen/eigen
+[submodule "submodules/SFML"]
+	path = submodules/SFML
+	url = https://github.com/SFML/SFML
