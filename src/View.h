@@ -1,30 +1,24 @@
 #pragma once
 
-#include "Controller.h"
-
-#include <Observer.h>
-#include <SFML/Graphics.hpp>
+#include "RuntimeComponent.h"
+#include "Frame.h"
 
 namespace r3d {
 
 class View {
+
+using WindowPtr = std::shared_ptr<sf::RenderWindow>;
+
 public:
-	View(uint32_t win_width, uint32_t win_height,
-		 const std::string& win_title) noexcept;
+	View(const RuntimeComponent& runtime_comp);
 
-	NSLibrary::CObserver<uint8_t*>* getFramePort();
-	void attachEventPort(NSLibrary::CObserver<ModelEvent>* obs);
-
-	void run();
+	FrameObserver* getFramePort() noexcept;
 
 private:
-	void renderFrame(uint8_t* data);
+	void showFrame(FramePtr frame);
 
-	sf::RenderWindow window_;
-
-	ModelEvent current_event_;
-	NSLibrary::CColdInput<uint8_t*> frame_port_in_;
-	NSLibrary::CObservable<ModelEvent> event_port_out_;
+	WindowPtr window_;
+	FrameColdInput frame_port_in_;
 };
 
 } // namespace r3d

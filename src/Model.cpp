@@ -2,16 +2,20 @@
 
 namespace r3d {
 
-Model::Model(size_t frame_width, size_t frame_height) noexcept
-	: current_frame_(frame_width, frame_height), frame_port_out_([this]() {
-		  this->renderer_(this->current_frame_);
-		  return this->current_frame_.data();
-	  }) {}
+Model::Model(Frame::Width frame_width, Frame::Height frame_height)
+	: current_frame_(std::make_shared<Frame>(frame_width, frame_height)) {}
 
-void Model::attachFramePort(NSLibrary::CObserver<uint8_t*>* obs) {
+void Model::attachFramePort(FrameObserver* obs) {
 	frame_port_out_.subscribe(obs);
 }
 
-void Model::startRender() { frame_port_out_.notify(); }
+void Model::renderFrame() { 
+	renderer_.render(current_frame_);
+	frame_port_out_.set(current_frame_);
+}
+
+void Model::resizeFrame(const Vec2s& new_size) {
+	current_frame_->changeSize(new_size);
+}
 
 } // namespace r3d

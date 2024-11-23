@@ -1,28 +1,28 @@
 #pragma once
 
+#include "Frame.h"
 #include "Renderer.h"
 
-#include <Observer.h>
+#include <functional>
 
 namespace r3d {
-
-class Controller;
-
 class Model {
-	friend Controller;
 
 public:
-	Model(size_t frame_width, size_t frame_height) noexcept;
+	Model(Frame::Width frame_width, Frame::Height frame_height);
 
-	void attachFramePort(NSLibrary::CObserver<uint8_t*>* obs);
+	void attachFramePort(FrameObserver* obs);
+
+	void renderFrame();
+	void resizeFrame(const Vec2s& new_size);
 
 private:
-	void startRender();
-
-	Frame current_frame_;
+	FramePtr current_frame_;
 	Renderer renderer_;
 
-	NSLibrary::CObservable<uint8_t*> frame_port_out_;
+	FrameObservable frame_port_out_;
 };
+
+using ModelRef = std::reference_wrapper<Model>;
 
 } // namespace r3d

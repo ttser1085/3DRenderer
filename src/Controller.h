@@ -1,24 +1,21 @@
 #pragma once
 
 #include "Model.h"
-
-#include <Observer.h>
+#include "ModelEvent.h"
 
 namespace r3d {
-
-enum ModelEvent { START_RENDER };
-
+	
 class Controller {
 public:
-	Controller(Model& model);
+	Controller(ModelRef model);
 
-	NSLibrary::CObserver<ModelEvent>* getEventPort();
+	ModelEventObserver* getEventPort() noexcept;
 
 private:
-	void onModelEvent(ModelEvent evevt);
+	void onModelEvent(const ModelEvent& evevt);
 
-	Model& model_;
-	NSLibrary::CColdInput<ModelEvent> event_port_in_;
+	ModelRef model_;
+	ModelEventColdInput event_port_in_;
 };
 
 } // namespace r3d

@@ -1,18 +1,13 @@
-#include "Controller.h"
-#include "Model.h"
-#include "View.h"
-
-#include <iostream>
+#include "Application.h"
+#include "Except.h"
 
 int main() {
-	r3d::Model model(800, 600);
-	r3d::View view(800, 600, "My window");
-	r3d::Controller controler(model);
-
-	model.attachFramePort(view.getFramePort());
-	view.attachEventPort(controler.getEventPort());
-
-	view.run();
+	try {
+		r3d::Application app;
+		app.run();
+	} catch (...) {
+		except::react();
+	}
 
 	return 0;
 }
