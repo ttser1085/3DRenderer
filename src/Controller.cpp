@@ -14,7 +14,8 @@ void Controller::onModelEvent(const ModelEvent& event) {
 	if (event.is<ModelEvent::RenderFrame>()) {
 		model_.get().renderFrame();
 	} else if (event.is<ModelEvent::ResizeFrame>()) {
-		model_.get().resizeFrame(event.getIf<ModelEvent::ResizeFrame>()->new_size);
+		auto resize_event = event.getIf<ModelEvent::ResizeFrame>();
+		model_.get().resizeFrame(resize_event->new_width, resize_event->new_height);
 	} else {
 		assert(0);
 	}

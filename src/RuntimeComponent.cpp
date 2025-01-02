@@ -30,8 +30,9 @@ void RuntimeComponent::run() {
 									static_cast<float>(new_size.y)});
 				window_->setView(sf::View(area)); // <--- sfml cringe
 
-				event_port_out_.set(
-					ModelEvent::ResizeFrame{Vec2s{new_size.x, new_size.y}});
+				event_port_out_.set(ModelEvent::ResizeFrame{
+					static_cast<Frame::Width>(new_size.x),
+					static_cast<Frame::Height>(new_size.y)});
 			}
 		}
 

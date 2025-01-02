@@ -12,3 +12,6 @@ make
 ```bash
 ./bin/renderer
 ```
+
+### Граф зависимостей проекта:
+![Dependency graph](graph.jpg)

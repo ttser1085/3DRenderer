@@ -14,10 +14,9 @@ public:
 	void attachFramePort(FrameObserver* obs);
 
 	void renderFrame();
-	void resizeFrame(const Vec2s& new_size);
+	void resizeFrame(Frame::Width new_width, Frame::Height new_height);
 
 private:
-	FramePtr current_frame_;
 	Renderer renderer_;
 
 	FrameObservable frame_port_out_;

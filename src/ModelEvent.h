@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Linalg.h"
+#include "Frame.h"
 
 #include <Observer.h>
 #include <variant>
@@ -14,7 +15,8 @@ public:
 	struct RenderFrame {};
 
 	struct ResizeFrame {
-		Vec2s new_size;
+		Frame::Width new_width;
+		Frame::Height new_height;
 	};
 
 	ModelEvent() = default;

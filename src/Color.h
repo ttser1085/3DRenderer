@@ -36,7 +36,7 @@ constexpr static Color4 kBlue4 = Color4{0, 0, 255, 255};
 constexpr static Color4 kBlack4 = Color4{0, 0, 0, 255};
 constexpr static Color4 kWhite4 = Color4{255, 255, 255, 255};
 
-bool operator==(const Color3, const Color3);
-bool operator==(const Color4, const Color4);
+bool operator==(Color3, Color3);
+bool operator==(Color4, Color4);
 
 } // namespace r3d

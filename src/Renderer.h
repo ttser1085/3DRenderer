@@ -6,7 +6,11 @@ namespace r3d {
 
 class Renderer {
 public:
-	void render(FramePtr frame);
+	Renderer(Frame::Width target_width, Frame::Height target_height);
+
+	FramePtr makeFrame();
+
+	void setTargetSize(Frame::Width target_width, Frame::Height target_height);
 
 private:
 	class Primitives {
@@ -20,6 +24,9 @@ private:
 		Primitives() = delete;
 		~Primitives() = delete;
 	};
+
+	Frame::Width target_width_;
+	Frame::Height target_height_;
 };
 
 } // namespace r3d
