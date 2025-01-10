@@ -12,7 +12,7 @@ namespace r3d {
 
 class Frame {
 
-	using Storage = std::vector<Color4>;
+	using Storage = std::vector<Color4b>;
 	using frame_size_t = size_t;
 
 public:
@@ -21,15 +21,13 @@ public:
 
 	Frame(Width width, Height height);
 
-	void setColor(const Vec2s& pos, Color3 color);
-	Color3 getColor(const Vec2s& pos) const;
+	void setColor(const Vec2s& pos, Color3b color);
+	Color3b getColor(const Vec2s& pos) const;
 
 	Width getWidth() const noexcept;
 	Height getHeight() const noexcept;
 
-	void changeSize(const Vec2s& new_size);
-
-	void clear(Color3 color = kBlack3);
+	void clear(Color3b color = kBlack3b);
 
 	uint8_t* data();
 
