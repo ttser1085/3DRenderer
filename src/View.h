@@ -7,7 +7,8 @@ namespace r3d {
 
 class View {
 
-using WindowPtr = std::shared_ptr<sf::RenderWindow>;
+	using WindowPtr = std::shared_ptr<sf::RenderWindow>;
+	using FrameInput = FrameColdInput;
 
 public:
 	View(const RuntimeComponent& runtime_comp);
@@ -18,7 +19,7 @@ private:
 	void showFrame(FramePtr frame);
 
 	WindowPtr window_;
-	FrameColdInput frame_port_in_;
+	FrameInput frame_in_;
 };
 
 } // namespace r3d

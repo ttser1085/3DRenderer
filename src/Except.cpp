@@ -10,6 +10,8 @@ void react() {
 		throw;
 	} catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
+	} catch (...) {
+		std::cerr << "Unknown error!\n";
 	}
 }
 

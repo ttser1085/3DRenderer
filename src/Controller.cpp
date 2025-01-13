@@ -4,10 +4,10 @@ namespace r3d {
 
 r3d::Controller::Controller(ModelRef model)
 	: model_(model),
-	  event_port_in_([this](const ModelEvent& event) { onModelEvent(event); }) {}
+	  event_in_([this](const ModelEvent& event) { onModelEvent(event); }) {}
 
 ModelEventObserver* Controller::getEventPort() noexcept {
-	return &event_port_in_;
+	return &event_in_;
 }
 
 void Controller::onModelEvent(const ModelEvent& event) {
@@ -17,7 +17,7 @@ void Controller::onModelEvent(const ModelEvent& event) {
 		auto resize_event = event.getIf<ModelEvent::ResizeFrame>();
 		model_.get().resizeFrame(resize_event->new_width, resize_event->new_height);
 	} else {
-		assert(0);
+		assert(false && "Unknown command!\n");
 	}
 }
 

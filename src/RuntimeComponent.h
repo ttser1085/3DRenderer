@@ -11,6 +11,7 @@ class RuntimeComponent {
 
 	using WindowPtr = std::shared_ptr<sf::RenderWindow>;
 	using screen_size_t = uint32_t; // sf::Uint32 removed from sfml :(
+	using EventOutput = ModelEventObservable;
 
 public:
 	enum Width : screen_size_t;
@@ -26,7 +27,7 @@ public:
 
 private:
 	WindowPtr window_;
-	ModelEventObservable event_port_out_;
+	EventOutput event_out_;
 };
 
 } // namespace r3d

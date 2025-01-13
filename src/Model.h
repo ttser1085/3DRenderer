@@ -3,10 +3,10 @@
 #include "Frame.h"
 #include "Renderer.h"
 
-#include <functional>
-
 namespace r3d {
 class Model {
+
+	using FrameOutput = FrameObservable;
 
 public:
 	Model(Frame::Width frame_width, Frame::Height frame_height);
@@ -19,9 +19,7 @@ public:
 private:
 	Renderer renderer_;
 
-	FrameObservable frame_port_out_;
+	FrameOutput frame_out_;
 };
-
-using ModelRef = std::reference_wrapper<Model>;
 
 } // namespace r3d
