@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RuntimeComponent.h"
-#include "Frame.h"
 
 namespace r3d {
 

@@ -2,8 +2,7 @@
 
 #include <Eigen/Core>
 
-namespace r3d
-{
+namespace r3d {
 
 // Vectors
 

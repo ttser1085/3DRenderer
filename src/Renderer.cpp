@@ -9,7 +9,7 @@ Renderer::Renderer(Frame::Width target_width, Frame::Height target_height)
 
 FramePtr Renderer::makeFrame() {
 	FramePtr frame = std::make_shared<Frame>(target_width_, target_height_);
-
+	frame->clear(kRed3b);
 	// render all objects
 
 	return frame;

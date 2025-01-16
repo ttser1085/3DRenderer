@@ -6,7 +6,7 @@
 #include <functional>
 
 namespace r3d {
-	
+
 class Controller {
 
 	using ModelRef = std::reference_wrapper<Model>;
@@ -18,9 +18,19 @@ public:
 	ModelEventObserver* getEventPort() noexcept;
 
 private:
-	void onModelEvent(const ModelEvent& evevt);
+	class ControllerVisitor {
+	public:
+		ControllerVisitor(ModelRef model);
 
-	ModelRef model_;
+		void operator()(NoneEvent) const;
+		void operator()(RenderEvent) const;
+		void operator()(const ResizeEvent&) const;
+
+	private:
+		ModelRef model_;
+	};
+
+	ControllerVisitor visitor_;
 	EventInput event_in_;
 };
 

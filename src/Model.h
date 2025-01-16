@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Frame.h"
 #include "Renderer.h"
 
 namespace r3d {

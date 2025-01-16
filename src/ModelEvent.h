@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Linalg.h"
 #include "Frame.h"
 
 #include <Observer.h>
@@ -8,39 +7,16 @@
 
 namespace r3d {
 
-class ModelEvent {
-public:
-	struct None {};
+struct NoneEvent {};
 
-	struct RenderFrame {};
+struct RenderEvent {};
 
-	struct ResizeFrame {
-		Frame::Width new_width;
-		Frame::Height new_height;
-	};
-
-	ModelEvent() = default;
-
-	template<typename T>
-	ModelEvent(const T& event) {
-		event_ = event;
-	}
-
-	template<typename T>
-	bool is() const {
-		return std::holds_alternative<T>(event_);
-	}
-
-	template<typename T>
-	const T* getIf() const {
-		return std::get_if<T>(&event_);
-	}
-
-private:
-	using EventVariant = std::variant<None, RenderFrame, ResizeFrame>;
-
-	EventVariant event_ = None{};
+struct ResizeEvent {
+	Frame::Width new_width;
+	Frame::Height new_height;
 };
+
+using ModelEvent = std::variant<NoneEvent, RenderEvent, ResizeEvent>;
 
 using ModelEventObservable =
 	NSLibrary::CObservableData<ModelEvent, NSLibrary::CByReference>;

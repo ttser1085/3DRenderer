@@ -17,31 +17,27 @@ void RuntimeComponent::attachEventPort(ModelEventObserver* obs) {
 
 void RuntimeComponent::run() {
 	while (window_->isOpen()) {
-		while (const std::optional event = window_->pollEvent()) {
-			if (event->is<sf::Event::Closed>()) {
-				window_->close();
-				return;
-			} else if (event->is<sf::Event::Resized>()) {
-				sf::Vector2u new_size =
-					event->getIf<sf::Event::Resized>()->size;
-
-				sf::FloatRect area({0.0f, 0.0f},
-								   {static_cast<float>(new_size.x),
-									static_cast<float>(new_size.y)});
-				window_->setView(sf::View(area)); // <--- sfml cringe
-
-				event_out_.set(ModelEvent::ResizeFrame{
-					static_cast<Frame::Width>(new_size.x),
-					static_cast<Frame::Height>(new_size.y)});
-			}
+		while (const std::optional event_opt = window_->pollEvent()) {
+			onEvent(event_opt.value());
 		}
 
-		window_->clear();
+		event_out_.set(RenderEvent{});
+	}
+}
 
-		// render frame: runtime -> controller -> model -> view
-		event_out_.set(ModelEvent::RenderFrame{});
+void RuntimeComponent::onEvent(const sf::Event& event) {
+	if (event.is<sf::Event::Closed>()) {
+		window_->close();
+		exit(EXIT_SUCCESS);
+	} else if (event.is<sf::Event::Resized>()) {
+		sf::Vector2u new_size = event.getIf<sf::Event::Resized>()->size;
 
-		window_->display();
+		sf::FloatRect area({0.0f, 0.0f}, {static_cast<float>(new_size.x),
+										  static_cast<float>(new_size.y)});
+		window_->setView(sf::View(area)); // <--- sfml cringe
+
+		event_out_.set(ResizeEvent{static_cast<Frame::Width>(new_size.x),
+								   static_cast<Frame::Height>(new_size.y)});
 	}
 }
 

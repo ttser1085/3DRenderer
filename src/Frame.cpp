@@ -18,9 +18,7 @@ Frame::Width Frame::getWidth() const noexcept { return width_; }
 Frame::Height Frame::getHeight() const noexcept { return height_; }
 
 void Frame::clear(Color3b color) {
-	for (auto& c : storage_) {
-		c = Color4b::fromColor3b(color);
-	}
+	std::fill(storage_.begin(), storage_.end(), Color4b::fromColor3b(color));
 }
 
 uint8_t* Frame::data() {

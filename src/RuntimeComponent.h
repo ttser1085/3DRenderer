@@ -26,6 +26,8 @@ public:
 	void run();
 
 private:
+	void onEvent(const sf::Event& event);
+
 	WindowPtr window_;
 	EventOutput event_out_;
 };

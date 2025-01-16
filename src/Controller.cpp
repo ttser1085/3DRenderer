@@ -3,22 +3,24 @@
 namespace r3d {
 
 r3d::Controller::Controller(ModelRef model)
-	: model_(model),
-	  event_in_([this](const ModelEvent& event) { onModelEvent(event); }) {}
+	: visitor_(model), event_in_([this](const ModelEvent& event) {
+		  std::visit(visitor_, event);
+	  }) {}
 
-ModelEventObserver* Controller::getEventPort() noexcept {
-	return &event_in_;
+ModelEventObserver* Controller::getEventPort() noexcept { return &event_in_; }
+
+Controller::ControllerVisitor::ControllerVisitor(ModelRef model)
+	: model_(model) {}
+
+void Controller::ControllerVisitor::operator()(NoneEvent) const {}
+
+void Controller::ControllerVisitor::operator()(RenderEvent) const {
+	model_.get().renderFrame();
 }
 
-void Controller::onModelEvent(const ModelEvent& event) {
-	if (event.is<ModelEvent::RenderFrame>()) {
-		model_.get().renderFrame();
-	} else if (event.is<ModelEvent::ResizeFrame>()) {
-		auto resize_event = event.getIf<ModelEvent::ResizeFrame>();
-		model_.get().resizeFrame(resize_event->new_width, resize_event->new_height);
-	} else {
-		assert(false && "Unknown command!\n");
-	}
+void Controller::ControllerVisitor::operator()(
+	const ResizeEvent& resize_event) const {
+	model_.get().resizeFrame(resize_event.new_width, resize_event.new_height);
 }
 
 } // namespace r3d

@@ -52,7 +52,6 @@ struct Color4f {
 	static Color4f fromColor3b(Color3b);
 };
 
-
 constexpr static Color3b kRed3b = Color3b{255, 0, 0};
 constexpr static Color3b kGreen3b = Color3b{0, 255, 0};
 constexpr static Color3b kBlue3b = Color3b{0, 0, 255};
