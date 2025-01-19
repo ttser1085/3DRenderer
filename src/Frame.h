@@ -39,11 +39,4 @@ private:
 
 using FramePtr = std::shared_ptr<Frame>;
 
-using FrameObservable =
-	NSLibrary::CObservableData<FramePtr, NSLibrary::CByValue>;
-using FrameObserver = NSLibrary::CObserver<FramePtr, NSLibrary::CByValue>;
-using FrameColdInput = NSLibrary::CColdInput<FramePtr, NSLibrary::CByValue>;
-
-static_assert(std::is_same_v<FrameObservable::CReturn, FramePtr>);
-
 } // namespace r3d

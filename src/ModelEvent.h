@@ -18,11 +18,4 @@ struct ResizeEvent {
 
 using ModelEvent = std::variant<NoneEvent, RenderEvent, ResizeEvent>;
 
-using ModelEventObservable =
-	NSLibrary::CObservableData<ModelEvent, NSLibrary::CByReference>;
-using ModelEventObserver =
-	NSLibrary::CObserver<ModelEvent, NSLibrary::CByReference>;
-using ModelEventColdInput =
-	NSLibrary::CColdInput<ModelEvent, NSLibrary::CByReference>;
-
 } // namespace r3d

@@ -5,7 +5,7 @@ namespace r3d {
 Model::Model(Frame::Width frame_width, Frame::Height frame_height)
 	: renderer_(frame_width, frame_height) {}
 
-void Model::attachFramePort(FrameObserver* obs) { frame_out_.subscribe(obs); }
+void Model::attachFramePort(FrameInput* obs) { frame_out_.subscribe(obs); }
 
 void Model::renderFrame() { frame_out_.set(renderer_.makeFrame()); }
 

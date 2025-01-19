@@ -10,12 +10,13 @@ namespace r3d {
 class Controller {
 
 	using ModelRef = std::reference_wrapper<Model>;
-	using EventInput = ModelEventColdInput;
+
+	using EventInput = NSLibrary::CColdInput<ModelEvent, NSLibrary::CByReference>;
 
 public:
 	Controller(ModelRef model);
 
-	ModelEventObserver* getEventPort() noexcept;
+	EventInput* getEventPort() noexcept;
 
 private:
 	class ControllerVisitor {

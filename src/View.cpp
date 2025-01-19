@@ -4,9 +4,9 @@ namespace r3d {
 
 View::View(const RuntimeComponent& runtime_comp)
 	: window_(runtime_comp.getWindowPtr()),
-	  frame_in_([this](FramePtr frame) { showFrame(frame); }) {}
+	  frame_in_([this](FramePtr frame) { showFrame(std::move(frame)); }) {}
 
-FrameObserver* View::getFramePort() noexcept { return &frame_in_; }
+View::FrameInput* View::getFramePort() noexcept { return &frame_in_; }
 
 void View::showFrame(FramePtr frame) {
 	window_->clear();

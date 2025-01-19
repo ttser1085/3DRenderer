@@ -11,7 +11,7 @@ RuntimeComponent::WindowPtr RuntimeComponent::getWindowPtr() const noexcept {
 	return window_;
 }
 
-void RuntimeComponent::attachEventPort(ModelEventObserver* obs) {
+void RuntimeComponent::attachEventPort(EventInput* obs) {
 	event_out_.subscribe(obs);
 }
 

@@ -11,7 +11,11 @@ class RuntimeComponent {
 
 	using WindowPtr = std::shared_ptr<sf::RenderWindow>;
 	using screen_size_t = uint32_t; // sf::Uint32 removed from sfml :(
-	using EventOutput = ModelEventObservable;
+
+	using EventOutput =
+		NSLibrary::CObservableData<ModelEvent, NSLibrary::CByReference>;
+	using EventInput =
+		NSLibrary::CObserver<ModelEvent, NSLibrary::CByReference>;
 
 public:
 	enum Width : screen_size_t;
@@ -21,7 +25,7 @@ public:
 					 const std::string& win_title);
 
 	WindowPtr getWindowPtr() const noexcept;
-	void attachEventPort(ModelEventObserver* obs);
+	void attachEventPort(EventInput* obs);
 
 	void run();
 

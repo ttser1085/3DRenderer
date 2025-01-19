@@ -7,12 +7,13 @@ namespace r3d {
 class View {
 
 	using WindowPtr = std::shared_ptr<sf::RenderWindow>;
-	using FrameInput = FrameColdInput;
+
+	using FrameInput = NSLibrary::CColdInput<FramePtr, NSLibrary::CByValue>;
 
 public:
 	View(const RuntimeComponent& runtime_comp);
 
-	FrameObserver* getFramePort() noexcept;
+	FrameInput* getFramePort() noexcept;
 
 private:
 	void showFrame(FramePtr frame);
