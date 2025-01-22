@@ -10,12 +10,12 @@ class Model {
 	using FrameInput = NSLibrary::CObserver<FramePtr, NSLibrary::CByValue>;
 
 public:
-	Model(Frame::Width frame_width, Frame::Height frame_height);
+	Model(Width frame_width, Height frame_height);
 
 	void attachFramePort(FrameInput* obs);
 
 	void renderFrame();
-	void resizeFrame(Frame::Width new_width, Frame::Height new_height);
+	void resizeFrame(Width new_width, Height new_height);
 
 private:
 	Renderer renderer_;

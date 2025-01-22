@@ -36,8 +36,8 @@ void RuntimeComponent::onEvent(const sf::Event& event) {
 										  static_cast<float>(new_size.y)});
 		window_->setView(sf::View(area)); // <--- sfml cringe
 
-		event_out_.set(ResizeEvent{static_cast<Frame::Width>(new_size.x),
-								   static_cast<Frame::Height>(new_size.y)});
+		event_out_.set(ResizeEvent{static_cast<Width>(new_size.x),
+								   static_cast<Height>(new_size.y)});
 	}
 }
 

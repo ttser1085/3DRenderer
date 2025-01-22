@@ -12,8 +12,8 @@ struct NoneEvent {};
 struct RenderEvent {};
 
 struct ResizeEvent {
-	Frame::Width new_width;
-	Frame::Height new_height;
+	Width new_width;
+	Height new_height;
 };
 
 using ModelEvent = std::variant<NoneEvent, RenderEvent, ResizeEvent>;

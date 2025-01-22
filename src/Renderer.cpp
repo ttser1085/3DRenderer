@@ -4,7 +4,7 @@ namespace r3d {
 
 // Renderer
 
-Renderer::Renderer(Frame::Width target_width, Frame::Height target_height)
+Renderer::Renderer(Width target_width, Height target_height)
 	: target_width_(target_width), target_height_(target_height) {}
 
 FramePtr Renderer::makeFrame() {
@@ -15,8 +15,7 @@ FramePtr Renderer::makeFrame() {
 	return frame;
 }
 
-void Renderer::setTargetSize(Frame::Width target_width,
-							 Frame::Height target_height) {
+void Renderer::setTargetSize(Width target_width, Height target_height) {
 	target_width_ = target_width;
 	target_height_ = target_height;
 }

@@ -10,7 +10,6 @@ namespace r3d {
 class RuntimeComponent {
 
 	using WindowPtr = std::shared_ptr<sf::RenderWindow>;
-	using screen_size_t = uint32_t; // sf::Uint32 removed from sfml :(
 
 	using EventOutput =
 		NSLibrary::CObservableData<ModelEvent, NSLibrary::CByReference>;
@@ -18,9 +17,6 @@ class RuntimeComponent {
 		NSLibrary::CObserver<ModelEvent, NSLibrary::CByReference>;
 
 public:
-	enum Width : screen_size_t;
-	enum Height : screen_size_t;
-
 	RuntimeComponent(Width win_width, Height win_height,
 					 const std::string& win_title);
 
