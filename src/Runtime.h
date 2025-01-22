@@ -7,7 +7,7 @@
 
 namespace r3d {
 
-class RuntimeComponent {
+class Runtime {
 
 	using WindowPtr = std::shared_ptr<sf::RenderWindow>;
 
@@ -17,7 +17,7 @@ class RuntimeComponent {
 		NSLibrary::CObserver<ModelEvent, NSLibrary::CByReference>;
 
 public:
-	RuntimeComponent(Width win_width, Height win_height,
+	Runtime(Width win_width, Height win_height,
 					 const std::string& win_title);
 
 	WindowPtr getWindowPtr() const noexcept;

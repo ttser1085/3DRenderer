@@ -1,21 +1,21 @@
-#include "RuntimeComponent.h"
+#include "Runtime.h"
 
 namespace r3d {
 
-RuntimeComponent::RuntimeComponent(Width win_width, Height win_height,
+Runtime::Runtime(Width win_width, Height win_height,
 								   const std::string& win_title)
 	: window_(std::make_shared<sf::RenderWindow>(
 		  sf::VideoMode({win_width, win_height}), win_title)) {}
 
-RuntimeComponent::WindowPtr RuntimeComponent::getWindowPtr() const noexcept {
+Runtime::WindowPtr Runtime::getWindowPtr() const noexcept {
 	return window_;
 }
 
-void RuntimeComponent::attachEventPort(EventInput* obs) {
+void Runtime::attachEventPort(EventInput* obs) {
 	event_out_.subscribe(obs);
 }
 
-void RuntimeComponent::run() {
+void Runtime::run() {
 	while (window_->isOpen()) {
 		while (const std::optional event_opt = window_->pollEvent()) {
 			onEvent(event_opt.value());
@@ -25,7 +25,7 @@ void RuntimeComponent::run() {
 	}
 }
 
-void RuntimeComponent::onEvent(const sf::Event& event) {
+void Runtime::onEvent(const sf::Event& event) {
 	if (event.is<sf::Event::Closed>()) {
 		window_->close();
 		exit(EXIT_SUCCESS);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RuntimeComponent.h"
+#include "Runtime.h"
 
 namespace r3d {
 
@@ -11,7 +11,7 @@ class View {
 	using FrameInput = NSLibrary::CColdInput<FramePtr, NSLibrary::CByValue>;
 
 public:
-	View(const RuntimeComponent& runtime_comp);
+	View(const Runtime& runtime_comp);
 
 	FrameInput* getFramePort() noexcept;
 

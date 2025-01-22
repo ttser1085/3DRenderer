@@ -2,7 +2,7 @@
 
 namespace r3d {
 
-View::View(const RuntimeComponent& runtime_comp)
+View::View(const Runtime& runtime_comp)
 	: window_(runtime_comp.getWindowPtr()),
 	  frame_in_([this](FramePtr frame) { showFrame(std::move(frame)); }) {}
 

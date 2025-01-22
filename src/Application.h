@@ -3,7 +3,7 @@
 #include "Model.h"
 #include "View.h"
 #include "Controller.h"
-#include "RuntimeComponent.h"
+#include "Runtime.h"
 
 namespace r3d {
 
@@ -14,7 +14,7 @@ public:
     void run();
 
 private:
-    RuntimeComponent runtime_;
+    Runtime runtime_;
 
     Model model_;
     View view_;
