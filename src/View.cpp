@@ -2,8 +2,8 @@
 
 namespace r3d {
 
-View::View(const Runtime& runtime_comp)
-	: window_(runtime_comp.getWindowPtr()),
+View::View(WindowPtr window)
+	: window_(window),
 	  frame_in_([this](FramePtr frame) { showFrame(std::move(frame)); }) {}
 
 View::FrameInput* View::getFramePort() noexcept { return &frame_in_; }

@@ -4,11 +4,11 @@ namespace r3d {
 
 Runtime::Runtime(Width win_width, Height win_height,
 								   const std::string& win_title)
-	: window_(std::make_shared<sf::RenderWindow>(
+	: window_(std::make_unique<sf::RenderWindow>(
 		  sf::VideoMode({win_width, win_height}), win_title)) {}
 
-Runtime::WindowPtr Runtime::getWindowPtr() const noexcept {
-	return window_;
+Runtime::WindowRawPtr Runtime::getWindowPtr() const noexcept {
+	return window_.get();
 }
 
 void Runtime::attachEventPort(EventInput* obs) {

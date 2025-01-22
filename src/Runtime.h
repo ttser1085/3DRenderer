@@ -9,7 +9,8 @@ namespace r3d {
 
 class Runtime {
 
-	using WindowPtr = std::shared_ptr<sf::RenderWindow>;
+	using WindowPtr = std::unique_ptr<sf::RenderWindow>;
+	using WindowRawPtr = sf::RenderWindow*;
 
 	using EventOutput =
 		NSLibrary::CObservableData<ModelEvent, NSLibrary::CByReference>;
@@ -20,7 +21,7 @@ public:
 	Runtime(Width win_width, Height win_height,
 					 const std::string& win_title);
 
-	WindowPtr getWindowPtr() const noexcept;
+	WindowRawPtr getWindowPtr() const noexcept;
 	void attachEventPort(EventInput* obs);
 
 	void run();
