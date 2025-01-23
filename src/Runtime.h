@@ -18,8 +18,7 @@ class Runtime {
 		NSLibrary::CObserver<ModelEvent, NSLibrary::CByReference>;
 
 public:
-	Runtime(Width win_width, Height win_height,
-					 const std::string& win_title);
+	Runtime(const std::string& win_title);
 
 	WindowRawPtr getWindowPtr() const noexcept;
 	void attachEventPort(EventInput* obs);
@@ -31,6 +30,9 @@ private:
 
 	WindowPtr window_;
 	EventOutput event_out_;
+
+	static constexpr Width kDefaultWidth = Width{1280};
+	static constexpr Height kDefaultHeight = Height{720};
 };
 
 } // namespace r3d

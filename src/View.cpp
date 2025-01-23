@@ -9,20 +9,32 @@ View::View(WindowPtr window)
 View::FrameInput* View::getFramePort() noexcept { return &frame_in_; }
 
 void View::showFrame(FramePtr frame) {
-	window_->clear();
+	if (frame == nullptr) { // model didn't send frame - for example in subscribe notification
+		return;
+	}
 
-	assert(frame != nullptr);
-	assert(frame->getWidth() == window_->getSize().x);
-	assert(frame->getHeight() ==
-		   window_->getSize().y); // resizing should be before rendering
-
-	sf::Texture texture(window_->getSize());
+	sf::Texture texture({frame->getWidth(), frame->getHeight()});
 	texture.update(frame->data());
 
 	sf::Sprite sprite(texture);
-	window_->draw(sprite);
+	scaleAndCentrilize(sprite);
 
+	window_->clear();
+	window_->draw(sprite);
 	window_->display();
+}
+
+void View::scaleAndCentrilize(sf::Sprite& sprite) const {
+	sf::Vector2u window_size = window_->getSize();
+	sf::Vector2u texture_size = sprite.getTexture().getSize();
+
+	float scale_x = static_cast<float>(window_size.x) / texture_size.x;
+	float scale_y = static_cast<float>(window_size.y) / texture_size.y;
+	float scale = std::min(scale_x, scale_y);
+
+	sprite.setScale({scale, scale});
+	sprite.setPosition({(window_size.x - texture_size.x * scale) / 2.0f,
+						(window_size.y - texture_size.y * scale) / 2.0f});
 }
 
 } // namespace r3d

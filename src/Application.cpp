@@ -2,8 +2,8 @@
 
 namespace r3d {
 Application::Application()
-	: runtime_(Width{800}, Height{600}, "My window"),
-	  model_(Width{800}, Height{600}), view_(runtime_.getWindowPtr()), controller_(model_) {
+	: runtime_("3D Renderer"), model_(Width{1280}, Height{720}),
+	  view_(runtime_.getWindowPtr()), controller_(model_) {
 	model_.attachFramePort(view_.getFramePort());
 	runtime_.attachEventPort(controller_.getEventPort());
 }
