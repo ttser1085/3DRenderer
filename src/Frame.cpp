@@ -3,7 +3,9 @@
 namespace r3d {
 
 Frame::Frame(Width width, Height height)
-	: width_(width), height_(height), storage_(width_ * height_) {}
+	: width_(width), height_(height),
+	  storage_(static_cast<screen_size_t>(width) *
+			   static_cast<screen_size_t>(height)) {}
 
 void Frame::setColor(const Vec2s& pos, Color3b color) {
 	storage_[pos(1) * width_ + pos(0)] = Color4b::fromColor3b(color);
