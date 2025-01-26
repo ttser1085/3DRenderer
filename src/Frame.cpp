@@ -15,9 +15,9 @@ Color3b Frame::getColor(const Vec2s& pos) const {
 	return Color3b::fromColor4b(storage_[pos(1) * width_ + pos(0)]);
 }
 
-Width Frame::getWidth() const noexcept { return width_; }
+Width Frame::width() const noexcept { return width_; }
 
-Height Frame::getHeight() const noexcept { return height_; }
+Height Frame::height() const noexcept { return height_; }
 
 void Frame::clear(Color3b color) {
 	std::fill(storage_.begin(), storage_.end(), Color4b::fromColor3b(color));

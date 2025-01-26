@@ -20,8 +20,8 @@ public:
 	void setColor(const Vec2s& pos, Color3b color);
 	Color3b getColor(const Vec2s& pos) const;
 
-	Width getWidth() const noexcept;
-	Height getHeight() const noexcept;
+	Width width() const noexcept;
+	Height height() const noexcept;
 
 	void clear(Color3b color = kBlack3b);
 

@@ -20,7 +20,7 @@ class Runtime {
 public:
 	Runtime(const std::string& win_title);
 
-	WindowRawPtr getWindowPtr() const noexcept;
+	WindowRawPtr window() const noexcept;
 	void attachEventPort(EventInput* obs);
 
 	void run();

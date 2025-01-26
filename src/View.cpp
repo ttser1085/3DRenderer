@@ -6,14 +6,14 @@ View::View(WindowPtr window)
 	: window_(window),
 	  frame_in_([this](FramePtr frame) { showFrame(std::move(frame)); }) {}
 
-View::FrameInput* View::getFramePort() noexcept { return &frame_in_; }
+View::FrameInput* View::framePort() noexcept { return &frame_in_; }
 
 void View::showFrame(FramePtr frame) {
 	if (frame == nullptr) { // model didn't send frame - for example in subscribe notification
 		return;
 	}
 
-	sf::Texture texture({frame->getWidth(), frame->getHeight()});
+	sf::Texture texture({frame->width(), frame->height()});
 	texture.update(frame->data());
 
 	sf::Sprite sprite(texture);

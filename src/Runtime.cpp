@@ -6,7 +6,7 @@ Runtime::Runtime(const std::string& win_title)
 	: window_(std::make_unique<sf::RenderWindow>(
 		  sf::VideoMode({kDefaultWidth, kDefaultHeight}), win_title)) {}
 
-Runtime::WindowRawPtr Runtime::getWindowPtr() const noexcept {
+Runtime::WindowRawPtr Runtime::window() const noexcept {
 	return window_.get();
 }
 

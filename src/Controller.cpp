@@ -7,7 +7,7 @@ r3d::Controller::Controller(ModelRef model)
 		  std::visit(visitor_, event);
 	  }) {}
 
-Controller::EventInput* Controller::getEventPort() noexcept { return &event_in_; }
+Controller::EventInput* Controller::eventPort() noexcept { return &event_in_; }
 
 Controller::ControllerVisitor::ControllerVisitor(ModelRef model)
 	: model_(model) {}

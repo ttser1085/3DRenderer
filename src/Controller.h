@@ -16,7 +16,7 @@ class Controller {
 public:
 	Controller(ModelRef model);
 
-	EventInput* getEventPort() noexcept;
+	EventInput* eventPort() noexcept;
 
 private:
 	class ControllerVisitor {

@@ -13,7 +13,7 @@ class View {
 public:
 	View(WindowPtr window);
 
-	FrameInput* getFramePort() noexcept;
+	FrameInput* framePort() noexcept;
 
 private:
 	void showFrame(FramePtr frame);
