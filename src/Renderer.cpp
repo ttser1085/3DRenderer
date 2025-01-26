@@ -1,5 +1,7 @@
 #include "Renderer.h"
 
+#include "Brush.h"
+
 namespace r3d {
 
 // Renderer
@@ -9,8 +11,15 @@ Renderer::Renderer(Width target_width, Height target_height)
 
 FramePtr Renderer::makeFrame() const {
 	FramePtr frame = std::make_shared<Frame>(target_width_, target_height_);
-	frame->clear(kRed3b);
-	// render all objects
+	frame->clear(kBlack3b);
+
+	Brush brush(frame);
+
+	for (const auto& object : objects_) {
+		for (auto mesh : object) {
+			// TODO:
+		}
+	}
 
 	return frame;
 }

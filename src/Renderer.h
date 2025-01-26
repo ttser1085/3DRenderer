@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Frame.h"
+#include "Object.h"
 
 namespace r3d {
 
@@ -15,6 +16,8 @@ public:
 private:
 	Width target_width_;
 	Height target_height_;
+
+	std::vector<Object> objects_;
 };
 
 } // namespace r3d
