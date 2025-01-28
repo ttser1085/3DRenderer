@@ -6,8 +6,8 @@ namespace r3d {
 class Model {
 
 	using FrameOutput =
-		NSLibrary::CObservableData<FramePtr, NSLibrary::CByValue>;
-	using FrameInput = NSLibrary::CObserver<FramePtr, NSLibrary::CByValue>;
+		NSLibrary::CObservableData<FrozenFrame, NSLibrary::CByValue>;
+	using FrameInput = NSLibrary::CObserver<FrozenFrame, NSLibrary::CByValue>;
 
 public:
 	Model(Width frame_width, Height frame_height);

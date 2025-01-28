@@ -8,7 +8,7 @@ class View {
 
 	using WindowPtr = sf::RenderWindow*;
 
-	using FrameInput = NSLibrary::CHotInput<FramePtr, NSLibrary::CByValue>;
+	using FrameInput = NSLibrary::CHotInput<FrozenFrame, NSLibrary::CByValue>;
 
 public:
 	View(WindowPtr window);
@@ -16,7 +16,7 @@ public:
 	FrameInput* framePort() noexcept;
 
 private:
-	void showFrame(FramePtr frame);
+	void showFrame(FrozenFrame frame);
 
 	void scaleAndCentrilize(sf::Sprite& sprite) const;
 

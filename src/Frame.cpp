@@ -23,12 +23,12 @@ void Frame::clear(Color3b color) {
 	std::fill(storage_.begin(), storage_.end(), Color4b::fromColor3b(color));
 }
 
-uint8_t* Frame::data() {
+const uint8_t* Frame::data() const {
 	if (storage_.empty()) {
 		return nullptr;
 	}
 
-	return reinterpret_cast<uint8_t*>(storage_.data());
+	return reinterpret_cast<const uint8_t*>(storage_.data());
 }
 
 } // namespace r3d

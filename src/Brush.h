@@ -7,13 +7,17 @@ namespace r3d {
 
 class Brush {
 
-    using Canvas = FramePtr;
+    using Canvas = Frame;
 
 public:
-    Brush(Canvas canvas);
+    Brush(Canvas&& canvas);
 
     void drawPoint(const Vec2f& pos, const Color3f& color);
+    // void drawLine;
     // void drawMesh;
+    // void fillMesh;
+
+    Canvas&& release();
 
 private:
     Canvas canvas_;

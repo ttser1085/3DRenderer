@@ -4,11 +4,11 @@ namespace r3d {
 
 View::View(WindowPtr window)
 	: window_(window),
-	  frame_in_([this](FramePtr frame) { showFrame(std::move(frame)); }) {}
+	  frame_in_([this](FrozenFrame frame) { showFrame(std::move(frame)); }) {}
 
 View::FrameInput* View::framePort() noexcept { return &frame_in_; }
 
-void View::showFrame(FramePtr frame) {
+void View::showFrame(FrozenFrame frame) {
 	if (frame == nullptr) { // model didn't send frame - for example in subscribe notification
 		return;
 	}

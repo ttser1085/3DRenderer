@@ -25,7 +25,7 @@ public:
 
 	void clear(Color3b color = kBlack3b);
 
-	uint8_t* data();
+	const uint8_t* data() const;
 
 private:
 	Width width_;
@@ -33,6 +33,6 @@ private:
 	Storage storage_;
 };
 
-using FramePtr = std::shared_ptr<Frame>;
+using FrozenFrame = std::shared_ptr<const Frame>;
 
 } // namespace r3d

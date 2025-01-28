@@ -9,7 +9,7 @@ class Renderer {
 public:
 	Renderer(Width target_width, Height target_height);
 
-	FramePtr makeFrame() const;
+	Frame makeFrame() const;
 
 	void setTargetSize(Width target_width, Height target_height);
 
