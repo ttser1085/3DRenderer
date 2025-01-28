@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Frame.h"
-#include "Object.h"
+#include "Scene.h"
 
 namespace r3d {
 
@@ -17,7 +17,7 @@ private:
 	Width target_width_;
 	Height target_height_;
 
-	std::vector<Object> objects_;
+	Scene scene_;
 };
 
 } // namespace r3d

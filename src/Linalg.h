@@ -30,4 +30,8 @@ using Mat4f = Eigen::Matrix4f;
 using Mat4d = Eigen::Matrix4d;
 using Mat4s = Eigen::Matrix4<screen_size_t>;
 
+// Angle
+
+using Angle = float;
+
 } // namespace r3d

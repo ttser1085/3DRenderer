@@ -2,6 +2,9 @@
 
 #include "Color.h"
 #include "Linalg.h"
+#include "Vertex.h"
+
+#include "Eigen/Geometry"
 
 #include <functional>
 
@@ -10,64 +13,76 @@ namespace r3d {
 class ConstMeshIterator;
 
 class Object {
-    friend class ProxyMesh;
-    friend class ConstMeshIterator;
+	friend class ProxyMesh;
+	friend class ConstMeshIterator;
+
+	using Transform = Eigen::Affine3f;
+	using Rotation = Eigen::AngleAxisf;
 
 public:
-    Object();
+	Object(const Vec3f& position = Vec3f::Zero());
 
-    ConstMeshIterator begin() const;
-    ConstMeshIterator end() const;
+	void addVertex(const Vertex& vertex);
+	void addMesh(Index v1, Index v2, Index v3);
+
+	void move(const Vec3f& movement);
+	void scale(const Vec3f& scale);
+	void rotate(Angle angle, const Vec3f& axis);
+
+	ConstMeshIterator begin() const;
+	ConstMeshIterator end() const;
 
 private:
-    struct Mesh {
-        size_t vertices[3];
-    };
+	struct InnerMesh {
+		Index vertices[3];
+	};
 
-    std::vector<Vec4f> positions_;
-    std::vector<Color3f> colors_;
-    // std::vector<Vec3f> normals;
+	Transform transform_;
 
-    std::vector<Mesh> meshes_;
+	std::vector<Vec4f> positions_;
+	std::vector<Color3f> colors_;
+	// std::vector<Vec3f> normals;
+
+	std::vector<InnerMesh> meshes_;
 };
 
 class ProxyMesh {
-    friend class ConstMeshIterator;
+	friend class ConstMeshIterator;
 
-    using MeshCRef = std::reference_wrapper<const Object::Mesh>;
-    using ObjectCRef = std::reference_wrapper<const Object>;
+	using MeshCRef = std::reference_wrapper<const Object::InnerMesh>;
+	using ObjectCRef = std::reference_wrapper<const Object>;
 
 public:
-    Vec4f position(size_t index) const;
-    Color3f color(size_t index) const;
+	Vec4f position(Index index) const;
+	Color3f color(Index index) const;
 
 private:
-    MeshCRef mesh_;
+	MeshCRef mesh_;
 	ObjectCRef object_;
 
-    ProxyMesh(MeshCRef mesh, ObjectCRef object);
+	ProxyMesh(MeshCRef mesh, ObjectCRef object);
 };
 
 class ConstMeshIterator {
-    friend class Object;
+	friend class Object;
 
-    using RawIterator = std::vector<Object::Mesh>::const_iterator;
-    using ObjectCRef = std::reference_wrapper<const Object>;
+	using RawIterator = std::vector<Object::InnerMesh>::const_iterator;
+	using ObjectCRef = std::reference_wrapper<const Object>;
 
 public:
-    ProxyMesh operator*();
-    
-    ConstMeshIterator& operator++();
-    ConstMeshIterator& operator--();
+	ProxyMesh operator*();
 
-    bool operator==(const ConstMeshIterator& other) const;
-    bool operator!=(const ConstMeshIterator& other) const ;
+	ConstMeshIterator& operator++();
+	ConstMeshIterator& operator--();
+
+	bool operator==(const ConstMeshIterator& other) const;
+	bool operator!=(const ConstMeshIterator& other) const;
 
 private:
-    ConstMeshIterator(RawIterator iter, ObjectCRef object);
+	ConstMeshIterator(RawIterator iter, ObjectCRef object);
 
-    RawIterator iter_;
-    ObjectCRef object_;
+	RawIterator iter_;
+	ObjectCRef object_;
 };
 
 /*
@@ -75,9 +90,9 @@ private:
 using:
 
 for (const Object& obj : objects) {
-    for (ProxyMesh mesh : obj) {
-        render mesh
-    }
+	for (ProxyMesh mesh : obj) {
+		render mesh
+	}
 }
 
 */

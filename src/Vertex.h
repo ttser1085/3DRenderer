@@ -7,7 +7,7 @@ namespace r3d {
 
 struct Vertex {
     Vec4f pos;
-    Color4f color;
+    Color3f color;
 };
 
 

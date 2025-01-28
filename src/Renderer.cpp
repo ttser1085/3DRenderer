@@ -15,7 +15,7 @@ FramePtr Renderer::makeFrame() const {
 
 	Brush brush(frame);
 
-	for (const auto& object : objects_) {
+	for (const auto& object : scene_.objects()) {
 		for (auto mesh : object) {
 			// TODO:
 		}
