@@ -1,26 +1,28 @@
 #pragma once
 
 #include "Frame.h"
-#include "Object.h"
+#include "Linalg/LinalgBase.h"
+
+using linalg::Vec2;
 
 namespace r3d {
 
 class Brush {
 
-    using Canvas = Frame;
+	using Canvas = Frame;
 
 public:
-    Brush(Canvas&& canvas);
+	explicit Brush(Canvas&& canvas);
 
-    void drawPoint(const Vec2f& pos, const Color3f& color);
-    // void drawLine;
-    // void drawMesh;
-    // void fillMesh;
+	void drawPoint(const Vec2& pos, const Color3f& color);
+	// void drawLine;
+	// void drawMesh;
+	// void fillMesh;
 
-    Canvas&& release();
+	Canvas&& release();
 
 private:
-    Canvas canvas_;
+	Canvas canvas_;
 };
 
 } // namespace r3d

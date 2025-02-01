@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Color.h"
-#include "Linalg.h"
+#include "Linalg/LinalgBase.h"
 
 namespace r3d {
 
 struct Vertex {
-    Vec4f pos;
+    linalg::Vec4 pos;
     Color3f color;
 };
 

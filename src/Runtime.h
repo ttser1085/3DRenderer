@@ -18,7 +18,7 @@ class Runtime {
 		NSLibrary::CObserver<ModelEvent, NSLibrary::CByReference>;
 
 public:
-	Runtime(const std::string& win_title);
+	explicit Runtime(const std::string& win_title);
 
 	WindowRawPtr window() const noexcept;
 	void attachEventPort(EventInput* obs);

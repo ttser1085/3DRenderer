@@ -11,7 +11,7 @@ class View {
 	using FrameInput = NSLibrary::CHotInput<FrozenFrame, NSLibrary::CByValue>;
 
 public:
-	View(WindowPtr window);
+	explicit View(WindowPtr window);
 
 	FrameInput* framePort() noexcept;
 

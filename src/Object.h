@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Color.h"
-#include "Linalg.h"
 #include "Vertex.h"
 
-#include "Eigen/Geometry"
-
 #include <functional>
+
+using linalg::Vec3;
+using linalg::Vec4;
+using linalg::Angle;
 
 namespace r3d {
 
@@ -16,18 +17,18 @@ class Object {
 	friend class ProxyMesh;
 	friend class ConstMeshIterator;
 
-	using Transform = Eigen::Affine3f;
-	using Rotation = Eigen::AngleAxisf;
+	using Transform = linalg::AffineTransform;
+	using Rotation = linalg::Rotation;
 
 public:
-	Object(const Vec3f& position = Vec3f::Zero());
+	explicit Object(const Vec3& position = Vec3::Zero());
 
 	void addVertex(const Vertex& vertex);
 	void addMesh(Index v1, Index v2, Index v3);
 
-	void move(const Vec3f& movement);
-	void scale(const Vec3f& scale);
-	void rotate(Angle angle, const Vec3f& axis);
+	void move(const Vec3& movement);
+	void scale(const Vec3& scale);
+	void rotate(Angle angle, const Vec3& axis);
 
 	ConstMeshIterator begin() const;
 	ConstMeshIterator end() const;
@@ -39,9 +40,9 @@ private:
 
 	Transform transform_;
 
-	std::vector<Vec4f> positions_;
+	std::vector<Vec4> positions_;
 	std::vector<Color3f> colors_;
-	// std::vector<Vec3f> normals;
+	// std::vector<Vec3> normals;
 
 	std::vector<InnerMesh> meshes_;
 };
@@ -53,7 +54,7 @@ class ProxyMesh {
 	using ObjectCRef = std::reference_wrapper<const Object>;
 
 public:
-	Vec4f position(Index index) const;
+	Vec4 position(Index index) const;
 	Color3f color(Index index) const;
 
 private:

@@ -7,12 +7,12 @@ Frame::Frame(Width width, Height height)
 	  storage_(static_cast<screen_size_t>(width) *
 			   static_cast<screen_size_t>(height)) {}
 
-void Frame::setColor(const Vec2s& pos, Color3b color) {
-	storage_[pos(1) * width_ + pos(0)] = Color4b::fromColor3b(color);
+void Frame::setColor(const SizePair& pos, Color3b color) {
+	storage_[pos.second * width_ + pos.first] = Color4b::fromColor3b(color);
 }
 
-Color3b Frame::getColor(const Vec2s& pos) const {
-	return Color3b::fromColor4b(storage_[pos(1) * width_ + pos(0)]);
+Color3b Frame::getColor(const SizePair& pos) const {
+	return Color3b::fromColor4b(storage_[pos.second * width_ + pos.first]);
 }
 
 Width Frame::width() const noexcept { return width_; }

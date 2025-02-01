@@ -1,5 +1,7 @@
 #include "Color.h"
 
+#include <assert.h>
+
 namespace r3d {
 
 // Color3b
@@ -93,5 +95,48 @@ bool operator==(const Color3f& c1, const Color3f& c2) {
 bool operator==(const Color4f& c1, const Color4f& c2) {
 	return c1.r == c2.r && c1.b == c2.b && c1.g == c2.g && c1.a == c2.a;
 }
+
+// Binary ops
+
+Color3f operator+(const Color3f& c1, const Color3f& c2) {
+	assert((c1.r + c2.r <= 1.0f) && "Invalid color operation!");
+	assert((c1.g + c2.g <= 1.0f) && "Invalid color operation!");
+	assert((c1.b + c2.b <= 1.0f) && "Invalid color operation!");
+	return Color3f{c1.r + c2.r, c1.g + c2.g, c1.b + c2.b};
+}
+
+Color4f operator+(const Color4f& c1, const Color4f& c2) {
+	assert((c1.r + c2.r <= 1.0f) && "Invalid color operation!");
+	assert((c1.g + c2.g <= 1.0f) && "Invalid color operation!");
+	assert((c1.b + c2.b <= 1.0f) && "Invalid color operation!");
+	assert((c1.a + c2.a <= 1.0f) && "Invalid color operation!");
+	return Color4f{c1.r + c2.r, c1.g + c2.g, c1.b + c2.b, c1.a + c2.a};
+}
+
+Color3f operator*(const Color3f& color, float x) {
+	assert((color.r * x <= 1.0f) && (color.r * x >= 0.0f) &&
+		   "Invalid color operation!");
+	assert((color.g * x <= 1.0f) && (color.g * x >= 0.0f) &&
+		   "Invalid color operation!");
+	assert((color.b * x <= 1.0f) && (color.b * x >= 0.0f) &&
+		   "Invalid color operation!");
+	return Color3f{color.r * x, color.g * x, color.b * x};
+}
+
+Color3f operator*(float x, const Color3f& color) { return color * x; }
+
+Color4f operator*(const Color4f& color, float x) {
+	assert((color.r * x <= 1.0f) && (color.r * x >= 0.0f) &&
+		   "Invalid color operation!");
+	assert((color.g * x <= 1.0f) && (color.g * x >= 0.0f) &&
+		   "Invalid color operation!");
+	assert((color.b * x <= 1.0f) && (color.b * x >= 0.0f) &&
+		   "Invalid color operation!");
+	assert((color.a * x <= 1.0f) && (color.a * x >= 0.0f) &&
+		   "Invalid color operation!");
+	return Color4f{color.r * x, color.g * x, color.b * x, color.a * x};
+}
+
+Color4f operator*(float x, const Color4f& color) { return color * x; }
 
 } // namespace r3d

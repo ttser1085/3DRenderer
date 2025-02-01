@@ -14,14 +14,14 @@ class Controller {
 	using EventInput = NSLibrary::CColdInput<ModelEvent, NSLibrary::CByReference>;
 
 public:
-	Controller(ModelRef model);
+	explicit Controller(ModelRef model);
 
 	EventInput* eventPort() noexcept;
 
 private:
 	class ControllerVisitor {
 	public:
-		ControllerVisitor(ModelRef model);
+		explicit ControllerVisitor(ModelRef model);
 
 		void operator()(NoneEvent) const;
 		void operator()(RenderEvent) const;

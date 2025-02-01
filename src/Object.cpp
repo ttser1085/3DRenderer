@@ -4,7 +4,7 @@ namespace r3d {
 
 // Object
 
-Object::Object(const Vec3f& position) {
+Object::Object(const Vec3& position) {
 	transform_.setIdentity();
 	transform_.translate(position);
 }
@@ -18,11 +18,11 @@ void Object::addMesh(Index v1, Index v2, Index v3) {
 	meshes_.push_back(InnerMesh{v1, v2, v3});
 }
 
-void Object::move(const Vec3f& movement) { transform_.translate(movement); }
+void Object::move(const Vec3& movement) { transform_.translate(movement); }
 
-void Object::scale(const Vec3f& scale) { transform_.scale(scale); }
+void Object::scale(const Vec3& scale) { transform_.scale(scale); }
 
-void Object::rotate(Angle angle, const Vec3f& axis) {
+void Object::rotate(Angle angle, const Vec3& axis) {
 	transform_.rotate(Rotation(angle, axis));
 }
 
@@ -39,7 +39,7 @@ ConstMeshIterator Object::end() const {
 ProxyMesh::ProxyMesh(MeshCRef mesh, ObjectCRef object)
 	: mesh_(mesh), object_(object) {}
 
-Vec4f ProxyMesh::position(Index index) const {
+Vec4 ProxyMesh::position(Index index) const {
 	return (object_.get().transform_) *
 		   (object_.get()
 				.positions_[mesh_.get().vertices[index]]); // Affine transform *

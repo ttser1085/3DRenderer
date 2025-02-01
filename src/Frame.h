@@ -1,11 +1,9 @@
 #pragma once
 
 #include "Color.h"
-#include "Linalg.h"
 
 #include <Observer.h>
 #include <memory>
-#include <utility>
 #include <vector>
 
 namespace r3d {
@@ -17,8 +15,8 @@ class Frame {
 public:
 	Frame(Width width, Height height);
 
-	void setColor(const Vec2s& pos, Color3b color);
-	Color3b getColor(const Vec2s& pos) const;
+	void setColor(const SizePair& pos, Color3b color);
+	Color3b getColor(const SizePair& pos) const;
 
 	Width width() const noexcept;
 	Height height() const noexcept;

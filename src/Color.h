@@ -82,4 +82,13 @@ bool operator==(Color4b, Color4b);
 bool operator==(const Color3f&, const Color3f&);
 bool operator==(const Color4f&, const Color4f&);
 
+Color3f operator+(const Color3f&, const Color3f&);
+Color4f operator+(const Color4f&, const Color4f&);
+
+Color3f operator*(const Color3f&, float);
+Color3f operator*(float, const Color3f&);
+
+Color4f operator*(const Color4f&, float);
+Color4f operator*(float, const Color4f&);
+
 } // namespace r3d
