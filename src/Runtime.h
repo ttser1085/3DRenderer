@@ -31,8 +31,7 @@ private:
 	WindowPtr window_;
 	EventOutput event_out_;
 
-	static constexpr inttypes::Width kDefaultWidth = inttypes::Width{1280};
-	static constexpr inttypes::Height kDefaultHeight = inttypes::Height{720};
+	static constexpr sf::Vector2u kDefaultSize = sf::Vector2u{1280, 720};
 };
 
 } // namespace r3d
