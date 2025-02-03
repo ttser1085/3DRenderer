@@ -11,15 +11,15 @@ Color3b Color3b::fromColor4b(Color4b color4b) {
 }
 
 Color3b Color3b::fromColor3f(const Color3f& color3f) {
-	return Color3b{static_cast<uint8_t>(color3f.r * 255.0f),
-				   static_cast<uint8_t>(color3f.g * 255.0f),
-				   static_cast<uint8_t>(color3f.b * 255.0f)};
+	return Color3b{static_cast<Byte>(color3f.r * 255.0f),
+				   static_cast<Byte>(color3f.g * 255.0f),
+				   static_cast<Byte>(color3f.b * 255.0f)};
 }
 
 Color3b Color3b::fromColor4f(const Color4f& color4f) {
-	return Color3b{static_cast<uint8_t>(color4f.r * 255.0f),
-				   static_cast<uint8_t>(color4f.g * 255.0f),
-				   static_cast<uint8_t>(color4f.b * 255.0f)};
+	return Color3b{static_cast<Byte>(color4f.r * 255.0f),
+				   static_cast<Byte>(color4f.g * 255.0f),
+				   static_cast<Byte>(color4f.b * 255.0f)};
 }
 
 // COlor4b
@@ -29,16 +29,16 @@ Color4b Color4b::fromColor3b(Color3b color3b) {
 }
 
 Color4b Color4b::fromColor3f(const Color3f& color3f) {
-	return Color4b{static_cast<uint8_t>(color3f.r * 255.0f),
-				   static_cast<uint8_t>(color3f.g * 255.0f),
-				   static_cast<uint8_t>(color3f.b * 255.0f), 255};
+	return Color4b{static_cast<Byte>(color3f.r * 255.0f),
+				   static_cast<Byte>(color3f.g * 255.0f),
+				   static_cast<Byte>(color3f.b * 255.0f), 255};
 }
 
 Color4b Color4b::fromColor4f(const Color4f& color4f) {
-	return Color4b{static_cast<uint8_t>(color4f.r * 255.0f),
-				   static_cast<uint8_t>(color4f.g * 255.0f),
-				   static_cast<uint8_t>(color4f.b * 255.0f),
-				   static_cast<uint8_t>(color4f.a * 255.0f)};
+	return Color4b{static_cast<Byte>(color4f.r * 255.0f),
+				   static_cast<Byte>(color4f.g * 255.0f),
+				   static_cast<Byte>(color4f.b * 255.0f),
+				   static_cast<Byte>(color4f.a * 255.0f)};
 }
 
 // Color3f

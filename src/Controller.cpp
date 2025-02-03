@@ -18,9 +18,4 @@ void Controller::ControllerVisitor::operator()(RenderEvent) const {
 	model_.get().renderFrame();
 }
 
-void Controller::ControllerVisitor::operator()(
-	const ResizeEvent& resize_event) const {
-	model_.get().resizeFrame(resize_event.new_width, resize_event.new_height);
-}
-
 } // namespace r3d

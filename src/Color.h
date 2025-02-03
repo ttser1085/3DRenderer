@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Inttypes.h"
+#include "Inttypes/Inttypes.h"
 
 namespace r3d {
 
@@ -11,9 +11,11 @@ struct Color3f;
 struct Color4f;
 
 struct Color3b {
-	uint8_t r = 0;
-	uint8_t g = 0;
-	uint8_t b = 0;
+	using Byte = inttypes::Byte;
+
+	Byte r = 0;
+	Byte g = 0;
+	Byte b = 0;
 
 	static Color3b fromColor4b(Color4b);
 	static Color3b fromColor3f(const Color3f&);
@@ -21,10 +23,12 @@ struct Color3b {
 };
 
 struct Color4b {
-	uint8_t r = 0;
-	uint8_t g = 0;
-	uint8_t b = 0;
-	uint8_t a = 255;
+	using Byte = inttypes::Byte;
+
+	Byte r = 0;
+	Byte g = 0;
+	Byte b = 0;
+	Byte a = 255;
 
 	static Color4b fromColor3b(Color3b);
 	static Color4b fromColor3f(const Color3f&);

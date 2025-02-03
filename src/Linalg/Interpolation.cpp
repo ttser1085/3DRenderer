@@ -2,14 +2,14 @@
 
 namespace linalg {
 
-Vec2 Barycentric(const Vec2& p, const Vec2& a, const Vec2& b) {
+Vec2 barycentric(const Vec2& p, const Vec2& a, const Vec2& b) {
 	float dist_a = (p - a).norm();
 	float dist_b = (p - b).norm();
 
 	return Vec2{dist_b, dist_a} / (dist_a + dist_b);
 }
 
-Vec3 Barycentric(const Vec3& p, const Vec3& a, const Vec3& b, const Vec3& c) {
+Vec3 barycentric(const Vec3& p, const Vec3& a, const Vec3& b, const Vec3& c) {
 	Vec3 v0 = b - a;
 	Vec3 v1 = c - a;
 	Vec3 v2 = p - a;

@@ -1,6 +1,7 @@
 #include "Renderer.h"
 
 #include "Brush.h"
+#include "Clipping.h"
 
 namespace r3d {
 
@@ -11,13 +12,13 @@ Renderer::Renderer(Width target_width, Height target_height)
 
 Frame Renderer::makeFrame() const {
 	Frame frame(target_width_, target_height_);
-	frame.clear(kBlue3b);
+	frame.clear(kBlack3b);
 
 	Brush brush(std::move(frame));
 
 	for (const auto& object : scene_.objects()) {
 		for (auto mesh : object) {
-			// TODO:
+			// proxy mesh --> clip --> meshes
 		}
 	}
 

@@ -12,8 +12,4 @@ void Model::renderFrame() {
 		std::make_shared<const Frame>(std::move(renderer_.makeFrame())));
 }
 
-void Model::resizeFrame(Width new_width, Height new_height) {
-	renderer_.setTargetSize(new_width, new_height);
-}
-
 } // namespace r3d

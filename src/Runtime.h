@@ -31,8 +31,8 @@ private:
 	WindowPtr window_;
 	EventOutput event_out_;
 
-	static constexpr Width kDefaultWidth = Width{1280};
-	static constexpr Height kDefaultHeight = Height{720};
+	static constexpr inttypes::Width kDefaultWidth = inttypes::Width{1280};
+	static constexpr inttypes::Height kDefaultHeight = inttypes::Height{720};
 };
 
 } // namespace r3d

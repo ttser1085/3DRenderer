@@ -6,6 +6,10 @@
 namespace r3d {
 
 class Renderer {
+
+	using Width = inttypes::Width;
+	using Height = inttypes::Height;
+
 public:
 	Renderer(Width target_width, Height target_height);
 

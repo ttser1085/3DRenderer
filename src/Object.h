@@ -17,6 +17,7 @@ class Object {
 	friend class ProxyMesh;
 	friend class ConstMeshIterator;
 
+	using Index = inttypes::Index;
 	using Transform = linalg::AffineTransform;
 	using Rotation = linalg::Rotation;
 
@@ -50,6 +51,7 @@ private:
 class ProxyMesh {
 	friend class ConstMeshIterator;
 
+	using Index = inttypes::Index;
 	using MeshCRef = std::reference_wrapper<const Object::InnerMesh>;
 	using ObjectCRef = std::reference_wrapper<const Object>;
 

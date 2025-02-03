@@ -25,7 +25,6 @@ private:
 
 		void operator()(NoneEvent) const;
 		void operator()(RenderEvent) const;
-		void operator()(const ResizeEvent&) const;
 
 	private:
 		ModelRef model_;

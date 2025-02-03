@@ -10,6 +10,10 @@ namespace r3d {
 
 class Frame {
 
+	using Width = inttypes::Width;
+	using Height = inttypes::Height;
+	using SizePair = inttypes::SizePair;
+
 	using Storage = std::vector<Color4b>;
 
 public:
@@ -23,7 +27,7 @@ public:
 
 	void clear(Color3b color = kBlack3b);
 
-	const uint8_t* data() const;
+	const inttypes::Byte* data() const;
 
 private:
 	Width width_;

@@ -11,11 +11,6 @@ struct NoneEvent {};
 
 struct RenderEvent {};
 
-struct ResizeEvent {
-	Width new_width;
-	Height new_height;
-};
-
-using ModelEvent = std::variant<NoneEvent, RenderEvent, ResizeEvent>;
+using ModelEvent = std::variant<NoneEvent, RenderEvent>;
 
 } // namespace r3d
