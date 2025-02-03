@@ -2,7 +2,13 @@
 
 #include "Frame.h"
 
-#include <SFML/Graphics.hpp>
+namespace sf {
+
+class RenderWindow;
+
+class Sprite;
+
+} // namespace sf
 
 namespace r3d {
 

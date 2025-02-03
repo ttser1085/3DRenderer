@@ -2,6 +2,8 @@
 
 #include "Runtime.h"
 
+#include <SFML/Graphics.hpp>
+
 namespace r3d {
 
 View::View(WindowPtr window)
