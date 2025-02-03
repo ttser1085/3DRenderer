@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Model.h"
 #include "ModelEvent.h"
 
 #include <functional>
 
 namespace r3d {
+
+class Model;
 
 class Controller {
 

@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Runtime.h"
+#include "Frame.h"
+
+#include <SFML/Graphics.hpp>
 
 namespace r3d {
 

@@ -1,5 +1,7 @@
 #include "Controller.h"
 
+#include "Model.h"
+
 namespace r3d {
 
 r3d::Controller::Controller(ModelRef model)

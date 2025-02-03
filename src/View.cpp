@@ -1,5 +1,7 @@
 #include "View.h"
 
+#include "Runtime.h"
+
 namespace r3d {
 
 View::View(WindowPtr window)
