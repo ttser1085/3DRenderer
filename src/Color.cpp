@@ -48,15 +48,15 @@ Color3f Color3f::fromColor4f(const Color4f& color4f) {
 }
 
 Color3f Color3f::fromColor4b(Color4b color4b) {
-	return Color3f{static_cast<float>(color4b.r) / 255.0f,
-				   static_cast<float>(color4b.g) / 255.0f,
-				   static_cast<float>(color4b.b) / 255.0f};
+	return Color3f{static_cast<Float>(color4b.r) / 255.0f,
+				   static_cast<Float>(color4b.g) / 255.0f,
+				   static_cast<Float>(color4b.b) / 255.0f};
 }
 
 Color3f Color3f::fromColor3b(Color3b color3b) {
-	return Color3f{static_cast<float>(color3b.r) / 255.0f,
-				   static_cast<float>(color3b.g) / 255.0f,
-				   static_cast<float>(color3b.b) / 255.0f};
+	return Color3f{static_cast<Float>(color3b.r) / 255.0f,
+				   static_cast<Float>(color3b.g) / 255.0f,
+				   static_cast<Float>(color3b.b) / 255.0f};
 }
 
 // Color4f
@@ -66,16 +66,16 @@ Color4f Color4f::fromColor3f(const Color3f& color3f) {
 }
 
 Color4f Color4f::fromColor4b(Color4b color4b) {
-	return Color4f{static_cast<float>(color4b.r) / 255.0f,
-				   static_cast<float>(color4b.g) / 255.0f,
-				   static_cast<float>(color4b.b) / 255.0f,
-				   static_cast<float>(color4b.a) / 255.0f};
+	return Color4f{static_cast<Float>(color4b.r) / 255.0f,
+				   static_cast<Float>(color4b.g) / 255.0f,
+				   static_cast<Float>(color4b.b) / 255.0f,
+				   static_cast<Float>(color4b.a) / 255.0f};
 }
 
 Color4f Color4f::fromColor3b(Color3b color3b) {
-	return Color4f{static_cast<float>(color3b.r) / 255.0f,
-				   static_cast<float>(color3b.g) / 255.0f,
-				   static_cast<float>(color3b.b) / 255.0f, 1.0f};
+	return Color4f{static_cast<Float>(color3b.r) / 255.0f,
+				   static_cast<Float>(color3b.g) / 255.0f,
+				   static_cast<Float>(color3b.b) / 255.0f, 1.0f};
 }
 
 // Comparators
@@ -113,7 +113,7 @@ Color4f operator+(const Color4f& c1, const Color4f& c2) {
 	return Color4f{c1.r + c2.r, c1.g + c2.g, c1.b + c2.b, c1.a + c2.a};
 }
 
-Color3f operator*(const Color3f& color, float x) {
+Color3f operator*(const Color3f& color, Float x) {
 	assert((color.r * x <= 1.0f) && (color.r * x >= 0.0f) &&
 		   "Invalid color operation!");
 	assert((color.g * x <= 1.0f) && (color.g * x >= 0.0f) &&
@@ -123,9 +123,9 @@ Color3f operator*(const Color3f& color, float x) {
 	return Color3f{color.r * x, color.g * x, color.b * x};
 }
 
-Color3f operator*(float x, const Color3f& color) { return color * x; }
+Color3f operator*(Float x, const Color3f& color) { return color * x; }
 
-Color4f operator*(const Color4f& color, float x) {
+Color4f operator*(const Color4f& color, Float x) {
 	assert((color.r * x <= 1.0f) && (color.r * x >= 0.0f) &&
 		   "Invalid color operation!");
 	assert((color.g * x <= 1.0f) && (color.g * x >= 0.0f) &&
@@ -137,6 +137,6 @@ Color4f operator*(const Color4f& color, float x) {
 	return Color4f{color.r * x, color.g * x, color.b * x, color.a * x};
 }
 
-Color4f operator*(float x, const Color4f& color) { return color * x; }
+Color4f operator*(Float x, const Color4f& color) { return color * x; }
 
 } // namespace r3d

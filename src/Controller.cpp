@@ -17,7 +17,7 @@ Controller::ControllerVisitor::ControllerVisitor(ModelRef model)
 void Controller::ControllerVisitor::operator()(NoneEvent) const {}
 
 void Controller::ControllerVisitor::operator()(RenderEvent) const {
-	model_.get().renderFrame();
+	model_.renderFrame();
 }
 
 } // namespace r3d

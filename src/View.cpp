@@ -32,9 +32,9 @@ void View::scaleAndCentrilize(sf::Sprite& sprite) const {
 	sf::Vector2u window_size = window_->getSize();
 	sf::Vector2u texture_size = sprite.getTexture().getSize();
 
-	float scale_x = static_cast<float>(window_size.x) / texture_size.x;
-	float scale_y = static_cast<float>(window_size.y) / texture_size.y;
-	float scale = std::min(scale_x, scale_y);
+	Float scale_x = static_cast<Float>(window_size.x) / texture_size.x;
+	Float scale_y = static_cast<Float>(window_size.y) / texture_size.y;
+	Float scale = std::min(scale_x, scale_y);
 
 	sprite.setScale({scale, scale});
 	sprite.setPosition({(window_size.x - texture_size.x * scale) / 2.0f,

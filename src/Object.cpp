@@ -22,7 +22,7 @@ void Object::move(const Vec3& movement) { transform_.translate(movement); }
 
 void Object::scale(const Vec3& scale) { transform_.scale(scale); }
 
-void Object::rotate(Angle angle, const Vec3& axis) {
+void Object::rotate(linalg::Angle angle, const Vec3& axis) {
 	transform_.rotate(Rotation(angle, axis));
 }
 

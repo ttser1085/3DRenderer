@@ -2,17 +2,16 @@
 
 #include "ModelEvent.h"
 
-#include <functional>
-
 namespace r3d {
 
 class Model;
 
 class Controller {
 
-	using ModelRef = std::reference_wrapper<Model>;
+	using ModelRef = Model&;
 
-	using EventInput = NSLibrary::CColdInput<ModelEvent, NSLibrary::CByReference>;
+	using EventInput =
+		NSLibrary::CColdInput<ModelEvent, NSLibrary::CByReference>;
 
 public:
 	explicit Controller(ModelRef model);

@@ -5,8 +5,8 @@ namespace r3d {
 
 Brush::Brush(Canvas&& canvas)
 	: canvas_(std::move(canvas)),
-	  canvas_size_(static_cast<float>(canvas_.width()),
-				   static_cast<float>(canvas_.height())) {}
+	  canvas_size_(static_cast<Float>(canvas_.width()),
+				   static_cast<Float>(canvas_.height())) {}
 
 // convert x: [-1.0f, 1.0f] --> [0, width]
 // convert y: [-1.0f, 1.0f] --> [height, 0]
@@ -20,8 +20,8 @@ Brush::SizePair Brush::relativeToAbsolute(const Vec2& pos) const {
 // convert x: [0, width] --> [-1.0f, 1.0f]
 // convert y: [height, 0] --> [-1.0f, 1.0f]
 Brush::Vec2 Brush::absoluteToRelative(const SizePair& pos) const {
-	return Vec2(2.0f * static_cast<float>(pos.width) / canvas_size_(0) - 1.0f,
-				-2.0f * static_cast<float>(pos.height) / canvas_size_(1) +
+	return Vec2(2.0f * static_cast<Float>(pos.width) / canvas_size_(0) - 1.0f,
+				-2.0f * static_cast<Float>(pos.height) / canvas_size_(1) +
 					1.0f);
 }
 

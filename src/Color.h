@@ -1,8 +1,11 @@
 #pragma once
 
 #include "Inttypes/Inttypes.h"
+#include "Linalg/LinalgBase.h"
 
 namespace r3d {
+
+using linalg::Float;
 
 struct Color3b;
 struct Color4b;
@@ -36,9 +39,9 @@ struct Color4b {
 };
 
 struct Color3f {
-	float r = 0.0f;
-	float g = 0.0f;
-	float b = 0.0f;
+	Float r = 0.0f;
+	Float g = 0.0f;
+	Float b = 0.0f;
 
 	static Color3f fromColor4f(const Color4f&);
 	static Color3f fromColor4b(Color4b);
@@ -46,10 +49,10 @@ struct Color3f {
 };
 
 struct Color4f {
-	float r = 0.0f;
-	float g = 0.0f;
-	float b = 0.0f;
-	float a = 1.0f;
+	Float r = 0.0f;
+	Float g = 0.0f;
+	Float b = 0.0f;
+	Float a = 1.0f;
 
 	static Color4f fromColor3f(const Color3f&);
 	static Color4f fromColor4b(Color4b);
@@ -89,10 +92,10 @@ bool operator==(const Color4f&, const Color4f&);
 Color3f operator+(const Color3f&, const Color3f&);
 Color4f operator+(const Color4f&, const Color4f&);
 
-Color3f operator*(const Color3f&, float);
-Color3f operator*(float, const Color3f&);
+Color3f operator*(const Color3f&, Float);
+Color3f operator*(Float, const Color3f&);
 
-Color4f operator*(const Color4f&, float);
-Color4f operator*(float, const Color4f&);
+Color4f operator*(const Color4f&, Float);
+Color4f operator*(Float, const Color4f&);
 
 } // namespace r3d

@@ -5,10 +5,6 @@
 
 #include <functional>
 
-using linalg::Vec3;
-using linalg::Vec4;
-using linalg::Angle;
-
 namespace r3d {
 
 class ConstMeshIterator;
@@ -18,6 +14,7 @@ class Object {
 	friend class ConstMeshIterator;
 
 	using Index = inttypes::Index;
+
 	using Transform = linalg::AffineTransform;
 	using Rotation = linalg::Rotation;
 
@@ -29,7 +26,7 @@ public:
 
 	void move(const Vec3& movement);
 	void scale(const Vec3& scale);
-	void rotate(Angle angle, const Vec3& axis);
+	void rotate(linalg::Angle angle, const Vec3& axis);
 
 	ConstMeshIterator begin() const;
 	ConstMeshIterator end() const;
