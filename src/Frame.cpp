@@ -2,20 +2,20 @@
 
 namespace r3d {
 
-Frame::Frame(SizePair size) : size_(size), storage_(size.width * size.height) {}
+Frame::Frame(SizePair size) : size_(size), storage_(size.x * size.y) {}
 
 void Frame::setColor(SizePair pos, Color3b color) {
-	storage_[pos.height * size_.width + pos.width] =
+	storage_[pos.y * size_.x + pos.x] =
 		Color4b::fromColor3b(color);
 }
 
 Color3b Frame::getColor(SizePair pos) const {
-	return Color3b::fromColor4b(storage_[pos.height * size_.width + pos.width]);
+	return Color3b::fromColor4b(storage_[pos.y * size_.x + pos.x]);
 }
 
-Frame::Width Frame::width() const noexcept { return size_.width; }
+Frame::Width Frame::width() const noexcept { return size_.x; }
 
-Frame::Height Frame::height() const noexcept { return size_.height; }
+Frame::Height Frame::height() const noexcept { return size_.y; }
 
 void Frame::clear(Color3b color) {
 	std::fill(storage_.begin(), storage_.end(), Color4b::fromColor3b(color));

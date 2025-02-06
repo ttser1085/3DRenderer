@@ -20,13 +20,13 @@ Brush::SizePair Brush::relativeToAbsolute(const Vec2& pos) const {
 // convert x: [0, width] --> [-1.0f, 1.0f]
 // convert y: [height, 0] --> [-1.0f, 1.0f]
 Brush::Vec2 Brush::absoluteToRelative(SizePair pos) const {
-	return Vec2(2.0f * static_cast<Float>(pos.width) / canvas_size_(0) - 1.0f,
-				-2.0f * static_cast<Float>(pos.height) / canvas_size_(1) +
+	return Vec2(2.0f * static_cast<Float>(pos.x) / canvas_size_(0) - 1.0f,
+				-2.0f * static_cast<Float>(pos.y) / canvas_size_(1) +
 					1.0f);
 }
 
 void Brush::drawPixel(SizePair pos, const Color3f& color) {
-	if ((pos.width < canvas_.width()) && (pos.height < canvas_.height())) {
+	if ((pos.x < canvas_.width()) && (pos.y < canvas_.height())) {
 		canvas_.setColor(pos, Color3b::fromColor3f(color));
 	}
 }
@@ -40,10 +40,10 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 	SizePair sp1 = relativeToAbsolute(p1);
 	SizePair sp2 = relativeToAbsolute(p2);
 
-	ScreenDiff dx = abs(diff(sp2.width, sp1.width));
-	ScreenDiff dy = abs(diff(sp2.height, sp1.height));
-	ScreenDiff sx = sp2.width >= sp1.width ? 1 : -1;
-	ScreenDiff sy = sp2.height >= sp1.height ? 1 : -1;
+	ScreenDiff dx = abs(diff(sp2.x, sp1.x));
+	ScreenDiff dy = abs(diff(sp2.y, sp1.y));
+	ScreenDiff sx = sp2.x >= sp1.x ? 1 : -1;
+	ScreenDiff sy = sp2.y >= sp1.y ? 1 : -1;
 
 	if (dy <= dx) {
 		ScreenDiff d = (dy << 1) - dx;
@@ -52,7 +52,7 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 
 		drawPixel(sp1, c1);
 
-		for (ScreenSize x = sum(sp1.width, sx), y = sp1.height, i = 0; i <= dx;
+		for (ScreenSize x = sum(sp1.x, sx), y = sp1.y, i = 0; i <= dx;
 			 ++i, x = sum(x, sx)) {
 			if (d > 0) {
 				d += d2;
@@ -79,7 +79,7 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 
 		drawPixel(sp1, c1);
 
-		for (ScreenSize x = sp1.width, y = sum(sp1.height, sy), i = 0; i <= dy;
+		for (ScreenSize x = sp1.x, y = sum(sp1.y, sy), i = 0; i <= dy;
 			 ++i, y = sum(y, sy)) {
 			if (d > 0) {
 				d += d2;

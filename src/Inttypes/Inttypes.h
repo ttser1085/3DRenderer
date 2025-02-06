@@ -18,8 +18,8 @@ enum Width : ScreenSize;
 enum Height : ScreenSize;
 
 struct SizePair {
-	Width width;
-	Height height;
+	Width x;
+	Height y;
 };
 
 SizePair makeSizePair(ScreenSize w, ScreenSize h);
