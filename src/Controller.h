@@ -19,9 +19,9 @@ public:
 	EventInput* eventPort() noexcept;
 
 private:
-	class ControllerVisitor {
+	class Visitor {
 	public:
-		explicit ControllerVisitor(ModelRef model);
+		explicit Visitor(ModelRef model);
 
 		void operator()(NoneEvent) const;
 		void operator()(RenderEvent) const;
@@ -30,7 +30,7 @@ private:
 		ModelRef model_;
 	};
 
-	ControllerVisitor visitor_;
+	Visitor visitor_;
 	EventInput event_in_;
 };
 

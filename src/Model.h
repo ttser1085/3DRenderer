@@ -14,7 +14,7 @@ class Model {
 public:
 	explicit Model(SizePair target_size_);
 
-	void attachFramePort(FrameInput* obs);
+	void subscribe(FrameInput* obs);
 
 	void renderFrame();
 

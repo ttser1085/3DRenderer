@@ -11,12 +11,12 @@ r3d::Controller::Controller(ModelRef model)
 
 Controller::EventInput* Controller::eventPort() noexcept { return &event_in_; }
 
-Controller::ControllerVisitor::ControllerVisitor(ModelRef model)
+Controller::Visitor::Visitor(ModelRef model)
 	: model_(model) {}
 
-void Controller::ControllerVisitor::operator()(NoneEvent) const {}
+void Controller::Visitor::operator()(NoneEvent) const {}
 
-void Controller::ControllerVisitor::operator()(RenderEvent) const {
+void Controller::Visitor::operator()(RenderEvent) const {
 	model_.renderFrame();
 }
 

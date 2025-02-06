@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Frame.h"
-
 #include <Observer.h>
+
 #include <variant>
 
 namespace r3d {
