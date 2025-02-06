@@ -17,10 +17,10 @@ class Frame {
 	using Storage = std::vector<Color4b>;
 
 public:
-	Frame(Width width, Height height);
+	explicit Frame(SizePair size);
 
-	void setColor(const SizePair& pos, Color3b color);
-	Color3b getColor(const SizePair& pos) const;
+	void setColor(SizePair pos, Color3b color);
+	Color3b getColor(SizePair pos) const;
 
 	Width width() const noexcept;
 	Height height() const noexcept;
@@ -30,8 +30,7 @@ public:
 	const inttypes::Byte* data() const;
 
 private:
-	Width width_;
-	Height height_;
+	SizePair size_;
 	Storage storage_;
 };
 

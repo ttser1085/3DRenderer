@@ -9,6 +9,9 @@ namespace linalg {
 
 using Float = float; // float32 or float64
 
+constexpr Float kDefaultPrecision = 1e-5;
+bool approxEqual(Float f1, Float f2, Float precision = kDefaultPrecision);
+
 // Vectors
 
 template<int S>
@@ -28,7 +31,7 @@ using Mat4 = Mat<4>;
 
 // Angle
 
-using Angle = Float; // in radians
+using Angle = Float;
 
 // Line
 
@@ -45,24 +48,9 @@ using AffineTransform = Eigen::Affine3f;
 
 // casts
 
-Vec3 fromHomogen(const Vec4&);
-Vec4 toHomogen(const Vec3&);
+Angle toRadians(Angle degrees);
+Angle toDegrees(Angle radians);
 
-// compare floating point vectors
-// compare only objects with float32 scalar type
-
-constexpr Float kDefaultEps = 1e-5f;
-
-bool approxEqual(Float, Float, Float eps = kDefaultEps);
-
-template<int S>
-bool approxEqual(const Vec<S>& v1, const Vec<S>& v2, Float eps = kDefaultEps) {
-	return approxEqual((v2 - v1).sum(), 0.0f, eps);
-}
-
-template<int S>
-bool approxEqual(const Mat<S>& m1, const Mat<S>& m2, Float eps = kDefaultEps) {
-	return approxEqual((m2 - m1).sum(), 0.0f, eps);
-}
+Vec4 homoNormalized(const Vec4& homo);
 
 } // namespace linalg

@@ -19,13 +19,13 @@ Brush::SizePair Brush::relativeToAbsolute(const Vec2& pos) const {
 
 // convert x: [0, width] --> [-1.0f, 1.0f]
 // convert y: [height, 0] --> [-1.0f, 1.0f]
-Brush::Vec2 Brush::absoluteToRelative(const SizePair& pos) const {
+Brush::Vec2 Brush::absoluteToRelative(SizePair pos) const {
 	return Vec2(2.0f * static_cast<Float>(pos.width) / canvas_size_(0) - 1.0f,
 				-2.0f * static_cast<Float>(pos.height) / canvas_size_(1) +
 					1.0f);
 }
 
-void Brush::drawPixel(const SizePair& pos, const Color3f& color) {
+void Brush::drawPixel(SizePair pos, const Color3f& color) {
 	if ((pos.width < canvas_.width()) && (pos.height < canvas_.height())) {
 		canvas_.setColor(pos, Color3b::fromColor3f(color));
 	}
@@ -62,7 +62,13 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 			}
 
 			SizePair cur_pos = makeSizePair(x, y);
-			Vec2 brc = linalg::barycentric(absoluteToRelative(cur_pos), p1, p2);
+			Vec2 p = absoluteToRelative(cur_pos);
+			Vec2 brc = linalg::barycentric(p, p1, p2);
+
+			assert(linalg::isCorrectBrc<2>(brc, p, p1, p2));
+			assert(linalg::isNormBrc(brc));
+			assert(linalg::isInnerBrc(brc));
+
 			drawPixel(cur_pos,
 					  linalg::linearInterpolation<Color3f>(brc, c1, c2));
 		}
@@ -83,7 +89,13 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 			}
 
 			SizePair cur_pos = makeSizePair(x, y);
-			Vec2 brc = linalg::barycentric(absoluteToRelative(cur_pos), p1, p2);
+			Vec2 p = absoluteToRelative(cur_pos);
+			Vec2 brc = linalg::barycentric(p, p1, p2);
+
+			assert(linalg::isCorrectBrc<2>(brc, p, p1, p2));
+			assert(linalg::isNormBrc(brc));
+			assert(linalg::isInnerBrc(brc));
+
 			drawPixel(cur_pos,
 					  linalg::linearInterpolation<Color3f>(brc, c1, c2));
 		}

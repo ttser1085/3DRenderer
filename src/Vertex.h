@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Color.h"
-#include "Linalg/LinalgBase.h"
 
 namespace r3d {
 

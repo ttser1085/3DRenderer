@@ -25,9 +25,9 @@ public:
 
 private:
 	SizePair relativeToAbsolute(const Vec2& pos) const;
-	Vec2 absoluteToRelative(const SizePair& pos) const;
+	Vec2 absoluteToRelative(SizePair pos) const;
 
-	void drawPixel(const SizePair& pos, const Color3f& color);
+	void drawPixel(SizePair pos, const Color3f& color);
 
 	Canvas canvas_;
 	Vec2 canvas_size_;

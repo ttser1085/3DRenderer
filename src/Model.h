@@ -5,15 +5,14 @@
 namespace r3d {
 class Model {
 
-	using Width = inttypes::Width;
-	using Height = inttypes::Height;
+	using SizePair = inttypes::SizePair;
 
 	using FrameOutput =
 		NSLibrary::CObservableData<FrozenFrame, NSLibrary::CByValue>;
 	using FrameInput = NSLibrary::CObserver<FrozenFrame, NSLibrary::CByValue>;
 
 public:
-	Model(Width frame_width, Height frame_height);
+	explicit Model(SizePair target_size_);
 
 	void attachFramePort(FrameInput* obs);
 
@@ -21,6 +20,8 @@ public:
 
 private:
 	Renderer renderer_;
+	Camera camera_;
+	Scene scene_;
 
 	FrameOutput frame_out_;
 };

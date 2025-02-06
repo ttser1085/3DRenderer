@@ -1,16 +1,20 @@
 #include "LinalgBase.h"
 
+#include <cmath>
+
 namespace linalg {
 
-Vec3 fromHomogen(const Vec4& homo) {
-	assert(homo(3) != 0 && "Zero division error!");
-	return Vec3{homo(0) / homo(3), homo(1) / homo(3), homo(2) / homo(3)};
+bool approxEqual(Float f1, Float f2, Float precision) {
+	return Vec<1>(f1).isApproxToConstant(f2, precision);
 }
 
-Vec4 toHomogen(const Vec3& vec) { return Vec4{vec(0), vec(1), vec(2), 1.0f}; }
+Angle toRadians(Angle degrees) { return degrees * M_PI / 180.0f; }
 
-bool approxEqual(Float x1, Float x2, Float eps) {
-	return std::abs(x2 - x1) < eps;
+Angle toDegrees(Angle radians) { return radians * 180.0f * M_1_PI; }
+
+Vec4 homoNormalized(const Vec4& homo) {
+	assert(!approxEqual(homo(3), 0.0f)  && "Zero division error!");
+	return homo / homo(3);
 }
 
 } // namespace linalg
