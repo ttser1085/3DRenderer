@@ -11,7 +11,7 @@ const std::vector<Object>& Scene::objects() const { return objects_; }
 // Пока так, потом чтение из файлика сделаю
 void Scene::initObjects() {
 	Object object(Vec3{0.0f, 0.0f, -7.0f});
-	object.addVertex(Vertex{Vec4{0.0f, 0.0f, 0.0f, 1.0f}, kBlue3f});
+	object.addVertex(Vertex{Vec4{0.0f, 0.0f, 0.0f, 1.0f}, kGreen3f});
 	object.addVertex(Vertex{Vec4{1.0f, 0.0f, 0.0f, 1.0f}, kBlue3f});
 	object.addVertex(Vertex{Vec4{0.0f, 1.0f, 0.0f, 1.0f}, kBlue3f});
 	object.addVertex(Vertex{Vec4{1.0f, 1.0f, 0.0f, 1.0f}, kBlue3f});

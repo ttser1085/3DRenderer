@@ -52,7 +52,7 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 
 		drawPixel(sp1, c1);
 
-		for (ScreenSize x = sum(sp1.x, sx), y = sp1.y, i = 0; i <= dx;
+		for (ScreenSize x = sum(sp1.x, sx), y = sp1.y, i = 0; i < dx;
 			 ++i, x = sum(x, sx)) {
 			if (d > 0) {
 				d += d2;
@@ -79,7 +79,7 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 
 		drawPixel(sp1, c1);
 
-		for (ScreenSize x = sp1.x, y = sum(sp1.y, sy), i = 0; i <= dy;
+		for (ScreenSize x = sp1.x, y = sum(sp1.y, sy), i = 0; i < dy;
 			 ++i, y = sum(y, sy)) {
 			if (d > 0) {
 				d += d2;

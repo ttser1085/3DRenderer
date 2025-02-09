@@ -18,6 +18,8 @@ public:
 
 	void renderFrame();
 
+	void moveCamera(Vec3 dir, Float dtime);
+
 private:
 	Renderer renderer_;
 	Camera camera_;

@@ -24,21 +24,20 @@ R linearInterpolation(const Vec<S>& brc, First first, Args&&... args) {
 
 template<int S, typename... Args>
 bool isCorrectBrc(const Vec<S>& brc, const Vec<S> p, Args&&... args) {
-	static constexpr Float kPrecision = 2.25f;
-	return p.isApprox(
-		linearInterpolation<Vec<S>>(brc, std::forward<Args>(args)...),
+	static constexpr Float kPrecision = 0.05f;
+	return approxEqual(
+		p, linearInterpolation<Vec<S>>(brc, std::forward<Args>(args)...),
 		kPrecision);
 }
 
 template<int S>
 bool isNormBrc(const Vec<S>& brc) {
-	static constexpr Float kPrecision = 1e-5f;
-	return Vec<1>{brc.sum()}.isOnes(kPrecision);
+	return approxEqual(brc.sum(), 1.0f);
 }
 
 template<int S>
 bool isInnerBrc(const Vec<S>& brc) {
-	static constexpr Float kPrecision = 1.5f;
+	static constexpr Float kPrecision = 1.05f;
 	return brc.isMuchSmallerThan(1.0f, kPrecision);
 }
 

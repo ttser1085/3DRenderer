@@ -38,6 +38,7 @@ public:
 
 private:
 	void onEvent(sf::Event event);
+	void checkKeysPressed();
 
 	void send(const ModelEvent& event);
 	void send(const ViewEvent& event);
@@ -47,7 +48,7 @@ private:
 	ModelSender model_sender_;
 	ViewSender view_sender_;
 
-	static constexpr sf::Vector2u kDefaultSize = sf::Vector2u{1280, 720};
+	static constexpr sf::Vector2u kDefaultSize = sf::Vector2u{1440, 900};
 };
 
 } // namespace r3d

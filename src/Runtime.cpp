@@ -17,12 +17,15 @@ void Runtime::subscribe(ViewReceiver* receiver) {
 }
 
 void Runtime::run() {
+	sf::Clock clock;
 	while (window_->isOpen()) {
 		while (std::optional event_opt = window_->pollEvent()) {
 			onEvent(std::move(event_opt.value()));
 		}
 
-		send(RenderEvent{});
+		checkKeysPressed();
+
+		send(Tick{clock.restart()});
 	}
 }
 
@@ -33,6 +36,47 @@ void Runtime::onEvent(sf::Event event) {
 	} else if (event.is<sf::Event::Resized>()) {
 		ViewEvent view_event{std::move(*event.getIf<sf::Event::Resized>())};
 		send(view_event);
+	}
+}
+
+void Runtime::checkKeysPressed() {
+	using sf::Keyboard::isKeyPressed, sf::Keyboard::Key;
+
+	if (isKeyPressed(Key::Escape)) {
+		window_->close();
+		exit(EXIT_SUCCESS);
+	}
+
+	if (isKeyPressed(Key::W)) {
+		send(KeyPressed{Key::W});
+	}
+
+	if (isKeyPressed(Key::A)) {
+		send(KeyPressed{Key::A});
+	}
+
+	if (isKeyPressed(Key::S)) {
+		send(KeyPressed{Key::S});
+	}
+
+	if (isKeyPressed(Key::D)) {
+		send(KeyPressed{Key::D});
+	}
+
+	if (isKeyPressed(Key::LShift)) {
+		send(KeyPressed{Key::LShift});
+	}
+
+	if (isKeyPressed(Key::RShift)) {
+		send(KeyPressed{Key::RShift});
+	}
+
+	if (isKeyPressed(Key::LControl)) {
+		send(KeyPressed{Key::LControl});
+	}
+
+	if (isKeyPressed(Key::RControl)) {
+		send(KeyPressed{Key::RControl});
 	}
 }
 

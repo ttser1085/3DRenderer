@@ -13,7 +13,7 @@ Frame Renderer::makeFrame(const Camera& camera, const Scene& scene) const {
 
 	Brush brush(std::move(frame));
 
-	for (const auto& object : scene.objects()) {
+	for (const Object& object : scene.objects()) {
 		for (auto proxy : object) {
 			// TODO: clipping
 			Mesh mesh{Vertex{proxy.position(0), proxy.color(0)},
@@ -22,7 +22,7 @@ Frame Renderer::makeFrame(const Camera& camera, const Scene& scene) const {
 
 			for (inttypes::Index i = 0; i < 3; ++i) {
 				mesh.vertices[i].pos = linalg::homoNormalized(
-					camera.projection() * mesh.vertices[i].pos);
+					camera.projection(camera.lookAt(mesh.vertices[i].pos)));
 			}
 
 			brush.drawMesh(mesh);

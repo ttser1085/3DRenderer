@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Linalg/LinalgBase.h"
 #include "ModelEvent.h"
 
 namespace r3d {
@@ -23,11 +24,13 @@ private:
 	public:
 		explicit Visitor(ModelRef model);
 
-		void operator()(NoneEvent) const;
-		void operator()(RenderEvent) const;
+		void operator()(const Tick&);
+		void operator()(const KeyPressed&);
 
 	private:
 		ModelRef model_;
+
+		linalg::Vec3 movement_dir_ = linalg::Vec3::Zero();
 	};
 
 	Visitor visitor_;

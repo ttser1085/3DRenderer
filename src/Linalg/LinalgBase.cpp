@@ -5,7 +5,7 @@
 namespace linalg {
 
 bool approxEqual(Float f1, Float f2, Float precision) {
-	return Vec<1>(f1).isApproxToConstant(f2, precision);
+	return std::abs(f2 - f1) <= precision;
 }
 
 Angle toRadians(Angle degrees) { return degrees * M_PI / 180.0f; }
