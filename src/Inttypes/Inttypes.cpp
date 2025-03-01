@@ -20,17 +20,4 @@ SizePair toSizePair(DiffPair dp) {
 	return SizePair{toUnsigned(dp.x), toUnsigned(dp.y)};
 }
 
-// ScreenSize sum(ScreenSize s, ScreenDiff d) {
-// 	return s + static_cast<ScreenSize>(d);
-// }
-
-// ScreenDiff diff(ScreenSize s1, ScreenSize s2) {
-// 	return static_cast<ScreenDiff>(static_cast<int32_t>(s1) -
-// 								   static_cast<int32_t>(s2));
-// }
-
-// ScreenDiff abs(ScreenDiff d) {
-// 	return static_cast<ScreenDiff>(std::abs(static_cast<ScreenDiff>(d)));
-// }
-
 } // namespace inttypes
