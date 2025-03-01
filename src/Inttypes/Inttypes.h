@@ -4,6 +4,8 @@
 #include <inttypes.h>
 #include <utility>
 
+#include <assert.h>
+
 namespace inttypes {
 
 // Bytes
@@ -14,25 +16,45 @@ using Byte = uint8_t;
 
 using ScreenSize = uint32_t;
 
-enum Width : ScreenSize;
-enum Height : ScreenSize;
+enum Width : ScreenSize {};
+enum Height : ScreenSize {};
 
 struct SizePair {
 	Width x;
 	Height y;
 };
 
-SizePair makeSizePair(ScreenSize w, ScreenSize h);
+template<typename Tx, typename Ty,
+		 typename = std::enable_if_t<std::conjunction_v<
+			 std::is_arithmetic<Tx>, std::is_arithmetic<Ty>>>>
+SizePair makeSizePair(Tx x, Ty y) {
+	assert(x >= 0 && y >= 0);
+	return SizePair{static_cast<Width>(x), static_cast<Height>(y)};
+}
 
 // Screen diff
 
 using ScreenDiff = int32_t;
 
-ScreenSize sum(ScreenSize s, ScreenDiff d);
+enum SignedWidth : ScreenDiff {};
+enum SignedHeight : ScreenDiff {};
 
-ScreenDiff diff(ScreenSize s1, ScreenSize s2);
+struct DiffPair {
+	SignedWidth x;
+	SignedHeight y;
+};
 
-ScreenDiff abs(ScreenDiff d);
+template<typename Tx, typename Ty,
+		 typename = std::enable_if_t<std::conjunction_v<
+			 std::is_arithmetic<Tx>, std::is_arithmetic<Ty>>>>
+DiffPair makeDiffPair(Tx x, Ty y) {
+	return DiffPair{static_cast<SignedWidth>(x), static_cast<SignedHeight>(y)};
+}
+
+Width toUnsigned(SignedWidth w);
+Height toUnsigned(SignedHeight h);
+
+SizePair toSizePair(DiffPair dp);
 
 // Index
 

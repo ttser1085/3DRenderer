@@ -10,50 +10,52 @@ Brush::Brush(Canvas&& canvas)
 
 // convert x: [-1.0f, 1.0f] --> [0, width]
 // convert y: [-1.0f, 1.0f] --> [height, 0]
-Brush::SizePair Brush::relativeToAbsolute(const Vec2& pos) const {
-	using inttypes::Width, inttypes::Height;
-	return SizePair{
-		static_cast<Width>(((pos(0) + 1.0f) / 2.0f) * (canvas_size_(0))),
-		static_cast<Height>(((-pos(1) + 1.0f) / 2.0f) * (canvas_size_(1)))};
+Brush::DiffPair Brush::relativeToAbsolute(const Vec2& pos) const {
+	return inttypes::makeDiffPair<float, float>(
+		((pos(0) + 1.0f) / 2.0f) * (canvas_size_(0)),
+		((-pos(1) + 1.0f) / 2.0f) * (canvas_size_(1)));
 }
 
 // convert x: [0, width] --> [-1.0f, 1.0f]
 // convert y: [height, 0] --> [-1.0f, 1.0f]
-Brush::Vec2 Brush::absoluteToRelative(SizePair pos) const {
+Brush::Vec2 Brush::absoluteToRelative(DiffPair pos) const {
 	return Vec2(2.0f * static_cast<Float>(pos.x) / canvas_size_(0) - 1.0f,
-				-2.0f * static_cast<Float>(pos.y) / canvas_size_(1) +
-					1.0f);
+				-2.0f * static_cast<Float>(pos.y) / canvas_size_(1) + 1.0f);
 }
 
-void Brush::drawPixel(SizePair pos, const Color3f& color) {
-	if ((pos.x < canvas_.width()) && (pos.y < canvas_.height())) {
-		canvas_.setColor(pos, Color3b::fromColor3f(color));
+void Brush::drawPixel(DiffPair pos, const Color3f& color) {
+	if ((pos.x >= 0) && (pos.y >= 0)) {
+		SizePair sp = inttypes::toSizePair(pos);
+		if ((sp.x < canvas_.width()) && (sp.y < canvas_.height())) {
+			canvas_.setColor(sp, Color3b::fromColor3f(color));
+		}
 	}
 }
 
 // Bresenhames algorithm
 void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 					 Color3f c2) {
-	using inttypes::makeSizePair, inttypes::sum, inttypes::diff, inttypes::abs;
-	using inttypes::ScreenSize, inttypes::ScreenDiff;
+	using inttypes::ScreenSize, inttypes::ScreenDiff, inttypes::DiffPair;
 
-	SizePair sp1 = relativeToAbsolute(p1);
-	SizePair sp2 = relativeToAbsolute(p2);
+	DiffPair pair1 = relativeToAbsolute(p1);
+	DiffPair pair2 = relativeToAbsolute(p2);
 
-	ScreenDiff dx = abs(diff(sp2.x, sp1.x));
-	ScreenDiff dy = abs(diff(sp2.y, sp1.y));
-	ScreenDiff sx = sp2.x >= sp1.x ? 1 : -1;
-	ScreenDiff sy = sp2.y >= sp1.y ? 1 : -1;
+	drawPixel(pair1, c1);
+
+	ScreenDiff dx = std::abs(pair2.x - pair1.x);
+	ScreenDiff dy = std::abs(pair2.y - pair1.y);
+	ScreenDiff sx = pair2.x >= pair1.x ? 1 : -1;
+	ScreenDiff sy = pair2.y >= pair1.y ? 1 : -1;
 
 	if (dy <= dx) {
 		ScreenDiff d = (dy << 1) - dx;
 		ScreenDiff d1 = (dy << 1);
 		ScreenDiff d2 = (dy - dx) << 1;
 
-		drawPixel(sp1, c1);
+		drawPixel(pair1, c1);
 
-		for (ScreenSize x = sum(sp1.x, sx), y = sp1.y, i = 0; i < dx;
-			 ++i, x = sum(x, sx)) {
+		for (ScreenDiff x = pair1.x + sx, y = pair1.y, i = 0; i < dx;
+			 ++i, x += sx) {
 			if (d > 0) {
 				d += d2;
 				y += sy;
@@ -61,7 +63,7 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 				d += d1;
 			}
 
-			SizePair cur_pos = makeSizePair(x, y);
+			DiffPair cur_pos = inttypes::makeDiffPair(x, y);
 			Vec2 p = absoluteToRelative(cur_pos);
 			Vec2 brc = linalg::barycentric(p, p1, p2);
 
@@ -77,10 +79,10 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 		ScreenDiff d1 = (dx << 1);
 		ScreenDiff d2 = (dx - dy) << 1;
 
-		drawPixel(sp1, c1);
+		drawPixel(pair1, c1);
 
-		for (ScreenSize x = sp1.x, y = sum(sp1.y, sy), i = 0; i < dy;
-			 ++i, y = sum(y, sy)) {
+		for (ScreenDiff x = pair1.x, y = pair1.y + sy, i = 0; i < dy;
+			 ++i, y += sy) {
 			if (d > 0) {
 				d += d2;
 				x += sx;
@@ -88,7 +90,7 @@ void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
 				d += d1;
 			}
 
-			SizePair cur_pos = makeSizePair(x, y);
+			DiffPair cur_pos = inttypes::makeDiffPair(x, y);
 			Vec2 p = absoluteToRelative(cur_pos);
 			Vec2 brc = linalg::barycentric(p, p1, p2);
 

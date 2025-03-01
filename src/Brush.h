@@ -10,6 +10,7 @@ class Brush {
 	using Canvas = Frame;
 
 	using SizePair = inttypes::SizePair;
+	using DiffPair = inttypes::DiffPair;
 
 	using Vec2 = linalg::Vec2;
 
@@ -24,10 +25,14 @@ public:
 	Canvas&& release();
 
 private:
-	SizePair relativeToAbsolute(const Vec2& pos) const;
-	Vec2 absoluteToRelative(SizePair pos) const;
+	// SizePair relativeToAbsolute(const Vec2& pos) const;
+	DiffPair relativeToAbsolute(const Vec2& pos) const;
+	//Vec2 absoluteToRelative(SizePair pos) const;
 
-	void drawPixel(SizePair pos, const Color3f& color);
+	Vec2 absoluteToRelative(DiffPair pos) const;
+
+	// void drawPixel(SizePair pos, const Color3f& color);
+	void drawPixel(DiffPair pos, const Color3f& color);
 
 	Canvas canvas_;
 	Vec2 canvas_size_;
