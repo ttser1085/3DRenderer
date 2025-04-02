@@ -1,5 +1,6 @@
 #include "Brush.h"
 #include "Linalg/Interpolation.h"
+#include "Inttypes/Inttypes.h"
 
 namespace r3d {
 

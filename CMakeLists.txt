@@ -18,5 +18,7 @@ set(CMAKE_CXX_COMPILER /usr/bin/clang++-17)
 set(SOURCE_DIR src)
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}/*.cpp")
 
+include_directories(src/)
+
 add_executable(renderer ${SOURCES})
 target_link_libraries(renderer PRIVATE sfml-system sfml-window sfml-graphics)

@@ -17,7 +17,7 @@ class Brush {
 public:
 	explicit Brush(Canvas&& canvas);
 
-	//void drawPoint(const Vec2& pos, const Color3f& color);
+	// void drawPoint(const Vec2& pos, const Color3f& color);
 	void drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2, Color3f c2);
 	void drawMesh(const Mesh& mesh);
 	void fillMesh(const Mesh& mesh);
@@ -27,7 +27,7 @@ public:
 private:
 	// SizePair relativeToAbsolute(const Vec2& pos) const;
 	DiffPair relativeToAbsolute(const Vec2& pos) const;
-	//Vec2 absoluteToRelative(SizePair pos) const;
+	// Vec2 absoluteToRelative(SizePair pos) const;
 
 	Vec2 absoluteToRelative(DiffPair pos) const;
 
