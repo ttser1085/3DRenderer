@@ -7,8 +7,7 @@ namespace r3d {
 class Scene {
 public:
     Scene();
-
-    std::vector<Object>& objects();
+    
     const std::vector<Object>& objects() const;
 
 private:
