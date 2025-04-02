@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Core/Renderer.h"
+#include "Core/Core.h"
+#include "CoreEvent.h"
 
 namespace r3d {
 class Model {
@@ -16,15 +17,11 @@ public:
 
 	void subscribe(FrameInput* obs);
 
-	void renderFrame();
-
-	void moveCamera(Vec3 dir, Float dtime);
+	void Handle(std::vector<CoreEvent> events);
 
 private:
-	Renderer renderer_;
-	Camera camera_;
-	Scene scene_;
-
+	Core core_;
+	Vec3 movement_dir_;
 	FrameOutput frame_out_;
 };
 

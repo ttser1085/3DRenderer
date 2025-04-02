@@ -1,0 +1,16 @@
+#include "Core.h"
+
+namespace r3d {
+
+r3d::Core::Core(inttypes::SizePair target_size_)
+	: camera_(Vec3::Zero(), target_size_) {}
+
+FrozenFrame Core::renderFrame() const {
+	return std::make_shared<Frame>(renderer_.makeFrame(camera_, scene_));
+}
+
+void Core::moveCamera(Vec3 dir, Float dtime) {
+    camera_.move(dir, dtime);
+}
+
+} // namespace r3d

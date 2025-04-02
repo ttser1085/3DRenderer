@@ -2,35 +2,32 @@
 
 #include "Linalg/LinalgBase.h"
 #include "ModelEvent.h"
+#include "CoreEvent.h"
 
 namespace r3d {
 
 class Model;
 
 class Controller {
-
-	using ModelRef = Model&;
-
 	using EventInput =
 		NSLibrary::CColdInput<ModelEvent, NSLibrary::CByReference>;
 
 public:
-	explicit Controller(ModelRef model);
+	explicit Controller(Model& model);
 
 	EventInput* eventPort() noexcept;
 
 private:
 	class Visitor {
 	public:
-		explicit Visitor(ModelRef model);
+		explicit Visitor(Model& model);
 
 		void operator()(const Tick&);
 		void operator()(const KeyPressed&);
 
 	private:
-		ModelRef model_;
-
-		linalg::Vec3 movement_dir_ = linalg::Vec3::Zero();
+		Model& model_;
+		std::vector<CoreEvent> current_batch_;
 	};
 
 	Visitor visitor_;
