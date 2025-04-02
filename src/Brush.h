@@ -22,7 +22,7 @@ public:
 	void drawMesh(const Mesh& mesh);
 	void fillMesh(const Mesh& mesh);
 
-	Canvas&& release();
+	Canvas release();
 
 private:
 	// SizePair relativeToAbsolute(const Vec2& pos) const;

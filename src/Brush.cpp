@@ -117,6 +117,6 @@ void Brush::fillMesh(const Mesh& mesh) {
 	// TODO
 }
 
-Brush::Canvas&& Brush::release() { return std::move(canvas_); }
+Brush::Canvas Brush::release() { return std::move(canvas_); }
 
 } // namespace r3d
