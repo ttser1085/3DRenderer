@@ -1,6 +1,6 @@
 #include "Brush.h"
-#include "Linalg/Interpolation.h"
 #include "Inttypes/Inttypes.h"
+#include "Linalg/Interpolation.h"
 
 namespace r3d {
 
@@ -34,8 +34,8 @@ void Brush::drawPixel(DiffPair pos, const Color3f& color) {
 }
 
 // Bresenhames algorithm
-void Brush::drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2,
-					 Color3f c2) {
+void Brush::drawLine(const Vec2& p1, const Color3f& c1, const Vec2& p2,
+					 const Color3f& c2) {
 	using inttypes::ScreenSize, inttypes::ScreenDiff, inttypes::DiffPair;
 
 	DiffPair pair1 = relativeToAbsolute(p1);

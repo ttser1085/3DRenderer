@@ -18,7 +18,7 @@ public:
 	explicit Brush(Canvas&& canvas);
 
 	// void drawPoint(const Vec2& pos, const Color3f& color);
-	void drawLine(const Vec2& p1, const Color3f c1, const Vec2 p2, Color3f c2);
+	void drawLine(const Vec2& p1, const Color3f& c1, const Vec2& p2, const Color3f& c2);
 	void drawMesh(const Mesh& mesh);
 	void fillMesh(const Mesh& mesh);
 
