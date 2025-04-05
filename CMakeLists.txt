@@ -19,4 +19,5 @@ file(GLOB_RECURSE SOURCES "${SOURCE_DIR}/*.cpp")
 include_directories(src/)
 
 add_executable(renderer ${SOURCES})
+target_compile_features(renderer PRIVATE cxx_std_20)
 target_link_libraries(renderer PRIVATE sfml-system sfml-window sfml-graphics)
