@@ -8,10 +8,10 @@ Vec2 barycentric(const Vec2& p, const Vec2& a, const Vec2& b);
 
 Vec3 barycentric(const Vec3& p, const Vec3& a, const Vec3& b, const Vec3& c);
 
-template<typename R, int S, typename First, typename... Args>
-R linearInterpolation(const Vec<S>& brc, First first, Args&&... args) {
-	static_assert(S >= 1, "Invalid arguments number!");
-	static_assert(sizeof...(args) == S - 1, "Invalid arguments number!");
+template<Linear R, int Dim, Linear First, Linear... Args>
+R linearCombination(const Vec<Dim>& brc, First&& first, Args&&... args) {
+	static_assert(Dim >= 1, "Invalid arguments number!");
+	static_assert(sizeof...(args) == Dim - 1, "Invalid arguments number!");
 
 	R result = brc(0) * first;
 	int index = 1;
@@ -22,11 +22,11 @@ R linearInterpolation(const Vec<S>& brc, First first, Args&&... args) {
 
 // Check barycentric coords:
 
-template<int S, typename... Args>
+template<int S, Linear... Args>
 bool isCorrectBrc(const Vec<S>& brc, const Vec<S> p, Args&&... args) {
 	static constexpr Float kPrecision = 0.05f;
 	return approxEqual(
-		p, linearInterpolation<Vec<S>>(brc, std::forward<Args>(args)...),
+		p, linearCombination<Vec<S>>(brc, std::forward<Args>(args)...),
 		kPrecision);
 }
 

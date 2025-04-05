@@ -5,6 +5,7 @@
 #include <utility>
 
 #include <assert.h>
+#include <functional>
 
 namespace inttypes {
 
@@ -24,9 +25,10 @@ struct SizePair {
 	Height y;
 };
 
-template<typename Tx, typename Ty,
-		 typename = std::enable_if_t<std::conjunction_v<
-			 std::is_arithmetic<Tx>, std::is_arithmetic<Ty>>>>
+template<typename T>
+concept Arithmetic = std::is_arithmetic_v<T>;
+
+template<Arithmetic Tx, Arithmetic Ty>
 SizePair makeSizePair(Tx x, Ty y) {
 	assert(x >= 0 && y >= 0);
 	return SizePair{static_cast<Width>(x), static_cast<Height>(y)};
@@ -44,9 +46,7 @@ struct DiffPair {
 	SignedHeight y;
 };
 
-template<typename Tx, typename Ty,
-		 typename = std::enable_if_t<std::conjunction_v<
-			 std::is_arithmetic<Tx>, std::is_arithmetic<Ty>>>>
+template<Arithmetic Tx, Arithmetic Ty>
 DiffPair makeDiffPair(Tx x, Ty y) {
 	return DiffPair{static_cast<SignedWidth>(x), static_cast<SignedHeight>(y)};
 }

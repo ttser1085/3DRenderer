@@ -37,7 +37,7 @@ void Brush::drawPixel(DiffPair pos, const Color3f& color) {
 // Bresenhames algorithm
 void Brush::drawLine(const Vertex& v1, const Vertex& v2) {
 	using inttypes::ScreenSize, inttypes::ScreenDiff, inttypes::DiffPair;
-	using linalg::linearInterpolation, linalg::barycentric;
+	using linalg::linearCombination, linalg::barycentric;
 
 	DiffPair pair1 = relativeToAbsolute(v1.pos.head<2>());
 	DiffPair pair2 = relativeToAbsolute(v2.pos.head<2>());
@@ -74,8 +74,8 @@ void Brush::drawLine(const Vertex& v1, const Vertex& v2) {
 			assert(linalg::isNormBrc(brc));
 			assert(linalg::isInnerBrc(brc));
 
-			Vertex v{linearInterpolation<Vec4>(brc, v1.pos, v2.pos),
-					 linearInterpolation<Color3f>(brc, v1.color, v2.color)};
+			Vertex v{linearCombination<Vec4>(brc, v1.pos, v2.pos),
+					 linearCombination<Color3f>(brc, v1.color, v2.color)};
 
 			drawPixel(cur_pos, v.color);
 		}
@@ -104,8 +104,8 @@ void Brush::drawLine(const Vertex& v1, const Vertex& v2) {
 			assert(linalg::isNormBrc(brc));
 			assert(linalg::isInnerBrc(brc));
 
-			Vertex v{linearInterpolation<Vec4>(brc, v1.pos, v2.pos),
-					 linearInterpolation<Color3f>(brc, v1.color, v2.color)};
+			Vertex v{linearCombination<Vec4>(brc, v1.pos, v2.pos),
+					 linearCombination<Color3f>(brc, v1.color, v2.color)};
 
 			drawPixel(cur_pos, v.color);
 		}

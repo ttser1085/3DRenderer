@@ -9,6 +9,15 @@ namespace linalg {
 
 using Float = float; // float32 or float64
 
+// Linear
+
+template<typename T>
+concept Linear = std::copy_constructible<T> && requires(T a, T b, Float f) {
+	{ a + b };
+	{ a * f };
+	{ f * a };
+};
+
 // Vectors
 
 template<int S>
@@ -57,12 +66,14 @@ constexpr Float kDefaultPrecision = 1e-5;
 bool approxEqual(Float f1, Float f2, Float precision = kDefaultPrecision);
 
 template<int S>
-bool approxEqual(const Vec<S>& v1, const Vec<S>& v2, Float eps = kDefaultPrecision) {
+bool approxEqual(const Vec<S>& v1, const Vec<S>& v2,
+				 Float eps = kDefaultPrecision) {
 	return approxEqual((v2 - v1).sum(), 0.0f, eps);
 }
 
 template<int S>
-bool approxEqual(const Mat<S>& m1, const Mat<S>& m2, Float eps = kDefaultPrecision) {
+bool approxEqual(const Mat<S>& m1, const Mat<S>& m2,
+				 Float eps = kDefaultPrecision) {
 	return approxEqual((m2 - m1).sum(), 0.0f, eps);
 }
 
