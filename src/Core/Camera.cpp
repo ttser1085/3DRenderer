@@ -12,7 +12,7 @@ Camera::Camera(Vec3 pos, SizePair size, Float speed, Float sensitivity,
 	assert(z_far > z_near && "Invalid argument!");
 	assert(z_near > 0.0f && "Invalid argument!");
 
-	aspect_ = static_cast<Float>(size.x) / size.y;
+	aspect_ = static_cast<Float>(size.x) / static_cast<Float>(size.y);
 	updateProjection();
 
 	dir.normalize();
@@ -50,7 +50,7 @@ Camera::SizePair Camera::targetSize() const { return target_size_; }
 
 void Camera::resizeTarget(SizePair size) {
 	target_size_ = size;
-	aspect_ = static_cast<Float>(size.x) / size.y;
+	aspect_ = static_cast<Float>(size.x) / static_cast<Float>(size.y);
 	updateProjection();
 }
 
