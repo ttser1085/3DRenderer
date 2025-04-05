@@ -25,6 +25,18 @@ struct SizePair {
 	Height y;
 };
 
+inline ScreenSize area(Height h, Width w) {
+	return static_cast<ScreenSize>(w) * static_cast<ScreenSize>(h);
+}
+
+inline ScreenSize area(Width w, Height h) {
+	return static_cast<ScreenSize>(w) * static_cast<ScreenSize>(h);
+}
+
+inline ScreenSize area(SizePair sp) {
+	return area(sp.x, sp.y);
+}
+
 template<typename T>
 concept Arithmetic = std::is_arithmetic_v<T>;
 

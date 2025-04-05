@@ -17,7 +17,7 @@ protected:
 
 public:
 	explicit RectBuffer(SizePair size)
-		: size_(size), storage_(size.x * size.y) {}
+		: size_(size), storage_(inttypes::area(size)) {}
 
 	inline Width width() const noexcept { return size_.x; }
 
@@ -34,10 +34,12 @@ protected:
 		return reinterpret_cast<const Byte*>(storage_.data());
 	}
 
-	T& get(SizePair pos) { return storage_[pos.y * size_.x + pos.x]; }
+	T& get(SizePair pos) {
+		return storage_[inttypes::area(pos.y, size_.x) + pos.x];
+	}
 
 	const T& get(SizePair pos) const {
-		return storage_[pos.y * size_.x + pos.x];
+		return storage_[inttypes::area(pos.y, size_.x) + pos.x];
 	}
 
 	void clear(const T& value) {
