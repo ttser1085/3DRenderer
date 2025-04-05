@@ -2,31 +2,18 @@
 
 namespace r3d {
 
-Frame::Frame(SizePair size) : size_(size), storage_(size.x * size.y) {}
+Frame::Frame(SizePair size) : Base(size) {}
 
 void Frame::setColor(SizePair pos, Color3b color) {
-	storage_[pos.y * size_.x + pos.x] =
-		Color4b::fromColor3b(color);
+	Base::get(pos) = Color4b::fromColor3b(color);
 }
 
 Color3b Frame::getColor(SizePair pos) const {
-	return Color3b::fromColor4b(storage_[pos.y * size_.x + pos.x]);
+	return Color3b::fromColor4b(RectBuffer<Color4b>::get(pos));
 }
 
-Frame::Width Frame::width() const noexcept { return size_.x; }
+void Frame::clear(Color3b color) { Base::clear(Color4b::fromColor3b(color)); }
 
-Frame::Height Frame::height() const noexcept { return size_.y; }
-
-void Frame::clear(Color3b color) {
-	std::fill(storage_.begin(), storage_.end(), Color4b::fromColor3b(color));
-}
-
-const inttypes::Byte* Frame::data() const {
-	if (storage_.empty()) {
-		return nullptr;
-	}
-
-	return reinterpret_cast<const inttypes::Byte*>(storage_.data());
-}
+const Frame::Base::Byte* Frame::data() const { return Base::data(); }
 
 } // namespace r3d

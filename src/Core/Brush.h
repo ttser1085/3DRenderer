@@ -2,6 +2,7 @@
 
 #include "Frame.h"
 #include "Mesh.h"
+#include "Test.h"
 
 namespace r3d {
 
@@ -17,8 +18,7 @@ class Brush {
 public:
 	explicit Brush(Canvas&& canvas);
 
-	// void drawPoint(const Vec2& pos, const Color3f& color);
-	void drawLine(const Vec2& p1, const Color3f& c1, const Vec2& p2, const Color3f& c2);
+	void drawLine(const Vertex& v1, const Vertex& v2);
 	void drawMesh(const Mesh& mesh);
 	void fillMesh(const Mesh& mesh);
 
@@ -36,6 +36,7 @@ private:
 
 	Canvas canvas_;
 	Vec2 canvas_size_;
+	DepthTest depth_test_;
 };
 
 } // namespace r3d

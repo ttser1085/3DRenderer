@@ -7,7 +7,8 @@ namespace r3d {
 Brush::Brush(Canvas&& canvas)
 	: canvas_(std::move(canvas)),
 	  canvas_size_(static_cast<Float>(canvas_.width()),
-				   static_cast<Float>(canvas_.height())) {}
+				   static_cast<Float>(canvas_.height())),
+	  depth_test_(canvas_.size()) {}
 
 // convert x: [-1.0f, 1.0f] --> [0, width]
 // convert y: [-1.0f, 1.0f] --> [height, 0]
@@ -34,14 +35,14 @@ void Brush::drawPixel(DiffPair pos, const Color3f& color) {
 }
 
 // Bresenhames algorithm
-void Brush::drawLine(const Vec2& p1, const Color3f& c1, const Vec2& p2,
-					 const Color3f& c2) {
+void Brush::drawLine(const Vertex& v1, const Vertex& v2) {
 	using inttypes::ScreenSize, inttypes::ScreenDiff, inttypes::DiffPair;
+	using linalg::linearInterpolation, linalg::barycentric;
 
-	DiffPair pair1 = relativeToAbsolute(p1);
-	DiffPair pair2 = relativeToAbsolute(p2);
+	DiffPair pair1 = relativeToAbsolute(v1.pos.head<2>());
+	DiffPair pair2 = relativeToAbsolute(v2.pos.head<2>());
 
-	drawPixel(pair1, c1);
+	drawPixel(pair1, v1.color);
 
 	ScreenDiff dx = std::abs(pair2.x - pair1.x);
 	ScreenDiff dy = std::abs(pair2.y - pair1.y);
@@ -53,7 +54,7 @@ void Brush::drawLine(const Vec2& p1, const Color3f& c1, const Vec2& p2,
 		ScreenDiff d1 = (dy << 1);
 		ScreenDiff d2 = (dy - dx) << 1;
 
-		drawPixel(pair1, c1);
+		drawPixel(pair1, v1.color);
 
 		for (ScreenDiff x = pair1.x + sx, y = pair1.y, i = 0; i < dx;
 			 ++i, x += sx) {
@@ -66,21 +67,24 @@ void Brush::drawLine(const Vec2& p1, const Color3f& c1, const Vec2& p2,
 
 			DiffPair cur_pos = inttypes::makeDiffPair(x, y);
 			Vec2 p = absoluteToRelative(cur_pos);
-			Vec2 brc = linalg::barycentric(p, p1, p2);
+			Vec2 brc = barycentric(p, v1.pos.head<2>(), v2.pos.head<2>());
 
-			assert(linalg::isCorrectBrc<2>(brc, p, p1, p2));
+			assert(linalg::isCorrectBrc<2>(brc, p, v1.pos.head<2>(),
+										   v2.pos.head<2>()));
 			assert(linalg::isNormBrc(brc));
 			assert(linalg::isInnerBrc(brc));
 
-			drawPixel(cur_pos,
-					  linalg::linearInterpolation<Color3f>(brc, c1, c2));
+			Vertex v{linearInterpolation<Vec4>(brc, v1.pos, v2.pos),
+					 linearInterpolation<Color3f>(brc, v1.color, v2.color)};
+
+			drawPixel(cur_pos, v.color);
 		}
 	} else {
 		ScreenDiff d = (dx << 1) - dy;
 		ScreenDiff d1 = (dx << 1);
 		ScreenDiff d2 = (dx - dy) << 1;
 
-		drawPixel(pair1, c1);
+		drawPixel(pair1, v1.color);
 
 		for (ScreenDiff x = pair1.x, y = pair1.y + sy, i = 0; i < dy;
 			 ++i, y += sy) {
@@ -93,25 +97,25 @@ void Brush::drawLine(const Vec2& p1, const Color3f& c1, const Vec2& p2,
 
 			DiffPair cur_pos = inttypes::makeDiffPair(x, y);
 			Vec2 p = absoluteToRelative(cur_pos);
-			Vec2 brc = linalg::barycentric(p, p1, p2);
+			Vec2 brc = barycentric(p, v1.pos.head<2>(), v2.pos.head<2>());
 
-			assert(linalg::isCorrectBrc<2>(brc, p, p1, p2));
+			assert(linalg::isCorrectBrc<2>(brc, p, v1.pos.head<2>(),
+										   v2.pos.head<2>()));
 			assert(linalg::isNormBrc(brc));
 			assert(linalg::isInnerBrc(brc));
 
-			drawPixel(cur_pos,
-					  linalg::linearInterpolation<Color3f>(brc, c1, c2));
+			Vertex v{linearInterpolation<Vec4>(brc, v1.pos, v2.pos),
+					 linearInterpolation<Color3f>(brc, v1.color, v2.color)};
+
+			drawPixel(cur_pos, v.color);
 		}
 	}
 }
 
 void Brush::drawMesh(const Mesh& mesh) {
-	drawLine(mesh.vertices[0].pos.head<2>(), mesh.vertices[0].color,
-			 mesh.vertices[1].pos.head<2>(), mesh.vertices[1].color);
-	drawLine(mesh.vertices[1].pos.head<2>(), mesh.vertices[1].color,
-			 mesh.vertices[2].pos.head<2>(), mesh.vertices[2].color);
-	drawLine(mesh.vertices[2].pos.head<2>(), mesh.vertices[2].color,
-			 mesh.vertices[0].pos.head<2>(), mesh.vertices[0].color);
+	drawLine(mesh.vertices[0], mesh.vertices[1]);
+	drawLine(mesh.vertices[1], mesh.vertices[2]);
+	drawLine(mesh.vertices[2], mesh.vertices[0]);
 }
 
 void Brush::fillMesh(const Mesh& mesh) {
