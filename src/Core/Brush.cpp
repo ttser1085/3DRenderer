@@ -77,7 +77,9 @@ void Brush::drawLine(const Vertex& v1, const Vertex& v2) {
 			Vertex v{linearCombination<Vec4>(brc, v1.pos, v2.pos),
 					 linearCombination<Color3f>(brc, v1.color, v2.color)};
 
-			drawPixel(cur_pos, v.color);
+			if (depth_test_(inttypes::toSizePair(cur_pos), v)) {
+				drawPixel(cur_pos, v.color);
+			}
 		}
 	} else {
 		ScreenDiff d = (dx << 1) - dy;
@@ -107,7 +109,9 @@ void Brush::drawLine(const Vertex& v1, const Vertex& v2) {
 			Vertex v{linearCombination<Vec4>(brc, v1.pos, v2.pos),
 					 linearCombination<Color3f>(brc, v1.color, v2.color)};
 
-			drawPixel(cur_pos, v.color);
+			if (depth_test_(inttypes::toSizePair(cur_pos), v)) {
+				drawPixel(cur_pos, v.color);
+			}
 		}
 	}
 }

@@ -16,8 +16,8 @@ protected:
 	using Storage = std::vector<T>;
 
 public:
-	explicit RectBuffer(SizePair size)
-		: size_(size), storage_(inttypes::area(size)) {}
+	explicit RectBuffer(SizePair size, const T& value = T())
+		: size_(size), storage_(inttypes::area(size), value) {}
 
 	inline Width width() const noexcept { return size_.x; }
 
@@ -42,7 +42,7 @@ protected:
 		return storage_[inttypes::area(pos.y, size_.x) + pos.x];
 	}
 
-	void clear(const T& value) {
+	void clear(const T& value = T()) {
 		std::fill(storage_.begin(), storage_.end(), value);
 	}
 

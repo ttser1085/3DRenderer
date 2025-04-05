@@ -9,6 +9,7 @@ namespace linalg {
 
 using Float = float; // float32 or float64
 
+
 // Linear
 
 template<typename T>
