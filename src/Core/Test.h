@@ -1,18 +1,69 @@
 #include "Vertex.h"
 #include "ZBuffer.h"
 
+#include <memory>
+
 namespace r3d {
 
-class DepthTest {
-public:
-	DepthTest(inttypes::SizePair size) : zbuff_(size) {}
+template<typename T>
+concept Test = requires(T t, inttypes::SizePair pos, const Vertex& vertex) {
+	{ t(pos, vertex) } -> std::same_as<bool>;
+};
 
-	bool operator()(inttypes::SizePair pos, const Vertex& vertex) {
-		return zbuff_.set(pos, vertex.pos(2));
+template<Test T>
+auto negation(T&& test) {
+	return [test = std::forward<T>(test)](
+			   inttypes::SizePair pos, const Vertex& vertex) mutable -> bool {
+		return !test(pos, vertex);
+	};
+}
+
+template<Test... Ts>
+auto conjunction(Ts&&... tests) {
+	return [... tests = std::forward<Ts>(tests)](
+			   inttypes::SizePair pos, const Vertex& vertex) mutable -> bool {
+		return (tests(pos, vertex) && ...);
+	};
+}
+
+template<Test... Ts>
+auto disjunction(Ts&&... tests) {
+	return [... tests = std::forward<Ts>(tests)](
+			   inttypes::SizePair pos, const Vertex& vertex) mutable -> bool {
+		return (tests(pos, vertex) || ...);
+	};
+}
+
+// Common tests:
+
+class BorderTest {
+	using SizePair = inttypes::SizePair;
+
+public:
+	BorderTest(SizePair left_top, SizePair size)
+		: left_top_(left_top), size_(size) {}
+
+	bool operator()(SizePair pos, const Vertex&) {
+		return pos.x >= left_top_.x && pos.y >= left_top_.y &&
+			   pos.x < left_top_.x + size_.x && pos.y <= left_top_.y + size_.y;
 	}
 
 private:
-	ZBuffer zbuff_;
+	SizePair left_top_;
+	SizePair size_;
+};
+
+class DepthTest {
+public:
+	DepthTest(inttypes::SizePair size)
+		: zbuff_(std::make_unique<ZBuffer>(size)) {}
+
+	bool operator()(inttypes::SizePair pos, const Vertex& vertex) {
+		return zbuff_->set(pos, vertex.pos(2));
+	}
+
+private:
+	std::unique_ptr<ZBuffer> zbuff_;
 };
 
 // class AlphaTest {

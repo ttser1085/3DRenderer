@@ -37,7 +37,8 @@ void View::showFrame(FrozenFrame frame) {
 		return;
 	}
 
-	sf::Texture texture({frame->width(), frame->height()});
+	sf::Texture texture({static_cast<uint32_t>(frame->width()),
+						 static_cast<uint32_t>(frame->height())});
 	texture.update(frame->data());
 
 	sf::Sprite sprite(texture);

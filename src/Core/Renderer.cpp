@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "Brush.h"
+#include "Drawer.h"
 #include "Clipping.h"
 
 namespace r3d {
@@ -11,7 +11,11 @@ Frame Renderer::makeFrame(const Camera& camera, const Scene& scene) const {
 	Frame frame(camera.targetSize());
 	frame.clear(kBlack3b);
 
-	Brush brush(std::move(frame));
+	BorderTest border_test(inttypes::makeSizePair(0, 0), frame.size());
+	DepthTest depth_test(frame.size());
+
+	Drawer brush(std::move(frame),
+				conjunction(std::move(border_test), std::move(depth_test)));
 
 	for (const Object& object : scene.objects()) {
 		for (auto proxy : object) {
