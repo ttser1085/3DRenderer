@@ -33,6 +33,8 @@ public:
 	SizePair targetSize() const;
 	void resizeTarget(SizePair size);
 
+	Angle fovy() const;
+
 private:
 	void updateProjection();
 
@@ -50,7 +52,7 @@ private:
 	Mat4 projection_;
 
 	constexpr static Float kDefaultSpeed = 1.0f;
-	constexpr static Float kDefaultSensitivity = 0.1f;
+	constexpr static Float kDefaultSensitivity = 0.5f;
 	constexpr static Float kDefaultZNear = 0.1f;
 	constexpr static Float kDefaultZFar = 100.f;
 	constexpr static Angle kDefaultFovy = M_PI_4; // 45 degrees

@@ -24,6 +24,7 @@ private:
 
 		void operator()(const Tick&);
 		void operator()(const KeyPressed&);
+		void operator()(const MouseMoved&);
 
 	private:
 		Model& model_;

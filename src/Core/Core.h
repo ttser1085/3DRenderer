@@ -10,7 +10,7 @@ public:
 
     FrozenFrame renderFrame() const;
 
-    void moveCamera(Vec3 dir, Float dtime);
+	Camera& camera();
 
 private:
 	Renderer renderer_;

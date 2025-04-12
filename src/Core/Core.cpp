@@ -9,8 +9,8 @@ FrozenFrame Core::renderFrame() const {
 	return std::make_shared<Frame>(renderer_.makeFrame(camera_, scene_));
 }
 
-void Core::moveCamera(Vec3 dir, Float dtime) {
-    camera_.move(dir, dtime);
+Camera& Core::camera() {
+	return camera_;
 }
 
 } // namespace r3d

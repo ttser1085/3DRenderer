@@ -4,7 +4,11 @@ namespace r3d {
 
 Runtime::Runtime(const std::string& win_title)
 	: window_(std::make_unique<sf::RenderWindow>(sf::VideoMode(kDefaultSize),
-												 win_title)) {}
+												 win_title)) {
+	window_->setMouseCursorVisible(false);
+	sf::Mouse::setPosition(sf::Vector2i{kDefaultSize.x / 2, kDefaultSize.y / 2},
+						   *window_);
+}
 
 Runtime::WindowRawPtr Runtime::window() const noexcept { return window_.get(); }
 
@@ -36,6 +40,12 @@ void Runtime::onEvent(sf::Event event) {
 	} else if (event.is<sf::Event::Resized>()) {
 		ViewEvent view_event{std::move(*event.getIf<sf::Event::Resized>())};
 		send(view_event);
+	} else if (event.is<sf::Event::MouseMovedRaw>()) {
+		MouseMoved mouse_event{event.getIf<sf::Event::MouseMovedRaw>()->delta,
+							   window_->getSize()};
+		send(mouse_event);
+		sf::Mouse::setPosition(
+			sf::Vector2i{kDefaultSize.x / 2, kDefaultSize.y / 2}, *window_);
 	}
 }
 

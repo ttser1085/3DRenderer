@@ -62,4 +62,13 @@ void Controller::Visitor::operator()(const KeyPressed& pressed) {
 	}
 }
 
+void Controller::Visitor::operator()(const MouseMoved& moved) {
+	current_batch_.emplace_back(
+		RotateCamera{static_cast<Float>(moved.delta.x) /
+						 static_cast<Float>(moved.win_size.x),
+					 static_cast<Float>(moved.delta.y) /
+						 static_cast<Float>(moved.win_size.y),
+					 0.0});
+}
+
 } // namespace r3d
