@@ -4,6 +4,7 @@
 #include "View.h"
 #include "Controller.h"
 #include "Runtime.h"
+#include "Broker.h"
 
 namespace r3d {
 
@@ -19,6 +20,7 @@ private:
     Model model_;
     View view_;
     Controller controller_;
+    Broker broker_;
 };
 
 } // namespace r3d

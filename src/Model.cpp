@@ -3,11 +3,14 @@
 namespace r3d {
 
 Model::Model(SizePair target_size_)
-	: core_(target_size_), movement_dir_(Vec3::Zero()) {}
+	: core_(target_size_), movement_dir_(Vec3::Zero()),
+	  event_in_([this](const Events& events) { handle(events); }) {}
 
 void Model::subscribe(FrameInput* obs) { frame_out_.subscribe(obs); }
 
-void Model::Handle(std::vector<CoreEvent> events) {
+Model::EventInput* Model::eventPort() { return &event_in_; }
+
+void Model::handle(const Events& events) {
 	assert(!events.empty());
 	assert(std::get_if<Update>(&events.back()));
 

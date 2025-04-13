@@ -3,32 +3,30 @@
 #include "Linalg/LinalgBase.h"
 #include "ModelEvent.h"
 #include "CoreEvent.h"
+#include "Broker.h"
 
 namespace r3d {
-
-class Model;
 
 class Controller {
 	using EventInput =
 		NSLibrary::CColdInput<ModelEvent, NSLibrary::CByReference>;
 
 public:
-	explicit Controller(Model& model);
+	explicit Controller(Broker& broker);
 
 	EventInput* eventPort() noexcept;
 
 private:
 	class Visitor {
 	public:
-		explicit Visitor(Model& model);
+		explicit Visitor(Broker& broker);
 
 		void operator()(const Tick&);
 		void operator()(const KeyPressed&);
 		void operator()(const MouseMoved&);
 
 	private:
-		Model& model_;
-		std::vector<CoreEvent> current_batch_;
+		Broker& broker_;
 	};
 
 	Visitor visitor_;
