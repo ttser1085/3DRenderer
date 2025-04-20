@@ -20,13 +20,9 @@ void View::Visitor::operator()(const sf::Event::Resized& event) const {
 
 View::View(WindowPtr window)
 	: visitor_(window),
-	  frame_in_([this](FrozenFrame frame) { showFrame(std::move(frame)); }),
-	  event_in_(
+	  FrameReceiver([this](FrozenFrame frame) { showFrame(std::move(frame)); }),
+	  EventReceiver(
 		  [this](const ViewEvent& event) { std::visit(visitor_, event); }) {}
-
-View::FrameInput* View::framePort() noexcept { return &frame_in_; }
-
-View::EventInput* View::eventPort() noexcept { return &event_in_; }
 
 View::WindowPtr View::window() const noexcept { return visitor_.window(); }
 

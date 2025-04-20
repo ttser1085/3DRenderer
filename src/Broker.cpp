@@ -2,14 +2,13 @@
 
 namespace r3d {
 
-void Broker::handle(CoreEvent&& event) {
-	events_.emplace_back(std::move(event));
-
-	if (std::get_if<Update>(&events_.back())) {
-		output_.set(std::exchange(events_, {}));
+void Broker::handle(CoreEvent event) {
+	if (std::get_if<Update>(&event)) {
+		set(std::move(event));
+		flush();
+	} else {
+		set(std::move(event));
 	}
 }
-
-void Broker::subscribe(Input* input) { output_.subscribe(input); }
 
 } // namespace r3d

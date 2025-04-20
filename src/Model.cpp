@@ -4,11 +4,7 @@ namespace r3d {
 
 Model::Model(SizePair target_size_)
 	: core_(target_size_), movement_dir_(Vec3::Zero()),
-	  event_in_([this](const Events& events) { handle(events); }) {}
-
-void Model::subscribe(FrameInput* obs) { frame_out_.subscribe(obs); }
-
-Model::EventInput* Model::eventPort() { return &event_in_; }
+	  EventReceiver([this](const Events& events) { handle(events); }) {}
 
 void Model::handle(const Events& events) {
 	assert(!events.empty());
@@ -18,7 +14,7 @@ void Model::handle(const Events& events) {
 		if (const auto* update = std::get_if<Update>(&event)) {
 			core_.camera().move(movement_dir_.normalized(), update->dtime);
 			movement_dir_ = Vec3::Zero();
-			frame_out_.set(core_.renderFrame());
+			set(core_.renderFrame());
 		} else if (const auto* movement = std::get_if<MoveCamera>(&event)) {
 			movement_dir_ += movement->dir;
 		} else if (const auto* rotation = std::get_if<RotateCamera>(&event)) {

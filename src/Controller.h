@@ -1,20 +1,19 @@
 #pragma once
 
+#include "Communication.h"
+#include "CoreEvent.h"
 #include "Linalg/LinalgBase.h"
 #include "ModelEvent.h"
-#include "CoreEvent.h"
-#include "Broker.h"
 
 namespace r3d {
 
-class Controller {
-	using EventInput =
-		NSLibrary::CColdInput<ModelEvent, NSLibrary::CByReference>;
+class Broker;
+
+class Controller : public ColdReceiver<ModelEvent, NSLibrary::CByReference> {
+	using Base = ColdReceiver<ModelEvent, NSLibrary::CByReference>;
 
 public:
 	explicit Controller(Broker& broker);
-
-	EventInput* eventPort() noexcept;
 
 private:
 	class Visitor {
@@ -30,7 +29,6 @@ private:
 	};
 
 	Visitor visitor_;
-	EventInput event_in_;
 };
 
 } // namespace r3d

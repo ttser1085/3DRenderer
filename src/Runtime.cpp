@@ -12,14 +12,6 @@ Runtime::Runtime(const std::string& win_title)
 
 Runtime::WindowRawPtr Runtime::window() const noexcept { return window_.get(); }
 
-void Runtime::subscribe(ModelReceiver* receiver) {
-	model_sender_.subscribe(receiver);
-}
-
-void Runtime::subscribe(ViewReceiver* receiver) {
-	view_sender_.subscribe(receiver);
-}
-
 void Runtime::run() {
 	sf::Clock clock;
 	while (window_->isOpen()) {
@@ -90,8 +82,8 @@ void Runtime::checkKeysPressed() {
 	}
 }
 
-void Runtime::send(const ModelEvent& event) { model_sender_.set(event); }
+void Runtime::send(const ModelEvent& event) { ModelSender::set(event); }
 
-void Runtime::send(const ViewEvent& event) { view_sender_.set(event); }
+void Runtime::send(const ViewEvent& event) { ViewSender::set(event); }
 
 } // namespace r3d

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Communication.h"
 #include "Core/Frame.h"
 #include "ViewEvent.h"
 
@@ -13,19 +14,15 @@ class Sprite;
 
 namespace r3d {
 
-class View {
+class View : public HotReceiver<FrozenFrame, NSLibrary::CByValue>,
+			 public ColdReceiver<ViewEvent, NSLibrary::CByReference> {
+	using FrameReceiver = HotReceiver<FrozenFrame, NSLibrary::CByValue>;
+	using EventReceiver = ColdReceiver<ViewEvent, NSLibrary::CByReference>;
 
 	using WindowPtr = sf::RenderWindow*;
 
-	using FrameInput = NSLibrary::CHotInput<FrozenFrame, NSLibrary::CByValue>;
-	using EventInput =
-		NSLibrary::CColdInput<ViewEvent, NSLibrary::CByReference>;
-
 public:
 	explicit View(WindowPtr window);
-
-	FrameInput* framePort() noexcept;
-	EventInput* eventPort() noexcept;
 
 private:
 	WindowPtr window() const noexcept;
@@ -46,9 +43,6 @@ private:
 	};
 
 	Visitor visitor_;
-
-	FrameInput frame_in_;
-	EventInput event_in_;
 };
 
 } // namespace r3d
