@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace linalg {
+namespace lalg {
 
 bool approxEqual(Float f1, Float f2, Float precision) {
 	return std::abs(f2 - f1) <= precision;

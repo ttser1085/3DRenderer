@@ -25,7 +25,7 @@ Frame Renderer::makeFrame(const Camera& camera, const Scene& scene) const {
 					  Vertex{proxy.position(2), proxy.color(2)}};
 
 			for (Index i = 0; i < 3; ++i) {
-				mesh.vertices[i].pos = linalg::homoNormalized(
+				mesh.vertices[i].pos = lalg::homoNormalized(
 					camera.projection(camera.lookAt(mesh.vertices[i].pos)));
 			}
 

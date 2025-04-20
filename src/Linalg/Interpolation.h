@@ -2,7 +2,7 @@
 
 #include "LinalgBase.h"
 
-namespace linalg {
+namespace lalg {
 
 Vec2 barycentric(const Vec2& p, const Vec2& a, const Vec2& b);
 

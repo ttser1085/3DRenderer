@@ -6,8 +6,8 @@ namespace r3d {
 
 Camera::Camera(Vec3 pos, SizePair size, Float speed, Float sensitivity,
 			   Angle fovy, Float z_near, Float z_far, Vec3 dir, Vec3 up)
-	: speed_(speed), sensitivity_(sensitivity),
-	  target_size_(size), fovy_(fovy), z_near_(z_near), z_far_(z_far) {
+	: speed_(speed), sensitivity_(sensitivity), target_size_(size), fovy_(fovy),
+	  z_near_(z_near), z_far_(z_far) {
 
 	assert(z_far > z_near && "Invalid argument!");
 	assert(z_near > 0.0f && "Invalid argument!");
@@ -26,15 +26,13 @@ Camera::Camera(Vec3 pos, SizePair size, Float speed, Float sensitivity,
 	look_at_.pretranslate(pos);
 }
 
-Camera::Vec4 Camera::projection(const Vec4& pos) const {
-	return projection_ * pos;
-}
+Vec4 Camera::projection(const Vec4& pos) const { return projection_ * pos; }
 
-Camera::Vec4 Camera::lookAt(const Vec4& pos) const { return look_at_ * pos; }
+Vec4 Camera::lookAt(const Vec4& pos) const { return look_at_ * pos; }
 
 void Camera::move(const Vec3& dir, Float dtime) {
-	assert(linalg::approxEqual(dir.norm(), 1.0f) ||
-		   linalg::approxEqual(dir.norm(), 0.0f));
+	assert(lalg::approxEqual(dir.norm(), 1.0f) ||
+		   lalg::approxEqual(dir.norm(), 0.0f));
 	look_at_.pretranslate(-dir * dtime * speed_);
 }
 
@@ -54,10 +52,10 @@ void Camera::resizeTarget(SizePair size) {
 	updateProjection();
 }
 
-Camera::Angle Camera::fovy() const { return fovy_; }
+Angle Camera::fovy() const { return fovy_; }
 
 void Camera::updateProjection() {
-	projection_ = linalg::perspective(fovy_, aspect_, z_near_, z_far_);
+	projection_ = lalg::perspective(fovy_, aspect_, z_near_, z_far_);
 }
 
 } // namespace r3d

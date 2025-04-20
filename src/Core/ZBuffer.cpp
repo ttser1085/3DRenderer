@@ -2,8 +2,7 @@
 
 namespace r3d {
 
-ZBuffer::ZBuffer(SizePair size)
-	: Base(size, std::numeric_limits<Float>::infinity()) {}
+ZBuffer::ZBuffer(SizePair size) : Base(size, lalg::kInfinity) {}
 
 bool ZBuffer::set(SizePair pos, Float value) {
 	if (Base::get(pos) > value) {

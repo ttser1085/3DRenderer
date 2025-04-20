@@ -37,7 +37,7 @@ void Scene::initObjects() {
 	object.addMesh(6, 5, 4);
 	object.addMesh(6, 7, 5);
 
-	object.rotate(linalg::toRadians(30.0f), Vec3::UnitY());
+	object.rotate(lalg::toRadians(30.0f), Vec3::UnitY());
 
 	objects_.emplace_back(std::move(object));
 }

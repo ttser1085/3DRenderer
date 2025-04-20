@@ -67,14 +67,14 @@ private:
 
 // class AlphaTest {
 // public:
-// 	AlphaTest(linalg::Float threshold) : threshold_(threshold) {}
+// 	AlphaTest(Float threshold) : threshold_(threshold) {}
 
 // 	bool operator()(inttypes::SizePair pos, const Vertex& vertex) {
 // 		return vertex.color.a > threshold_;
 // 	}
 
 // private:
-// 	linalg::Float threshold_;
+// 	Float threshold_;
 // };
 
 } // namespace r3d

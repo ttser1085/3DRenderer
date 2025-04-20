@@ -18,8 +18,8 @@ void Model::handle(const Events& events) {
 		} else if (const auto* movement = std::get_if<MoveCamera>(&event)) {
 			movement_dir_ += movement->dir;
 		} else if (const auto* rotation = std::get_if<RotateCamera>(&event)) {
-			linalg::Angle yaw = core_.camera().fovy() * rotation->delta_yaw;
-			linalg::Angle pitch = core_.camera().fovy() * rotation->delta_pitch;
+			lalg::Angle yaw = core_.camera().fovy() * rotation->delta_yaw;
+			lalg::Angle pitch = core_.camera().fovy() * rotation->delta_pitch;
 
 			core_.camera().rotateYaw(yaw);
 			core_.camera().rotatePitch(pitch);

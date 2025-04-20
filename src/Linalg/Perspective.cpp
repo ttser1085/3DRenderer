@@ -1,6 +1,6 @@
 #include "Perspective.h"
 
-namespace linalg {
+namespace lalg {
 
 Mat4 perspective(Angle fovy, Float aspect, Float z_near, Float z_far) {
 	assert(!approxEqual(z_near, z_far)  && "Zero division error!");

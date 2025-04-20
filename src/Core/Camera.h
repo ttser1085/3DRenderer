@@ -5,14 +5,12 @@
 
 namespace r3d {
 
+using lalg::Float, lalg::Angle;
+using lalg::Vec3, lalg::Vec4;
+
 class Camera {
-	using Float = linalg::Float;
-	using Angle = linalg::Angle;
-	using Vec3 = linalg::Vec3;
-	using Vec4 = linalg::Vec4;
-	using Mat4 = linalg::Mat4;
-	using Transform = linalg::AffineTransform;
-	using Rotation = linalg::Rotation;
+	using Transform = lalg::AffineTransform;
+	using Rotation = lalg::Rotation;
 
 public:
 	Camera(Vec3 pos, SizePair size, Float speed = kDefaultSpeed,
@@ -46,7 +44,7 @@ private:
 	Float z_near_;
 	Float z_far_;
 
-	Mat4 projection_;
+	lalg::Mat4 projection_;
 
 	constexpr static Float kDefaultSpeed = 1.0f;
 	constexpr static Float kDefaultSensitivity = 0.5f;

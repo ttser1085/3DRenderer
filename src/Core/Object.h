@@ -13,8 +13,8 @@ class Object {
 	friend class ProxyMesh;
 	friend class ConstMeshIterator;
 
-	using Transform = linalg::AffineTransform;
-	using Rotation = linalg::Rotation;
+	using Transform = lalg::AffineTransform;
+	using Rotation = lalg::Rotation;
 
 public:
 	explicit Object(const Vec3& position = Vec3::Zero());
@@ -24,7 +24,7 @@ public:
 
 	void move(const Vec3& movement);
 	void scale(const Vec3& scale);
-	void rotate(linalg::Angle angle, const Vec3& axis);
+	void rotate(lalg::Angle angle, const Vec3& axis);
 
 	ConstMeshIterator begin() const;
 	ConstMeshIterator end() const;

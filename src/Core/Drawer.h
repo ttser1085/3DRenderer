@@ -9,8 +9,6 @@ namespace r3d {
 
 template<Test T>
 class Drawer {
-	using Vec2 = linalg::Vec2;
-
 public:
 	Drawer(Frame&& canvas, T&& test)
 		: canvas_(std::move(canvas)),
@@ -19,7 +17,8 @@ public:
 		  test_(std::move(test)) {}
 
 	void drawLine(const Vertex& v1, const Vertex& v2) {
-		using linalg::linearCombination, linalg::barycentric;
+		using lalg::linearCombination, lalg::barycentric;
+		using lalg::Vec2;
 
 		SizePair pair1 = relativeToAbsolute(v1.pos.head<2>());
 		SizePair pair2 = relativeToAbsolute(v2.pos.head<2>());
@@ -51,10 +50,10 @@ public:
 				Vec2 p = absoluteToRelative(cur_pos);
 				Vec2 brc = barycentric(p, v1.pos.head<2>(), v2.pos.head<2>());
 
-				assert(linalg::isCorrectBrc<2>(brc, p, v1.pos.head<2>(),
-											   v2.pos.head<2>()));
-				assert(linalg::isNormBrc(brc));
-				assert(linalg::isInnerBrc(brc));
+				assert(lalg::isCorrectBrc<2>(brc, p, v1.pos.head<2>(),
+											 v2.pos.head<2>()));
+				assert(lalg::isNormBrc(brc));
+				assert(lalg::isInnerBrc(brc));
 
 				Vertex v{linearCombination<Vec4>(brc, v1.pos, v2.pos),
 						 linearCombination<Color3f>(brc, v1.color, v2.color)};
@@ -81,10 +80,10 @@ public:
 				Vec2 p = absoluteToRelative(cur_pos);
 				Vec2 brc = barycentric(p, v1.pos.head<2>(), v2.pos.head<2>());
 
-				assert(linalg::isCorrectBrc<2>(brc, p, v1.pos.head<2>(),
-											   v2.pos.head<2>()));
-				assert(linalg::isNormBrc(brc));
-				assert(linalg::isInnerBrc(brc));
+				assert(lalg::isCorrectBrc<2>(brc, p, v1.pos.head<2>(),
+											 v2.pos.head<2>()));
+				assert(lalg::isNormBrc(brc));
+				assert(lalg::isInnerBrc(brc));
 
 				Vertex v{linearCombination<Vec4>(brc, v1.pos, v2.pos),
 						 linearCombination<Color3f>(brc, v1.color, v2.color)};
@@ -111,21 +110,22 @@ public:
 private:
 	// convert x: [-1.0f, 1.0f] --> [0, width]
 	// convert y: [-1.0f, 1.0f] --> [height, 0]
-	SizePair relativeToAbsolute(const Vec2& pos) const {
-		return makeSizePair<float, float>(
+	SizePair relativeToAbsolute(const lalg::Vec2& pos) const {
+		return makeSizePair<Float, Float>(
 			((pos(0) + 1.0f) / 2.0f) * (canvas_size_(0)),
 			((-pos(1) + 1.0f) / 2.0f) * (canvas_size_(1)));
 	}
 
 	// convert x: [0, width] --> [-1.0f, 1.0f]
 	// convert y: [height, 0] --> [-1.0f, 1.0f]
-	Vec2 absoluteToRelative(SizePair pos) const {
-		return Vec2(2.0f * static_cast<Float>(pos.x) / canvas_size_(0) - 1.0f,
-					-2.0f * static_cast<Float>(pos.y) / canvas_size_(1) + 1.0f);
+	lalg::Vec2 absoluteToRelative(SizePair pos) const {
+		return lalg::Vec2(
+			2.0f * static_cast<Float>(pos.x) / canvas_size_(0) - 1.0f,
+			-2.0f * static_cast<Float>(pos.y) / canvas_size_(1) + 1.0f);
 	}
 
 	Frame canvas_;
-	Vec2 canvas_size_;
+	lalg::Vec2 canvas_size_;
 	T test_;
 };
 

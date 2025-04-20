@@ -3,11 +3,12 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
-namespace linalg {
+namespace lalg {
 
 // Float
 
 using Float = float; // float32 or float64
+static constexpr Float kInfinity = std::numeric_limits<Float>::infinity();
 
 
 // Linear

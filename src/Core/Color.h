@@ -5,7 +5,7 @@
 
 namespace r3d {
 
-using linalg::Float;
+using lalg::Float;
 
 struct Color3b;
 struct Color4b;

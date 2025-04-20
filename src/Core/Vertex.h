@@ -4,11 +4,11 @@
 
 namespace r3d {
 
-using linalg::Vec3;
-using linalg::Vec4;
+using lalg::Vec3;
+using lalg::Vec4;
 
 struct Vertex {
-    linalg::Vec4 pos;
+    Vec4 pos;
     Color3f color;
 };
 
