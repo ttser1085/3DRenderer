@@ -14,8 +14,6 @@ struct Color3f;
 struct Color4f;
 
 struct Color3b {
-	using Byte = inttypes::Byte;
-
 	Byte r = 0;
 	Byte g = 0;
 	Byte b = 0;
@@ -26,8 +24,6 @@ struct Color3b {
 };
 
 struct Color4b {
-	using Byte = inttypes::Byte;
-
 	Byte r = 0;
 	Byte g = 0;
 	Byte b = 0;

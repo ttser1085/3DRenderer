@@ -6,14 +6,14 @@
 namespace r3d {
 
 template<typename T>
-concept Test = requires(T t, inttypes::SizePair pos, const Vertex& vertex) {
+concept Test = requires(T t, SizePair pos, const Vertex& vertex) {
 	{ t(pos, vertex) } -> std::same_as<bool>;
 };
 
 template<Test T>
 auto negation(T&& test) {
 	return [test = std::forward<T>(test)](
-			   inttypes::SizePair pos, const Vertex& vertex) mutable -> bool {
+			   SizePair pos, const Vertex& vertex) mutable -> bool {
 		return !test(pos, vertex);
 	};
 }
@@ -21,7 +21,7 @@ auto negation(T&& test) {
 template<Test... Ts>
 auto conjunction(Ts&&... tests) {
 	return [... tests = std::forward<Ts>(tests)](
-			   inttypes::SizePair pos, const Vertex& vertex) mutable -> bool {
+			   SizePair pos, const Vertex& vertex) mutable -> bool {
 		return (tests(pos, vertex) && ...);
 	};
 }
@@ -29,7 +29,7 @@ auto conjunction(Ts&&... tests) {
 template<Test... Ts>
 auto disjunction(Ts&&... tests) {
 	return [... tests = std::forward<Ts>(tests)](
-			   inttypes::SizePair pos, const Vertex& vertex) mutable -> bool {
+			   SizePair pos, const Vertex& vertex) mutable -> bool {
 		return (tests(pos, vertex) || ...);
 	};
 }
@@ -37,7 +37,7 @@ auto disjunction(Ts&&... tests) {
 // Common tests:
 
 class BorderTest {
-	using SizePair = inttypes::SizePair;
+	using SizePair = SizePair;
 
 public:
 	BorderTest(SizePair left_top, SizePair size)
@@ -55,10 +55,9 @@ private:
 
 class DepthTest {
 public:
-	DepthTest(inttypes::SizePair size)
-		: zbuff_(std::make_unique<ZBuffer>(size)) {}
+	DepthTest(SizePair size) : zbuff_(std::make_unique<ZBuffer>(size)) {}
 
-	bool operator()(inttypes::SizePair pos, const Vertex& vertex) {
+	bool operator()(SizePair pos, const Vertex& vertex) {
 		return zbuff_->set(pos, vertex.pos(2));
 	}
 

@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <functional>
 
-namespace inttypes {
+namespace r3d {
 
 // Bytes
 
@@ -33,9 +33,7 @@ inline ScreenSize area(Width w, Height h) {
 	return static_cast<ScreenSize>(w) * static_cast<ScreenSize>(h);
 }
 
-inline ScreenSize area(SizePair sp) {
-	return area(sp.x, sp.y);
-}
+inline ScreenSize area(SizePair sp) { return area(sp.x, sp.y); }
 
 template<typename T>
 concept Arithmetic = std::is_arithmetic_v<T>;
@@ -49,4 +47,4 @@ SizePair makeSizePair(Tx x, Ty y) {
 
 using Index = size_t;
 
-} // namespace inttypes
+} // namespace r3d

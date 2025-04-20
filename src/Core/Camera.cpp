@@ -46,7 +46,7 @@ void Camera::rotatePitch(Angle angle) {
 	look_at_.prerotate(Rotation(angle * sensitivity_, Vec3::UnitX()));
 }
 
-Camera::SizePair Camera::targetSize() const { return target_size_; }
+SizePair Camera::targetSize() const { return target_size_; }
 
 void Camera::resizeTarget(SizePair size) {
 	target_size_ = size;

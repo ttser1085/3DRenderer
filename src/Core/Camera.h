@@ -6,9 +6,6 @@
 namespace r3d {
 
 class Camera {
-
-	using SizePair = inttypes::SizePair;
-
 	using Float = linalg::Float;
 	using Angle = linalg::Angle;
 	using Vec3 = linalg::Vec3;

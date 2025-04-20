@@ -14,6 +14,6 @@ Color3b Frame::getColor(SizePair pos) const {
 
 void Frame::clear(Color3b color) { Base::clear(Color4b::fromColor3b(color)); }
 
-const Frame::Base::Byte* Frame::data() const { return Base::data(); }
+const Byte* Frame::data() const { return Base::data(); }
 
 } // namespace r3d

@@ -9,15 +9,11 @@ namespace r3d {
 template<typename T>
 class RectBuffer {
 protected:
-	using Width = inttypes::Width;
-	using Height = inttypes::Height;
-	using SizePair = inttypes::SizePair;
-	using Byte = inttypes::Byte;
 	using Storage = std::vector<T>;
 
 public:
 	explicit RectBuffer(SizePair size, const T& value = T())
-		: size_(size), storage_(inttypes::area(size), value) {}
+		: size_(size), storage_(area(size), value) {}
 
 	inline Width width() const noexcept { return size_.x; }
 
@@ -34,12 +30,10 @@ protected:
 		return reinterpret_cast<const Byte*>(storage_.data());
 	}
 
-	T& get(SizePair pos) {
-		return storage_[inttypes::area(pos.y, size_.x) + pos.x];
-	}
+	T& get(SizePair pos) { return storage_[area(pos.y, size_.x) + pos.x]; }
 
 	const T& get(SizePair pos) const {
-		return storage_[inttypes::area(pos.y, size_.x) + pos.x];
+		return storage_[area(pos.y, size_.x) + pos.x];
 	}
 
 	void clear(const T& value = T()) {

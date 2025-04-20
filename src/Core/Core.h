@@ -6,7 +6,7 @@ namespace r3d {
 
 class Core {
 public:
-	explicit Core(inttypes::SizePair target_size_);
+	explicit Core(SizePair target_size_);
 
     FrozenFrame renderFrame() const;
 

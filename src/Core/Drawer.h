@@ -9,7 +9,6 @@ namespace r3d {
 
 template<Test T>
 class Drawer {
-	using SizePair = inttypes::SizePair;
 	using Vec2 = linalg::Vec2;
 
 public:
@@ -20,7 +19,6 @@ public:
 		  test_(std::move(test)) {}
 
 	void drawLine(const Vertex& v1, const Vertex& v2) {
-		using inttypes::ScreenSize;
 		using linalg::linearCombination, linalg::barycentric;
 
 		SizePair pair1 = relativeToAbsolute(v1.pos.head<2>());
@@ -49,7 +47,7 @@ public:
 					d += d1;
 				}
 
-				SizePair cur_pos = inttypes::makeSizePair(x, y);
+				SizePair cur_pos = makeSizePair(x, y);
 				Vec2 p = absoluteToRelative(cur_pos);
 				Vec2 brc = barycentric(p, v1.pos.head<2>(), v2.pos.head<2>());
 
@@ -79,7 +77,7 @@ public:
 					d += d1;
 				}
 
-				SizePair cur_pos = inttypes::makeSizePair(x, y);
+				SizePair cur_pos = makeSizePair(x, y);
 				Vec2 p = absoluteToRelative(cur_pos);
 				Vec2 brc = barycentric(p, v1.pos.head<2>(), v2.pos.head<2>());
 
@@ -114,7 +112,7 @@ private:
 	// convert x: [-1.0f, 1.0f] --> [0, width]
 	// convert y: [-1.0f, 1.0f] --> [height, 0]
 	SizePair relativeToAbsolute(const Vec2& pos) const {
-		return inttypes::makeSizePair<float, float>(
+		return makeSizePair<float, float>(
 			((pos(0) + 1.0f) / 2.0f) * (canvas_size_(0)),
 			((-pos(1) + 1.0f) / 2.0f) * (canvas_size_(1)));
 	}

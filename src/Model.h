@@ -10,8 +10,6 @@ class Model : public Sender<FrozenFrame, NSLibrary::CByValue>,
 	using Events = std::vector<CoreEvent>;
 	using EventReceiver = ColdStreamReceiver<CoreEvent>;
 
-	using SizePair = inttypes::SizePair;
-
 public:
 	explicit Model(SizePair target_size_);
 
