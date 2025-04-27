@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Broker.h"
 #include "ModelEvent.h"
 
