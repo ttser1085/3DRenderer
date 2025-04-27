@@ -14,10 +14,10 @@ class Sprite;
 
 namespace r3d {
 
-class View : public HotReceiver<FrozenFrame, NSLibrary::CByValue>,
-			 public ColdReceiver<ViewEvent, NSLibrary::CByReference> {
-	using FrameReceiver = HotReceiver<FrozenFrame, NSLibrary::CByValue>;
-	using EventReceiver = ColdReceiver<ViewEvent, NSLibrary::CByReference>;
+class View : public HotReceiver<FrozenFrame, ByVal>,
+			 public ColdReceiver<ViewEvent, ByRef> {
+	using FrameReceiver = HotReceiver<FrozenFrame, ByVal>;
+	using EventReceiver = ColdReceiver<ViewEvent, ByRef>;
 
 	using WindowPtr = sf::RenderWindow*;
 

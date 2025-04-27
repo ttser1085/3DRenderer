@@ -9,8 +9,7 @@ namespace r3d {
 
 class Broker;
 
-class ControllerManager
-	: public ColdReceiver<ModelEvent, NSLibrary::CByReference> {
+class ControllerManager : public ColdReceiver<ModelEvent, ByRef> {
 public:
 	template<Controller... Cs>
 	ControllerManager(Broker& broker, Cs... controllers)

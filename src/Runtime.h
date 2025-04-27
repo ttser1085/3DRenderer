@@ -9,14 +9,14 @@
 
 namespace r3d {
 
-class Runtime : public Sender<ModelEvent, NSLibrary::CByReference>,
-				public Sender<ViewEvent, NSLibrary::CByReference> {
+class Runtime : public Sender<ModelEvent, ByRef>,
+				public Sender<ViewEvent, ByRef> {
 	using WindowPtr = std::unique_ptr<sf::RenderWindow>;
 	using WindowRawPtr = sf::RenderWindow*;
 
 public:
-	using ModelSender = Sender<ModelEvent, NSLibrary::CByReference>;
-	using ViewSender = Sender<ViewEvent, NSLibrary::CByReference>;
+	using ModelSender = Sender<ModelEvent, ByRef>;
+	using ViewSender = Sender<ViewEvent, ByRef>;
 
 	explicit Runtime(const std::string& win_title);
 

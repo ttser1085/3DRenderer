@@ -6,7 +6,7 @@
 
 namespace r3d {
 
-class Model : public Sender<FrozenFrame, NSLibrary::CByValue>,
+class Model : public Sender<FrozenFrame, ByVal>,
 			  public ColdStreamReceiver<CoreEvent> {
 	using Events = std::vector<CoreEvent>;
 	using EventReceiver = ColdStreamReceiver<CoreEvent>;
