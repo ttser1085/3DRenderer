@@ -1,24 +1,24 @@
-#pragma once
-
-#include "Communication.h"
-#include "CoreEvent.h"
-#include "Linalg/LinalgBase.h"
+#include "Broker.h"
 #include "ModelEvent.h"
+#include "Utils/Overloaded.h"
 
 namespace r3d {
 
-class Broker;
+namespace detail {
 
-class Controller : public ColdReceiver<ModelEvent, NSLibrary::CByReference> {
-public:
-	explicit Controller(Broker& broker);
+template<typename T, typename Variant>
+struct CallWithBrokerImpl;
 
-private:
-	void handleTick(const Tick&);
-	void handleKeyPressed(const KeyPressed&);
-	void handleMouseMoved(const MouseMoved&);
-
-	Broker& broker_;
+template<typename T, typename... Types>
+struct CallWithBrokerImpl<T, std::variant<Types...>> {
+	static constexpr bool value = (requires(T ctrl, Broker& broker, Types arg) {
+		{ ctrl(broker, arg) } -> std::same_as<void>;
+	} || ...);
 };
+
+} // namespace detail
+
+template<typename T>
+concept Controller = detail::CallWithBrokerImpl<T, ModelEvent>::value;
 
 } // namespace r3d

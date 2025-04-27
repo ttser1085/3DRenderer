@@ -1,26 +1,26 @@
 #pragma once
 
-#include "Model.h"
-#include "View.h"
-#include "Controller.h"
-#include "Runtime.h"
 #include "Broker.h"
+#include "ControllerManager.h"
+#include "Model.h"
+#include "Runtime.h"
+#include "View.h"
 
 namespace r3d {
 
 class Application {
 public:
-    Application();
+	Application();
 
-    void run();
+	void run();
 
 private:
-    Runtime runtime_;
+	Runtime runtime_;
 
-    Model model_;
-    View view_;
-    Controller controller_;
-    Broker broker_;
+	Model model_;
+	View view_;
+	ControllerManager manager_;
+	Broker broker_;
 };
 
 } // namespace r3d
