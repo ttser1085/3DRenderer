@@ -1,5 +1,7 @@
 #include "Model.h"
 
+#include "Utils/Overloaded.h"
+
 namespace r3d {
 
 Model::Model(SizePair target_size_)
@@ -8,22 +10,23 @@ Model::Model(SizePair target_size_)
 
 void Model::handle(const Events& events) {
 	assert(!events.empty());
-	assert(std::get_if<Update>(&events.back()));
+	assert(std::get_if<Update>(&events.back())); // update must be last
 
 	for (const auto& event : events) {
-		if (const auto* update = std::get_if<Update>(&event)) {
-			core_.camera().move(movement_dir_.normalized(), update->dtime);
-			movement_dir_ = Vec3::Zero();
-			set(core_.renderFrame());
-		} else if (const auto* movement = std::get_if<MoveCamera>(&event)) {
-			movement_dir_ += movement->dir;
-		} else if (const auto* rotation = std::get_if<RotateCamera>(&event)) {
-			lalg::Angle yaw = core_.camera().fovy() * rotation->delta_yaw;
-			lalg::Angle pitch = core_.camera().fovy() * rotation->delta_pitch;
-
-			core_.camera().rotateYaw(yaw);
-			core_.camera().rotatePitch(pitch);
-		}
+		utils::Visit(
+			event,
+			[this](const Update& update) {
+				core_.camera().move(movement_dir_.normalized(), update.dtime);
+				movement_dir_ = Vec3::Zero();
+				set(core_.renderFrame());
+			},
+			[this](const MoveCamera& move) { movement_dir_ += move.dir; },
+			[this](const RotateCamera& rotate) {
+				lalg::Angle yaw = core_.camera().fovy() * rotate.delta_yaw;
+				lalg::Angle pitch = core_.camera().fovy() * rotate.delta_pitch;
+				core_.camera().rotateYaw(yaw);
+				core_.camera().rotatePitch(pitch);
+			});
 	}
 }
 
