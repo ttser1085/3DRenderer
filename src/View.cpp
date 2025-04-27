@@ -1,30 +1,22 @@
 #include "View.h"
 
 #include "Runtime.h"
+#include "Utils/Overloaded.h"
 
 #include <SFML/Graphics.hpp>
 
 namespace r3d {
 
-View::Visitor::Visitor(WindowPtr window) : window_(window) {}
-
-View::WindowPtr View::Visitor::window() const noexcept { return window_; }
-
-void View::Visitor::operator()(const sf::Event::Resized& event) const {
-	sf::Vector2u new_size = event.size;
-	window_->setSize(new_size);
-	sf::FloatRect area({0.0f, 0.0f}, {static_cast<float>(new_size.x),
-									  static_cast<float>(new_size.y)});
-	window_->setView(sf::View(area));
-}
-
 View::View(WindowPtr window)
-	: visitor_(window),
+	: window_(window),
 	  FrameReceiver([this](FrozenFrame frame) { showFrame(std::move(frame)); }),
-	  EventReceiver(
-		  [this](const ViewEvent& event) { std::visit(visitor_, event); }) {}
+	  EventReceiver([this](const ViewEvent& event) {
+		  utils::Visit(event, [this](const sf::Event::Resized& resized) {
+			  handleResize(resized);
+		  });
+	  }) {}
 
-View::WindowPtr View::window() const noexcept { return visitor_.window(); }
+View::WindowPtr View::window() const noexcept { return window_; }
 
 void View::showFrame(FrozenFrame frame) {
 	if (frame == nullptr) {
@@ -56,6 +48,14 @@ void View::scaleAndCentrilize(sf::Sprite& sprite) const {
 	sprite.setScale({scale, scale});
 	sprite.setPosition({(window_size.x - texture_size.x * scale) / 2.0f,
 						(window_size.y - texture_size.y * scale) / 2.0f});
+}
+
+void View::handleResize(const sf::Event::Resized& resized) {
+	sf::Vector2u new_size = resized.size;
+	window_->setSize(new_size);
+	sf::FloatRect area({0.0f, 0.0f}, {static_cast<float>(new_size.x),
+									  static_cast<float>(new_size.y)});
+	window_->setView(sf::View(area));
 }
 
 } // namespace r3d

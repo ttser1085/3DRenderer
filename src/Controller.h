@@ -14,19 +14,11 @@ public:
 	explicit Controller(Broker& broker);
 
 private:
-	class Visitor {
-	public:
-		explicit Visitor(Broker& broker);
+	void handleTick(const Tick&);
+	void handleKeyPressed(const KeyPressed&);
+	void handleMouseMoved(const MouseMoved&);
 
-		void operator()(const Tick&);
-		void operator()(const KeyPressed&);
-		void operator()(const MouseMoved&);
-
-	private:
-		Broker& broker_;
-	};
-
-	Visitor visitor_;
+	Broker& broker_;
 };
 
 } // namespace r3d

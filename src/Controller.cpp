@@ -2,20 +2,23 @@
 
 #include "Broker.h"
 #include "Linalg/LinalgBase.h"
+#include "Utils/Overloaded.h"
 
 namespace r3d {
 
 r3d::Controller::Controller(Broker& broker)
-	: visitor_(broker),
-	  BaseType([this](const ModelEvent& event) { std::visit(visitor_, event); }) {}
+	: broker_(broker), BaseType([this](const ModelEvent& event) {
+		  utils::Visit(
+			  event, [this](const Tick& tick) { handleTick(tick); },
+			  [this](const KeyPressed& pressed) { handleKeyPressed(pressed); },
+			  [this](const MouseMoved& moved) { handleMouseMoved(moved); });
+	  }) {}
 
-Controller::Visitor::Visitor(Broker& broker) : broker_(broker) {}
-
-void Controller::Visitor::operator()(const Tick& tick) {
+void Controller::handleTick(const Tick& tick) {
 	broker_.handle(Update{tick.dtime.asSeconds()});
 }
 
-void Controller::Visitor::operator()(const KeyPressed& pressed) {
+void Controller::handleKeyPressed(const KeyPressed& pressed) {
 	using sf::Keyboard::Key;
 
 	switch (pressed.key) {
@@ -56,13 +59,12 @@ void Controller::Visitor::operator()(const KeyPressed& pressed) {
 	}
 }
 
-void Controller::Visitor::operator()(const MouseMoved& moved) {
-	broker_.handle(
-		RotateCamera{static_cast<lalg::Float>(moved.delta.x) /
-						 static_cast<lalg::Float>(moved.win_size.x),
-					 static_cast<lalg::Float>(moved.delta.y) /
-						 static_cast<lalg::Float>(moved.win_size.y),
-					 0.0});
+void Controller::handleMouseMoved(const MouseMoved& moved) {
+	broker_.handle(RotateCamera{static_cast<lalg::Float>(moved.delta.x) /
+									static_cast<lalg::Float>(moved.win_size.x),
+								static_cast<lalg::Float>(moved.delta.y) /
+									static_cast<lalg::Float>(moved.win_size.y),
+								0.0});
 }
 
 } // namespace r3d

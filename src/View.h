@@ -29,20 +29,9 @@ private:
 
 	void showFrame(FrozenFrame frame);
 	void scaleAndCentrilize(sf::Sprite& sprite) const;
+	void handleResize(const sf::Event::Resized& event);
 
-	class Visitor {
-	public:
-		explicit Visitor(WindowPtr window_);
-
-		WindowPtr window() const noexcept;
-
-		void operator()(const sf::Event::Resized&) const;
-
-	private:
-		WindowPtr window_;
-	};
-
-	Visitor visitor_;
+	WindowPtr window_;
 };
 
 } // namespace r3d
