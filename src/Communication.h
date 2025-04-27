@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Utils/Tagged.h"
+
 #include <Observer.h>
 
 #include <vector>
@@ -7,43 +9,43 @@
 namespace r3d {
 
 template<typename T,
-		 typename TSendBy = NSLibrary::NSObserverDetail::AutoSendBy<T>>
-using Sender = NSLibrary::CObservableData<T, TSendBy>;
+		 typename TSendBy = NSLibrary::NSObserverDetail::AutoSendBy<T>,
+		 typename Tag = utils::DefaultTag>
+using Sender = utils::Tagged<NSLibrary::CObservableData<T, TSendBy>, Tag>;
 
 template<typename T,
-		 typename TSendBy = NSLibrary::NSObserverDetail::AutoSendBy<T>>
-using HotReceiver = NSLibrary::CHotInput<T, TSendBy>;
+		 typename TSendBy = NSLibrary::NSObserverDetail::AutoSendBy<T>,
+		 typename Tag = utils::DefaultTag>
+using HotReceiver = utils::Tagged<NSLibrary::CHotInput<T, TSendBy>, Tag>;
 
 template<typename T,
-		 typename TSendBy = NSLibrary::NSObserverDetail::AutoSendBy<T>>
-using ColdReceiver = NSLibrary::CColdInput<T, TSendBy>;
+		 typename TSendBy = NSLibrary::NSObserverDetail::AutoSendBy<T>,
+		 typename Tag = utils::DefaultTag>
+using ColdReceiver = utils::Tagged<NSLibrary::CColdInput<T, TSendBy>, Tag>;
 
-template<typename T>
-class StreamSender {
-	using Output = Sender<std::vector<T>, NSLibrary::CByReference>;
-	using Input = NSLibrary::CObserver<std::vector<T>, NSLibrary::CByReference>;
+template<typename T, typename Tag = utils::DefaultTag>
+class StreamSender
+	: public Sender<std::vector<T>, NSLibrary::CByReference, Tag> {
+	using Base = Sender<std::vector<T>, NSLibrary::CByReference, Tag>;
 
 public:
 	template<class... Args>
-	void set(Args&&... args) {
+	void append(Args&&... args) {
 		data_.emplace_back(std::forward<Args>(args)...);
 	}
 
-	void flush() { out_.set(std::exchange(data_, {})); }
-
-	void subscribe(Input* in) { out_.subscribe(in); }
+	void flush() { Base::set(std::exchange(data_, {})); }
 
 private:
-	Output out_;
 	std::vector<T> data_;
 };
 
-template<typename T>
+template<typename T, typename Tag = utils::DefaultTag>
 using HotStreamReceiver =
-	NSLibrary::CHotInput<std::vector<T>, NSLibrary::CByReference>;
+	HotReceiver<std::vector<T>, NSLibrary::CByReference, Tag>;
 
-template<typename T>
+template<typename T, typename Tag = utils::DefaultTag>
 using ColdStreamReceiver =
-	NSLibrary::CColdInput<std::vector<T>, NSLibrary::CByReference>;
+	ColdReceiver<std::vector<T>, NSLibrary::CByReference, Tag>;
 
 } // namespace r3d

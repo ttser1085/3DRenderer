@@ -10,8 +10,6 @@ namespace r3d {
 class Broker;
 
 class Controller : public ColdReceiver<ModelEvent, NSLibrary::CByReference> {
-	using Base = ColdReceiver<ModelEvent, NSLibrary::CByReference>;
-
 public:
 	explicit Controller(Broker& broker);
 

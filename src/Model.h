@@ -5,6 +5,7 @@
 #include "CoreEvent.h"
 
 namespace r3d {
+
 class Model : public Sender<FrozenFrame, NSLibrary::CByValue>,
 			  public ColdStreamReceiver<CoreEvent> {
 	using Events = std::vector<CoreEvent>;

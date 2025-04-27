@@ -7,7 +7,7 @@ namespace r3d {
 
 r3d::Controller::Controller(Broker& broker)
 	: visitor_(broker),
-	  Base([this](const ModelEvent& event) { std::visit(visitor_, event); }) {}
+	  BaseType([this](const ModelEvent& event) { std::visit(visitor_, event); }) {}
 
 Controller::Visitor::Visitor(Broker& broker) : broker_(broker) {}
 
