@@ -1,25 +1,45 @@
 #pragma once
 
-#include "Linalg/LinalgBase.h"
+#include "Core/Vertex.h"
 
 #include <variant>
 
 namespace r3d {
 
 struct MoveCamera {
-    lalg::Vec3 dir;
+	lalg::Vec3 dir;
 };
 
 struct RotateCamera {
-    lalg::Float delta_yaw;
-    lalg::Float delta_pitch;
-    lalg::Float delta_roll;
+	Float delta_yaw;
+	Float delta_pitch;
+	Float delta_roll;
 };
 
 struct Update {
-    lalg::Float dtime;
+	Float dtime;
 };
 
-using CoreEvent = std::variant<MoveCamera, RotateCamera, Update>;
+struct BeginObject {
+	Vec3 pos;
+};
+
+struct EndObject {};
+
+struct AddVertex {
+	Vertex vertex;
+};
+
+struct AddMesh {
+	Index vertices[3];
+};
+
+using CoreEvent = std::variant<MoveCamera, RotateCamera, Update, BeginObject,
+							   EndObject, AddVertex, AddMesh>;
+
+inline bool isTerminated(const CoreEvent& event) {
+	return std::holds_alternative<Update>(event) ||
+		   std::holds_alternative<EndObject>(event);
+}
 
 } // namespace r3d

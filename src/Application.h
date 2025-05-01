@@ -10,7 +10,7 @@ namespace r3d {
 
 class Application {
 public:
-	Application();
+	Application(int argc, char* argv[]);
 
 	void run();
 

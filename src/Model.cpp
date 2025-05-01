@@ -10,7 +10,7 @@ Model::Model(SizePair target_size_)
 
 void Model::handle(const Events& events) {
 	assert(!events.empty());
-	assert(std::get_if<Update>(&events.back())); // update must be last
+	assert(isTerminated(events.back())); // termination must be last
 
 	for (const auto& event : events) {
 		utils::Visit(
@@ -26,6 +26,17 @@ void Model::handle(const Events& events) {
 				lalg::Angle pitch = core_.camera().fovy() * rotate.delta_pitch;
 				core_.camera().rotateYaw(yaw);
 				core_.camera().rotatePitch(pitch);
+			},
+			[this](const BeginObject& begin) {
+				core_.scene().beginObject(begin.pos);
+			},
+			[this](const EndObject&) { core_.scene().endObject(); },
+			[this](const AddVertex& add) {
+				core_.scene().addVertex(add.vertex);
+			},
+			[this](const AddMesh& add) {
+				core_.scene().addMesh(add.vertices[0], add.vertices[1],
+									  add.vertices[2]);
 			});
 	}
 }

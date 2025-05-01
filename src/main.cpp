@@ -1,9 +1,9 @@
 #include "Application.h"
 #include "Except/Except.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 	try {
-		r3d::Application app;
+		r3d::Application app(argc, argv);
 		app.run();
 	} catch (...) {
 		except::react();

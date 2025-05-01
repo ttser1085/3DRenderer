@@ -11,6 +11,7 @@ public:
     FrozenFrame renderFrame() const;
 
 	Camera& camera();
+	Scene& scene();
 
 private:
 	Renderer renderer_;

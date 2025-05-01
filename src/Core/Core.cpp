@@ -13,4 +13,8 @@ Camera& Core::camera() {
 	return camera_;
 }
 
+Scene& Core::scene() {
+	return scene_;
+}
+
 } // namespace r3d

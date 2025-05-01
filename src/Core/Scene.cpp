@@ -2,9 +2,26 @@
 
 namespace r3d {
 
-Scene::Scene() { initObjects(); }
+Scene::Scene() {}
 
 const std::vector<Object>& Scene::objects() const { return objects_; }
+
+void Scene::beginObject(const Vec3& pos) {
+	started_ = true;
+	objects_.emplace_back(pos);
+}
+
+void Scene::endObject() { started_ = false; }
+
+void Scene::addVertex(const Vertex& vertex) {
+	assert(started_);
+	objects_.back().addVertex(vertex);
+}
+
+void Scene::addMesh(Index v1, Index v2, Index v3) {
+	assert(started_);
+	objects_.back().addMesh(v1, v2, v3);
+}
 
 // Пока так, потом чтение из файлика сделаю
 void Scene::initObjects() {

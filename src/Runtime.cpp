@@ -1,5 +1,7 @@
 #include "Runtime.h"
 
+#include <iostream>
+
 namespace r3d {
 
 Runtime::Runtime(const std::string& win_title)
