@@ -3,12 +3,29 @@
 #include <fstream>
 
 namespace r3d {
+Loader::Loader(const std::string& config_path)
+	: config_(YAML::LoadFile(config_path)) {}
 
-void Loader::ParseObject(const std::string& path, const Vec3& pos) {
-	using lalg::Vec4;
+void Loader::Parse() {
+	auto objects = config_["objects"];
+	assert(objects.IsSequence());
 
-	BaseType::set(ParseBegin{pos});
+	for (YAML::const_iterator it = objects.begin(); it != objects.end(); ++it) {
+		auto pos = (*it)["position"];
+		auto rotation = (*it)["rotation"];
+		std::string path = (*it)["path"].as<std::string>();
 
+		BaseType::set(ParseBegin{
+			Vec3{pos["x"].as<Float>(), pos["y"].as<Float>(),
+				 pos["z"].as<Float>()},
+			Vec3{rotation["angleX"].as<Float>(), rotation["angleY"].as<Float>(),
+				 rotation["angleZ"].as<Float>()}});
+		parseObject(path);
+		BaseType::set(ParseEnd{});
+	}
+}
+
+void Loader::parseObject(const std::string& path) {
 	std::fstream stream(path);
 	std::string word;
 	while (stream >> word) {
@@ -26,8 +43,6 @@ void Loader::ParseObject(const std::string& path, const Vec3& pos) {
 			BaseType::set(parse);
 		}
 	}
-
-	BaseType::set(ParseEnd{});
 
 	stream.close();
 }

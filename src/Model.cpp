@@ -28,7 +28,7 @@ void Model::handle(const Events& events) {
 				core_.camera().rotatePitch(pitch);
 			},
 			[this](const BeginObject& begin) {
-				core_.scene().beginObject(begin.pos);
+				core_.scene().beginObject(begin.pos, begin.rotation);
 			},
 			[this](const EndObject&) { core_.scene().endObject(); },
 			[this](const AddVertex& add) {

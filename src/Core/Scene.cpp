@@ -6,9 +6,12 @@ Scene::Scene() {}
 
 const std::vector<Object>& Scene::objects() const { return objects_; }
 
-void Scene::beginObject(const Vec3& pos) {
+void Scene::beginObject(const Vec3& pos, const Vec3& angles) {
 	started_ = true;
 	objects_.emplace_back(pos);
+	objects_.back().rotate(angles(0), Vec3::UnitX());
+	objects_.back().rotate(angles(1), Vec3::UnitY());
+	objects_.back().rotate(angles(2), Vec3::UnitZ());
 }
 
 void Scene::endObject() { started_ = false; }

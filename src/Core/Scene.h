@@ -10,7 +10,7 @@ public:
     
     const std::vector<Object>& objects() const;
 
-    void beginObject(const Vec3& pos);
+    void beginObject(const Vec3& pos, const Vec3& angles);
     void endObject();
 
     void addVertex(const Vertex& vertex);

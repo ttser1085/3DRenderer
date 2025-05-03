@@ -18,10 +18,9 @@ Application::Application(int argc, char* argv[])
 	broker_.subscribe(&model_);
 
 	if (argc >= 2) {
-		Loader loader;
+		Loader loader(argv[1]);
 		loader.subscribe(&manager_);
-		loader.ParseObject(argv[1], Vec3{0.0f, 0.0f, -7.0f});
-		loader.ParseObject(argv[1], Vec3{4.0f, 0.0f, -7.0f});
+		loader.Parse();
 		loader.unsubscribeAll();
 	}
 

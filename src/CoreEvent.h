@@ -22,6 +22,7 @@ struct Update {
 
 struct BeginObject {
 	Vec3 pos;
+	Vec3 rotation;
 };
 
 struct EndObject {};

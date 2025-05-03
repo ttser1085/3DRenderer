@@ -8,7 +8,10 @@ namespace r3d {
 class LoadController {
 public:
 	void operator()(Broker& broker, const ParseBegin& begin) {
-		broker.handle(BeginObject{begin.pos});
+		Vec3 rotation{lalg::toRadians(begin.rotation(0)),
+					  lalg::toRadians(begin.rotation(1)),
+					  lalg::toRadians(begin.rotation(2))};
+		broker.handle(BeginObject{begin.pos, rotation});
 	}
 
 	void operator()(Broker& broker, const ParseEnd end) {

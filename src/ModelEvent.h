@@ -22,6 +22,7 @@ struct MouseMoved {
 
 struct ParseBegin {
 	Vec3 pos;
+	Vec3 rotation;
 };
 
 struct ParseEnd {};
