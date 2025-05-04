@@ -10,6 +10,7 @@ public:
 
     FrozenFrame renderFrame() const;
 
+	Renderer& renderer();
 	Camera& camera();
 	Scene& scene();
 

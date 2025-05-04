@@ -1,3 +1,6 @@
+renderer:
+  mode: skeleton # full, skeleton, bordered
+
 objects:
   - position: { x: 0.0, y: 0.0, z: -7.0 }
     rotation: { angleX: 30.0, angleY: 60.0, angleZ: 0.0 }

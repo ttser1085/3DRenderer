@@ -26,6 +26,18 @@ public:
 		broker.handle(
 			AddMesh{mesh.vertices[0], mesh.vertices[1], mesh.vertices[2]});
 	}
+
+	void operator()(Broker& broker, ParseRenderMode parsed) {
+		if (parsed.mode == "full") {
+			broker.handle(SetRenderMode{Renderer::RenderMode::FULL});
+		} else if (parsed.mode == "skeleton") {
+			broker.handle(SetRenderMode{Renderer::RenderMode::SKELETON});
+		} else if (parsed.mode == "bordered") {
+			broker.handle(SetRenderMode{Renderer::RenderMode::BORDERED});
+		} else {
+			throw std::invalid_argument("invalid mode: " + std::string(parsed.mode));
+		}
+	}
 };
 
 } // namespace r3d

@@ -39,7 +39,12 @@ struct Tick {
 	sf::Time dtime;
 };
 
-using ModelEvent = std::variant<Tick, KeyPressed, MouseMoved, ParseBegin,
-								ParseEnd, ParseVertex, ParseMesh>;
+struct ParseRenderMode {
+	std::string_view mode;
+};
+
+using ModelEvent =
+	std::variant<Tick, KeyPressed, MouseMoved, ParseBegin, ParseEnd,
+				 ParseVertex, ParseMesh, ParseRenderMode>;
 
 } // namespace r3d

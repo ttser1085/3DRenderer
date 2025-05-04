@@ -35,6 +35,10 @@ inline ScreenSize area(Width w, Height h) {
 
 inline ScreenSize area(SizePair sp) { return area(sp.x, sp.y); }
 
+inline ScreenSize area(SizePair a, SizePair b, SizePair c) {
+	return (c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x);
+}
+
 template<typename T>
 concept Arithmetic = std::is_arithmetic_v<T>;
 

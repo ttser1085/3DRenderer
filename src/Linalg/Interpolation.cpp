@@ -9,10 +9,10 @@ Vec2 barycentric(const Vec2& p, const Vec2& a, const Vec2& b) {
 	return Vec2{dist_b, dist_a} / (dist_a + dist_b);
 }
 
-Vec3 barycentric(const Vec3& p, const Vec3& a, const Vec3& b, const Vec3& c) {
-	Vec3 v0 = b - a;
-	Vec3 v1 = c - a;
-	Vec3 v2 = p - a;
+Vec3 barycentric(const Vec2& p, const Vec2& a, const Vec2& b, const Vec2& c) {
+	Vec2 v0 = b - a;
+	Vec2 v1 = c - a;
+	Vec2 v2 = p - a;
 
 	Float d00 = v0.dot(v0);
 	Float d01 = v0.dot(v1);

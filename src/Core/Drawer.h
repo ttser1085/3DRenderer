@@ -3,18 +3,22 @@
 #include "Frame.h"
 #include "Linalg/Interpolation.h"
 #include "Mesh.h"
+#include "Shader.h"
 #include "Test.h"
+
+#include <iostream>
 
 namespace r3d {
 
-template<Test T>
+template<Shader S, LineShader LS, Test T>
 class Drawer {
 public:
-	Drawer(Frame&& canvas, T&& test)
+	Drawer(Frame&& canvas, T&& test, S&& shader, LS&& line_shader)
 		: canvas_(std::move(canvas)),
 		  canvas_size_(static_cast<Float>(canvas_.width()),
 					   static_cast<Float>(canvas_.height())),
-		  test_(std::move(test)) {}
+		  test_(std::move(test)), shader_(std::move(shader)),
+		  line_shader_(std::move(line_shader)) {}
 
 	void drawLine(const Vertex& v1, const Vertex& v2) {
 		using lalg::linearCombination, lalg::barycentric;
@@ -50,13 +54,7 @@ public:
 				Vec2 p = absoluteToRelative(cur_pos);
 				Vec2 brc = barycentric(p, v1.pos.head<2>(), v2.pos.head<2>());
 
-				assert(lalg::isCorrectBrc<2>(brc, p, v1.pos.head<2>(),
-											 v2.pos.head<2>()));
-				assert(lalg::isNormBrc(brc));
-				assert(lalg::isInnerBrc(brc));
-
-				Vertex v{linearCombination<Vec4>(brc, v1.pos, v2.pos),
-						 linearCombination<Color3f>(brc, v1.color, v2.color)};
+				Vertex v = line_shader_(brc, v1, v2);
 
 				if (test_(cur_pos, v)) {
 					canvas_.setColor(cur_pos, Color3b::fromColor3f(v.color));
@@ -80,13 +78,7 @@ public:
 				Vec2 p = absoluteToRelative(cur_pos);
 				Vec2 brc = barycentric(p, v1.pos.head<2>(), v2.pos.head<2>());
 
-				assert(lalg::isCorrectBrc<2>(brc, p, v1.pos.head<2>(),
-											 v2.pos.head<2>()));
-				assert(lalg::isNormBrc(brc));
-				assert(lalg::isInnerBrc(brc));
-
-				Vertex v{linearCombination<Vec4>(brc, v1.pos, v2.pos),
-						 linearCombination<Color3f>(brc, v1.color, v2.color)};
+				Vertex v = line_shader_(brc, v1, v2);
 
 				if (test_(cur_pos, v)) {
 					canvas_.setColor(cur_pos, Color3b::fromColor3f(v.color));
@@ -102,7 +94,42 @@ public:
 	}
 
 	void fillMesh(const Mesh& mesh) {
-		// TODO
+		using lalg::linearCombination, lalg::barycentric;
+		using lalg::Vec2;
+
+		SizePair p1 = relativeToAbsolute(mesh.vertices[0].pos.head<2>());
+		SizePair p2 = relativeToAbsolute(mesh.vertices[1].pos.head<2>());
+		SizePair p3 = relativeToAbsolute(mesh.vertices[2].pos.head<2>());
+
+		ScreenSize min_x = std::min(p1.x, std::min(p2.x, p3.x));
+		ScreenSize max_x = std::max(p1.x, std::max(p2.x, p3.x));
+		ScreenSize min_y = std::min(p1.y, std::min(p2.y, p3.y));
+		ScreenSize max_y = std::max(p1.y, std::max(p2.y, p3.y));
+
+		ScreenSize triangle_area = area(p1, p2, p3);
+
+		for (ScreenSize y = min_y; y <= max_y; ++y) {
+			for (ScreenSize x = min_x; x <= max_x; ++x) {
+				SizePair cur_pos = makeSizePair(x, y);
+				ScreenSize w1 = area(p2, p3, cur_pos);
+				ScreenSize w2 = area(p3, p1, cur_pos);
+				ScreenSize w3 = area(p1, p2, cur_pos);
+
+				if ((w1 >= 0 && w2 >= 0 && w3 >= 0) ||
+					(w1 <= 0 && w2 <= 0 && w3 <= 0)) {
+					Vec3 brc{static_cast<Float>(w1) / triangle_area,
+							 static_cast<Float>(w2) / triangle_area,
+							 static_cast<Float>(w3) / triangle_area};
+
+					Vertex v = shader_(brc, mesh);
+
+					if (test_(cur_pos, v)) {
+						canvas_.setColor(cur_pos,
+										 Color3b::fromColor3f(v.color));
+					}
+				}
+			}
+		}
 	}
 
 	Frame release() { return std::move(canvas_); }
@@ -127,6 +154,8 @@ private:
 	Frame canvas_;
 	lalg::Vec2 canvas_size_;
 	T test_;
+	S shader_;
+	LS line_shader_;
 };
 
 } // namespace r3d

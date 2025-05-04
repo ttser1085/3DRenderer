@@ -6,7 +6,7 @@ namespace lalg {
 
 Vec2 barycentric(const Vec2& p, const Vec2& a, const Vec2& b);
 
-Vec3 barycentric(const Vec3& p, const Vec3& a, const Vec3& b, const Vec3& c);
+Vec3 barycentric(const Vec2& p, const Vec2& a, const Vec2& b, const Vec2& c);
 
 template<Linear R, int Dim, Linear First, Linear... Args>
 R linearCombination(const Vec<Dim>& brc, First&& first, Args&&... args) {
@@ -22,12 +22,11 @@ R linearCombination(const Vec<Dim>& brc, First&& first, Args&&... args) {
 
 // Check barycentric coords:
 
-template<int S, Linear... Args>
-bool isCorrectBrc(const Vec<S>& brc, const Vec<S> p, Args&&... args) {
+template<int S, Linear R, Linear... Args>
+bool isCorrectBrc(const Vec<S>& brc, const R& p, Args&&... args) {
 	static constexpr Float kPrecision = 0.05f;
 	return approxEqual(
-		p, linearCombination<Vec<S>>(brc, std::forward<Args>(args)...),
-		kPrecision);
+		p, linearCombination<R>(brc, std::forward<Args>(args)...), kPrecision);
 }
 
 template<int S>
@@ -41,4 +40,4 @@ bool isInnerBrc(const Vec<S>& brc) {
 	return brc.isMuchSmallerThan(1.0f, kPrecision);
 }
 
-} // namespace linalg
+} // namespace lalg

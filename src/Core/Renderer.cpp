@@ -14,8 +14,9 @@ Frame Renderer::makeFrame(const Camera& camera, const Scene& scene) const {
 	BorderTest border_test(makeSizePair(0, 0), frame.size());
 	DepthTest depth_test(frame.size());
 
-	Drawer brush(std::move(frame),
-				 conjunction(std::move(border_test), std::move(depth_test)));
+	Drawer drawer(std::move(frame),
+				  conjunction(std::move(border_test), std::move(depth_test)),
+				  OptimizedShader{}, FullLineShader{});
 
 	for (const Object& object : scene.objects()) {
 		for (auto proxy : object) {
@@ -29,11 +30,22 @@ Frame Renderer::makeFrame(const Camera& camera, const Scene& scene) const {
 					camera.projection(camera.lookAt(mesh.vertices[i].pos)));
 			}
 
-			brush.drawMesh(mesh);
+			if (mode_ == RenderMode::FULL) {
+				drawer.fillMesh(mesh);
+			} else if (mode_ == RenderMode::SKELETON) {
+				drawer.drawMesh(mesh);
+			} else if (mode_ == RenderMode::BORDERED) {
+				drawer.fillMesh(mesh);
+				drawer.drawMesh(mesh);
+			} else {
+				assert(false);
+			}
 		}
 	}
 
-	return brush.release();
+	return drawer.release();
 }
+
+void Renderer::setMode(RenderMode mode) { mode_ = mode; }
 
 } // namespace r3d

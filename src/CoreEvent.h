@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/Renderer.h"
 #include "Core/Vertex.h"
 
 #include <variant>
@@ -35,12 +36,17 @@ struct AddMesh {
 	Index vertices[3];
 };
 
+struct SetRenderMode {
+	Renderer::RenderMode mode;
+};
+
 using CoreEvent = std::variant<MoveCamera, RotateCamera, Update, BeginObject,
-							   EndObject, AddVertex, AddMesh>;
+							   EndObject, AddVertex, AddMesh, SetRenderMode>;
 
 inline bool isTerminated(const CoreEvent& event) {
 	return std::holds_alternative<Update>(event) ||
-		   std::holds_alternative<EndObject>(event);
+		   std::holds_alternative<EndObject>(event) ||
+		   std::holds_alternative<SetRenderMode>(event);
 }
 
 } // namespace r3d

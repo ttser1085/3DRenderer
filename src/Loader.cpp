@@ -7,9 +7,12 @@ Loader::Loader(const std::string& config_path)
 	: config_(YAML::LoadFile(config_path)) {}
 
 void Loader::Parse() {
+	auto renderer = config_["renderer"];
+	auto mode = renderer["mode"].as<std::string_view>();
+	BaseType::set(ParseRenderMode{mode});
+
 	auto objects = config_["objects"];
 	assert(objects.IsSequence());
-
 	for (YAML::const_iterator it = objects.begin(); it != objects.end(); ++it) {
 		auto pos = (*it)["position"];
 		auto rotation = (*it)["rotation"];

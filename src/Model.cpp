@@ -37,6 +37,9 @@ void Model::handle(const Events& events) {
 			[this](const AddMesh& add) {
 				core_.scene().addMesh(add.vertices[0], add.vertices[1],
 									  add.vertices[2]);
+			},
+			[this](SetRenderMode mode) {
+				core_.renderer().setMode(mode.mode);
 			});
 	}
 }
