@@ -84,8 +84,4 @@ void Runtime::checkKeysPressed() {
 	}
 }
 
-void Runtime::send(const ModelEvent& event) { ModelSender::set(event); }
-
-void Runtime::send(const ViewEvent& event) { ViewSender::set(event); }
-
 } // namespace r3d

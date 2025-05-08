@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Communication.h"
-#include "ModelEvent.h"
+#include "Input.h"
 
 #include <yaml-cpp/yaml.h>
 
@@ -9,7 +8,7 @@
 
 namespace r3d {
 
-class Loader : public Sender<ModelEvent, ByRef> {
+class Loader : public Input {
 public:
 	explicit Loader(const std::string& config_path);
 

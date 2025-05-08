@@ -9,7 +9,7 @@ Loader::Loader(const std::string& config_path)
 void Loader::Parse() {
 	auto renderer = config_["renderer"];
 	auto mode = renderer["mode"].as<std::string_view>();
-	BaseType::set(ParseRenderMode{mode});
+	send(ParseRenderMode{mode});
 
 	auto objects = config_["objects"];
 	assert(objects.IsSequence());
@@ -18,13 +18,13 @@ void Loader::Parse() {
 		auto rotation = (*it)["rotation"];
 		std::string path = (*it)["path"].as<std::string>();
 
-		BaseType::set(ParseBegin{
-			Vec3{pos["x"].as<Float>(), pos["y"].as<Float>(),
-				 pos["z"].as<Float>()},
-			Vec3{rotation["angleX"].as<Float>(), rotation["angleY"].as<Float>(),
-				 rotation["angleZ"].as<Float>()}});
+		send(ParseBegin{Vec3{pos["x"].as<Float>(), pos["y"].as<Float>(),
+							 pos["z"].as<Float>()},
+						Vec3{rotation["angleX"].as<Float>(),
+							 rotation["angleY"].as<Float>(),
+							 rotation["angleZ"].as<Float>()}});
 		parseObject(path);
-		BaseType::set(ParseEnd{});
+		send(ParseEnd{});
 	}
 }
 
@@ -38,12 +38,12 @@ void Loader::parseObject(const std::string& path) {
 				parse.vertex.pos(2) >> parse.vertex.pos(3) >>
 				parse.vertex.color.r >> parse.vertex.color.g >>
 				parse.vertex.color.b;
-			BaseType::set(parse);
+			send(parse);
 		} else if (word == "f") {
 			ParseMesh parse;
 			stream >> parse.vertices[0] >> parse.vertices[1] >>
 				parse.vertices[2];
-			BaseType::set(parse);
+			send(parse);
 		}
 	}
 

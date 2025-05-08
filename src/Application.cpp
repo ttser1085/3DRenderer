@@ -19,9 +19,9 @@ Application::Application(int argc, char* argv[])
 
 	if (argc >= 2) {
 		Loader loader(argv[1]);
-		loader.subscribe(&manager_);
+		loader.ModelSender::subscribe(&manager_);
 		loader.Parse();
-		loader.unsubscribeAll();
+		loader.ModelSender::unsubscribeAll();
 	}
 
 	runtime_.ModelSender::subscribe(&manager_);
