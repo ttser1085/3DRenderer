@@ -2,8 +2,6 @@
 
 #include "Utils/Overloaded.h"
 
-#include <iostream>
-
 namespace r3d {
 
 View::View(WindowPtr window)
@@ -61,7 +59,6 @@ void View::handleResize(const sf::Event::Resized& resized) {
 }
 
 void View::loadFont(const std::string& path) {
-	std::cout << path << "\n";
 	assert(font_.openFromFile(path));
 }
 
