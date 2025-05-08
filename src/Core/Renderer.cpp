@@ -1,6 +1,5 @@
 #include "Renderer.h"
 
-#include "Clipping.h"
 #include "Drawer.h"
 
 namespace r3d {

@@ -11,6 +11,9 @@ void Loader::Parse() {
 	auto mode = renderer["mode"].as<std::string_view>();
 	send(ParseRenderMode{mode});
 
+	auto font_path = renderer["font"].as<std::string>();
+	send(LoadFont{font_path});
+
 	auto objects = config_["objects"];
 	assert(objects.IsSequence());
 	for (YAML::const_iterator it = objects.begin(); it != objects.end(); ++it) {

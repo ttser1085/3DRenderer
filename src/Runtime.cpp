@@ -23,7 +23,13 @@ void Runtime::run() {
 
 		checkKeysPressed();
 
-		send(Tick{clock.restart()});
+		sf::Time dtime = clock.restart();
+		send(Tick{dtime});
+
+		int fps = static_cast<int>(1.0f / dtime.asSeconds());
+		send(RenderText{"FPS: " + std::to_string(fps)});
+		
+		window()->display();
 	}
 }
 

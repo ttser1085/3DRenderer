@@ -1,9 +1,8 @@
 #include "View.h"
 
-#include "Runtime.h"
 #include "Utils/Overloaded.h"
 
-#include <SFML/Graphics.hpp>
+#include <iostream>
 
 namespace r3d {
 
@@ -11,9 +10,13 @@ View::View(WindowPtr window)
 	: window_(window),
 	  FrameReceiver([this](FrozenFrame frame) { showFrame(std::move(frame)); }),
 	  EventReceiver([this](const ViewEvent& event) {
-		  utils::Visit(event, [this](const sf::Event::Resized& resized) {
-			  handleResize(resized);
-		  });
+		  utils::Visit(
+			  event,
+			  [this](const sf::Event::Resized& resized) {
+				  handleResize(resized);
+			  },
+			  [this](const LoadFont& load) { loadFont(load.path); },
+			  [this](const RenderText& text) { renderText(text.text); });
 	  }) {}
 
 View::WindowPtr View::window() const noexcept { return window_; }
@@ -34,7 +37,6 @@ void View::showFrame(FrozenFrame frame) {
 
 	window()->clear();
 	window()->draw(sprite);
-	window()->display();
 }
 
 void View::scaleAndCentrilize(sf::Sprite& sprite) const {
@@ -56,6 +58,22 @@ void View::handleResize(const sf::Event::Resized& resized) {
 	sf::FloatRect area({0.0f, 0.0f}, {static_cast<float>(new_size.x),
 									  static_cast<float>(new_size.y)});
 	window_->setView(sf::View(area));
+}
+
+void View::loadFont(const std::string& path) {
+	std::cout << path << "\n";
+	assert(font_.openFromFile(path));
+}
+
+void View::renderText(const std::string& str) {
+	sf::Text text(font_, str);
+	text.setPosition(sf::Vector2f{10.0f, 10.0f});
+	text.setCharacterSize(30);
+	text.setFillColor(sf::Color::White);
+	text.setOutlineThickness(1);
+	text.setOutlineColor(sf::Color::Red);
+
+	window_->draw(text);
 }
 
 } // namespace r3d

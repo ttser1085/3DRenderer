@@ -20,6 +20,7 @@ Application::Application(int argc, char* argv[])
 	if (argc >= 2) {
 		Loader loader(argv[1]);
 		loader.ModelSender::subscribe(&manager_);
+		loader.ViewSender::subscribe(&view_);
 		loader.Parse();
 		loader.ModelSender::unsubscribeAll();
 	}

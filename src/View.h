@@ -4,13 +4,7 @@
 #include "Core/Frame.h"
 #include "ViewEvent.h"
 
-namespace sf {
-
-class RenderWindow;
-
-class Sprite;
-
-} // namespace sf
+#include <SFML/Graphics.hpp>
 
 namespace r3d {
 
@@ -30,8 +24,11 @@ private:
 	void showFrame(FrozenFrame frame);
 	void scaleAndCentrilize(sf::Sprite& sprite) const;
 	void handleResize(const sf::Event::Resized& event);
+	void loadFont(const std::string& path);
+	void renderText(const std::string& str);
 
 	WindowPtr window_;
+	sf::Font font_;
 };
 
 } // namespace r3d

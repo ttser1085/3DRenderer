@@ -1,10 +1,11 @@
 renderer:
   mode: skeleton # full, skeleton, bordered
+  font: ../resources/fonts/opensans/OpenSans-Regular.ttf
 
 objects:
   - position: { x: 0.0, y: 0.0, z: -7.0 }
     rotation: { angleX: 30.0, angleY: 60.0, angleZ: 0.0 }
-    path: ../resources/cube.obj
+    path: ../resources/objects/cube.obj
   - position: { x: 1.4, y: 1.2, z: -6.0 }
     rotation: { angleX: 0.0, angleY: 10.0, angleZ: 40.0 }
-    path: ../resources/cube.obj
+    path: ../resources/objects/cube.obj
