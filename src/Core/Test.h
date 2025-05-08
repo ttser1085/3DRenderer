@@ -37,8 +37,6 @@ auto disjunction(Ts&&... tests) {
 // Common tests:
 
 class BorderTest {
-	using SizePair = SizePair;
-
 public:
 	BorderTest(SizePair left_top, SizePair size)
 		: left_top_(left_top), size_(size) {}

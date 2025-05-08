@@ -13,8 +13,6 @@ include_directories(submodules/Library/Observer3)
 include_directories(submodules/SFML/include)
 include_directories(submodules/yaml-cpp/include)
 
-set(CMAKE_CXX_COMPILER /usr/bin/clang++-17)
-
 set(SOURCE_DIR src)
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}/*.cpp")
 

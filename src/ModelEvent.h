@@ -2,12 +2,10 @@
 
 #include "Core/Vertex.h"
 
-#include <Observer.h>
 #include <SFML/System.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 #include <variant>
-#include <vector>
 
 namespace r3d {
 
