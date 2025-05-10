@@ -88,18 +88,18 @@ public:
 	}
 
 	void drawMesh(const Mesh& mesh) {
-		drawLine(mesh.vertices[0], mesh.vertices[1]);
-		drawLine(mesh.vertices[1], mesh.vertices[2]);
-		drawLine(mesh.vertices[2], mesh.vertices[0]);
+		drawLine(mesh[0], mesh[1]);
+		drawLine(mesh[1], mesh[2]);
+		drawLine(mesh[2], mesh[0]);
 	}
 
 	void fillMesh(const Mesh& mesh) {
 		using lalg::linearCombination, lalg::barycentric;
 		using lalg::Vec2;
 
-		SizePair p1 = relativeToAbsolute(mesh.vertices[0].pos.head<2>());
-		SizePair p2 = relativeToAbsolute(mesh.vertices[1].pos.head<2>());
-		SizePair p3 = relativeToAbsolute(mesh.vertices[2].pos.head<2>());
+		SizePair p1 = relativeToAbsolute(mesh[0].pos.head<2>());
+		SizePair p2 = relativeToAbsolute(mesh[1].pos.head<2>());
+		SizePair p3 = relativeToAbsolute(mesh[2].pos.head<2>());
 
 		ScreenSize min_x = std::min(p1.x, std::min(p2.x, p3.x));
 		ScreenSize max_x = std::max(p1.x, std::max(p2.x, p3.x));

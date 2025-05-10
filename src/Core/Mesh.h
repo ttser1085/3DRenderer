@@ -4,8 +4,6 @@
 
 namespace r3d {
 
-struct Mesh {
-    Vertex vertices[3];
-};
+using Mesh = std::array<Vertex, 3>;
 
 } // namespace r3d

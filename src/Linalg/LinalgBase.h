@@ -60,6 +60,7 @@ Angle toRadians(Angle degrees);
 Angle toDegrees(Angle radians);
 
 Vec4 homoNormalized(const Vec4& homo);
+Vec4 homoNormalized(const Vec3& decart);
 
 // Compare
 

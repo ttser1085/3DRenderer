@@ -30,11 +30,21 @@ public:
 
 	Angle fovy() const;
 
+	std::vector<lalg::Plane> planes() const;
+
 private:
+	struct FrustumCorners {
+		Vec3 ntl, ntr, nbl, nbr;
+		Vec3 ftl, ftr, fbl, fbr;
+	};
+
+	FrustumCorners corners() const;
+
 	void updateProjection();
 
 	Transform look_at_;
 
+	Vec3 pos_;
 	Float speed_;
 	Float sensitivity_;
 
@@ -49,7 +59,7 @@ private:
 	constexpr static Float kDefaultSpeed = 1.0f;
 	constexpr static Float kDefaultSensitivity = 0.5f;
 	constexpr static Float kDefaultZNear = 0.1f;
-	constexpr static Float kDefaultZFar = 100.f;
+	constexpr static Float kDefaultZFar = 20.f;
 	constexpr static Angle kDefaultFovy = M_PI_4; // 45 degrees
 };
 

@@ -4,9 +4,30 @@
 
 namespace lalg {
 
-Vec2 barycentric(const Vec2& p, const Vec2& a, const Vec2& b);
+Vec2 barycentric(auto&& p, auto&& a, auto&& b) {
+	Float dist_a = (p - a).norm();
+	Float dist_b = (p - b).norm();
 
-Vec3 barycentric(const Vec2& p, const Vec2& a, const Vec2& b, const Vec2& c);
+	return Vec2{dist_b, dist_a} / (dist_a + dist_b);
+}
+
+Vec3 barycentric(auto&& p, auto&& a, auto&& b, auto&& c) {
+	auto v0 = b - a;
+	auto v1 = c - a;
+	auto v2 = p - a;
+
+	Float d00 = v0.dot(v0);
+	Float d01 = v0.dot(v1);
+	Float d11 = v1.dot(v1);
+	Float d20 = v2.dot(v0);
+	Float d21 = v2.dot(v1);
+
+	Float denom = d00 * d11 - d01 * d01;
+	Float c1 = (d11 * d20 - d01 * d21) / denom;
+	Float c2 = (d00 * d21 - d01 * d20) / denom;
+
+	return Vec3{c1, c2, 1.0f - c1 - c2};
+}
 
 template<Linear R, int Dim, Linear First, Linear... Args>
 R linearCombination(const Vec<Dim>& brc, First&& first, Args&&... args) {
