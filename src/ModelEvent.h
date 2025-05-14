@@ -18,31 +18,11 @@ struct MouseMoved {
 	sf::Vector2u win_size;
 };
 
-struct ParseBegin {
-	Vec3 pos;
-	Vec3 rotation;
-};
-
-struct ParseEnd {};
-
-struct ParseVertex {
-	Vertex vertex;
-};
-
-struct ParseMesh {
-	Index vertices[3];
-};
-
 struct Tick {
 	sf::Time dtime;
 };
 
-struct ParseRenderMode {
-	std::string_view mode;
-};
-
 using ModelEvent =
-	std::variant<Tick, KeyPressed, MouseMoved, ParseBegin, ParseEnd,
-				 ParseVertex, ParseMesh, ParseRenderMode>;
+	std::variant<Tick, KeyPressed, MouseMoved>;
 
 } // namespace r3d

@@ -6,60 +6,23 @@ Scene::Scene() {}
 
 const std::vector<Object>& Scene::objects() const { return objects_; }
 
-void Scene::beginObject(const Vec3& pos, const Vec3& angles) {
-	started_ = true;
-	objects_.emplace_back(pos);
-	objects_.back().rotate(angles(0), Vec3::UnitX());
-	objects_.back().rotate(angles(1), Vec3::UnitY());
-	objects_.back().rotate(angles(2), Vec3::UnitZ());
-}
-
-void Scene::endObject() { started_ = false; }
-
-void Scene::addVertex(const Vertex& vertex) {
-	assert(started_);
-	objects_.back().addVertex(vertex);
-}
-
-void Scene::addMesh(Index v1, Index v2, Index v3) {
-	assert(started_);
-	objects_.back().addMesh(v1, v2, v3);
-}
-
-// Пока так, потом чтение из файлика сделаю
-void Scene::initObjects() {
-	Object object(Vec3{0.0f, 0.0f, -7.0f});
-	object.addVertex(Vertex{Vec4{0.0f, 0.0f, 0.0f, 1.0f}, kGreen3f});
-	object.addVertex(Vertex{Vec4{1.0f, 0.0f, 0.0f, 1.0f}, kBlue3f});
-	object.addVertex(Vertex{Vec4{0.0f, 1.0f, 0.0f, 1.0f}, kBlue3f});
-	object.addVertex(Vertex{Vec4{1.0f, 1.0f, 0.0f, 1.0f}, kBlue3f});
-
-	object.addVertex(Vertex{Vec4{0.0f, 0.0f, 1.0f, 1.0f}, kRed3f});
-	object.addVertex(Vertex{Vec4{1.0f, 0.0f, 1.0f, 1.0f}, kRed3f});
-	object.addVertex(Vertex{Vec4{0.0f, 1.0f, 1.0f, 1.0f}, kRed3f});
-	object.addVertex(Vertex{Vec4{1.0f, 1.0f, 1.0f, 1.0f}, kRed3f});
-
-	object.addMesh(0, 2, 1);
-	object.addMesh(1, 2, 3);
-
-	object.addMesh(1, 5, 7);
-	object.addMesh(1, 7, 3);
-
-	object.addMesh(0, 4, 2);
-	object.addMesh(4, 6, 2);
-
-	object.addMesh(0, 1, 5);
-	object.addMesh(0, 5, 4);
-
-	object.addMesh(2, 3, 6);
-	object.addMesh(3, 7, 6);
-
-	object.addMesh(6, 5, 4);
-	object.addMesh(6, 7, 5);
-
-	object.rotate(lalg::toRadians(30.0f), Vec3::UnitY());
-
+void Scene::addObject(Object object) {
 	objects_.emplace_back(std::move(object));
+}
+
+void Scene::addObjects(std::vector<Object> objects) {
+	if (objects_.empty()) {
+		objects_ = std::move(objects);
+		return;
+	}
+
+	for (auto& obj : objects) {
+		objects_.emplace_back(std::move(obj));
+	}
+}
+
+void Scene::clear() {
+	objects_.clear();
 }
 
 } // namespace r3d

@@ -19,7 +19,7 @@ public:
 	void setMode(RenderMode mode);
 
 private:
-	RenderMode mode_ = RenderMode::FULL;
+	RenderMode mode_;;
 };
 
 } // namespace r3d

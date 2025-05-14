@@ -1,21 +1,23 @@
 #pragma once
 
-#include "Input.h"
+#include "CoreConfig.h"
 
+#include <SFML/Graphics.hpp>
 #include <yaml-cpp/yaml.h>
 
 #include <string_view>
 
 namespace r3d {
 
-class Loader : public Input {
+class Loader {
 public:
 	explicit Loader(const std::string& config_path);
 
-	void Parse();
+	CoreConfig parseCoreConfig();
+	sf::Font parseFont();
 
 private:
-	void parseObject(const std::string& path);
+	Object parseObject(const std::string& path);
 
 	YAML::Node config_;
 };

@@ -25,6 +25,7 @@ public:
 	void move(const Vec3& movement);
 	void scale(const Vec3& scale);
 	void rotate(lalg::Angle angle, const Vec3& axis);
+	void rotate(const Vec3& rotation);
 
 	ConstMeshIterator begin() const;
 	ConstMeshIterator end() const;

@@ -21,32 +21,10 @@ struct Update {
 	Float dtime;
 };
 
-struct BeginObject {
-	Vec3 pos;
-	Vec3 rotation;
-};
-
-struct EndObject {};
-
-struct AddVertex {
-	Vertex vertex;
-};
-
-struct AddMesh {
-	Index vertices[3];
-};
-
-struct SetRenderMode {
-	Renderer::RenderMode mode;
-};
-
-using CoreEvent = std::variant<MoveCamera, RotateCamera, Update, BeginObject,
-							   EndObject, AddVertex, AddMesh, SetRenderMode>;
+using CoreEvent = std::variant<MoveCamera, RotateCamera, Update>;
 
 inline bool isTerminated(const CoreEvent& event) {
-	return std::holds_alternative<Update>(event) ||
-		   std::holds_alternative<EndObject>(event) ||
-		   std::holds_alternative<SetRenderMode>(event);
+	return std::holds_alternative<Update>(event);
 }
 
 } // namespace r3d

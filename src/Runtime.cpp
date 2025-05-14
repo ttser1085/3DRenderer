@@ -26,9 +26,6 @@ void Runtime::run() {
 		sf::Time dtime = clock.restart();
 		send(Tick{dtime});
 
-		int fps = static_cast<int>(1.0f / dtime.asSeconds());
-		send(RenderText{"FPS: " + std::to_string(fps)});
-		
 		window()->display();
 	}
 }
@@ -89,5 +86,9 @@ void Runtime::checkKeysPressed() {
 		send(KeyPressed{Key::RControl});
 	}
 }
+
+void Runtime::send(const ModelEvent& event) { ModelSender::set(event); }
+
+void Runtime::send(const ViewEvent& event) { ViewSender::set(event); }
 
 } // namespace r3d

@@ -10,17 +10,12 @@ public:
     
     const std::vector<Object>& objects() const;
 
-    void beginObject(const Vec3& pos, const Vec3& angles);
-    void endObject();
-
-    void addVertex(const Vertex& vertex);
-    void addMesh(Index v1, Index v2, Index v3);
+    void addObject(Object object);
+    void addObjects(std::vector<Object> objects);
+    void clear();
 
 private:
-    void initObjects();
-
 	std::vector<Object> objects_;
-    bool started_ = false;
 
     // TODO: light sources
 };

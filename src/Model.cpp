@@ -4,9 +4,14 @@
 
 namespace r3d {
 
-Model::Model(SizePair target_size_)
-	: core_(target_size_), movement_dir_(Vec3::Zero()),
+Model::Model()
+	: movement_dir_(Vec3::Zero()),
 	  EventReceiver([this](const Events& events) { handle(events); }) {}
+
+void Model::initFromConfig(CoreConfig config) {
+	core_.renderer().setMode(config.mode);
+	core_.scene().addObjects(std::move(config.objects));
+}
 
 void Model::handle(const Events& events) {
 	assert(!events.empty());
@@ -26,20 +31,6 @@ void Model::handle(const Events& events) {
 				lalg::Angle pitch = core_.camera().fovy() * rotate.delta_pitch;
 				core_.camera().rotateYaw(yaw);
 				core_.camera().rotatePitch(pitch);
-			},
-			[this](const BeginObject& begin) {
-				core_.scene().beginObject(begin.pos, begin.rotation);
-			},
-			[this](const EndObject&) { core_.scene().endObject(); },
-			[this](const AddVertex& add) {
-				core_.scene().addVertex(add.vertex);
-			},
-			[this](const AddMesh& add) {
-				core_.scene().addMesh(add.vertices[0], add.vertices[1],
-									  add.vertices[2]);
-			},
-			[this](SetRenderMode mode) {
-				core_.renderer().setMode(mode.mode);
 			});
 	}
 }

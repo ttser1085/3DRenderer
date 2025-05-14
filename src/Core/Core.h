@@ -6,7 +6,7 @@ namespace r3d {
 
 class Core {
 public:
-	explicit Core(SizePair target_size_);
+	Core() = default;
 
     FrozenFrame renderFrame() const;
 

@@ -13,7 +13,7 @@ class Camera {
 	using Rotation = lalg::Rotation;
 
 public:
-	Camera(Vec3 pos, SizePair size, Float speed = kDefaultSpeed,
+	Camera(Vec3 pos = kDefaultPos, SizePair size = kDefaultSize, Float speed = kDefaultSpeed,
 		   Float sensitivity = kDefaultSensitivity, Angle fovy = kDefaultFovy,
 		   Float z_near = kDefaultZNear, Float z_far = kDefaultZFar,
 		   Vec3 dir = -Vec3::UnitZ(), Vec3 up = Vec3::UnitY());
@@ -56,6 +56,8 @@ private:
 
 	lalg::Mat4 projection_;
 
+	inline static Vec3 kDefaultPos = Vec3::Zero();
+	constexpr static SizePair kDefaultSize = SizePair{Width{1440}, Height{900}};
 	constexpr static Float kDefaultSpeed = 1.0f;
 	constexpr static Float kDefaultSensitivity = 0.5f;
 	constexpr static Float kDefaultZNear = 0.1f;

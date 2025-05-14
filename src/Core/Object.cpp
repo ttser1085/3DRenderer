@@ -26,6 +26,12 @@ void Object::rotate(lalg::Angle angle, const Vec3& axis) {
 	transform_.rotate(Rotation(angle, axis));
 }
 
+void Object::rotate(const Vec3& rotation) {
+	rotate(rotation(0), Vec3::UnitX());
+	rotate(rotation(1), Vec3::UnitY());
+	rotate(rotation(2), Vec3::UnitZ());
+}
+
 ConstMeshIterator Object::begin() const {
 	return ConstMeshIterator(meshes_.cbegin(), *this);
 }

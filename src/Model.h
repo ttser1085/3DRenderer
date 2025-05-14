@@ -3,6 +3,7 @@
 #include "Communication.h"
 #include "Core/Core.h"
 #include "CoreEvent.h"
+#include "CoreConfig.h"
 
 namespace r3d {
 
@@ -12,7 +13,9 @@ class Model : public Sender<FrozenFrame, ByVal>,
 	using EventReceiver = ColdStreamReceiver<CoreEvent>;
 
 public:
-	explicit Model(SizePair target_size_);
+	Model();
+			
+	void initFromConfig(CoreConfig config);
 
 private:
 	void handle(const Events& events);

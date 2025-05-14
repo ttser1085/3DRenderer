@@ -59,7 +59,7 @@ void View::handleResize(const sf::Event::Resized& resized) {
 }
 
 void View::loadFont(const std::string& path) {
-	assert(font_.openFromFile(path));
+	font_.openFromFile(path);
 }
 
 void View::renderText(const std::string& str) {
