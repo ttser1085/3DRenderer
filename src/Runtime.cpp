@@ -5,19 +5,18 @@
 namespace r3d {
 
 Runtime::Runtime(const std::string& win_title)
-	: window_(std::make_unique<sf::RenderWindow>(sf::VideoMode(kDefaultSize),
-												 win_title)) {
-	window_->setMouseCursorVisible(false);
+	: window_(sf::VideoMode(kDefaultSize), win_title) {
+	window_.setMouseCursorVisible(false);
 	sf::Mouse::setPosition(sf::Vector2i{kDefaultSize.x / 2, kDefaultSize.y / 2},
-						   *window_);
+						   window_);
 }
 
-Runtime::WindowRawPtr Runtime::window() const noexcept { return window_.get(); }
+sf::RenderWindow* Runtime::window() noexcept { return &window_; }
 
 void Runtime::run() {
 	sf::Clock clock;
-	while (window_->isOpen()) {
-		while (std::optional event_opt = window_->pollEvent()) {
+	while (window_.isOpen()) {
+		while (std::optional event_opt = window_.pollEvent()) {
 			onEvent(std::move(event_opt.value()));
 		}
 
@@ -32,17 +31,17 @@ void Runtime::run() {
 
 void Runtime::onEvent(sf::Event event) {
 	if (event.is<sf::Event::Closed>()) {
-		window_->close();
+		window_.close();
 		exit(EXIT_SUCCESS);
 	} else if (event.is<sf::Event::Resized>()) {
 		ViewEvent view_event{std::move(*event.getIf<sf::Event::Resized>())};
 		send(view_event);
 	} else if (event.is<sf::Event::MouseMovedRaw>()) {
 		MouseMoved mouse_event{event.getIf<sf::Event::MouseMovedRaw>()->delta,
-							   window_->getSize()};
+							   window_.getSize()};
 		send(mouse_event);
 		sf::Mouse::setPosition(
-			sf::Vector2i{kDefaultSize.x / 2, kDefaultSize.y / 2}, *window_);
+			sf::Vector2i{kDefaultSize.x / 2, kDefaultSize.y / 2}, window_);
 	}
 }
 
@@ -50,7 +49,7 @@ void Runtime::checkKeysPressed() {
 	using sf::Keyboard::isKeyPressed, sf::Keyboard::Key;
 
 	if (isKeyPressed(Key::Escape)) {
-		window_->close();
+		window_.close();
 		exit(EXIT_SUCCESS);
 	}
 

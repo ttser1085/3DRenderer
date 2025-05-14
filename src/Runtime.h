@@ -11,16 +11,13 @@ namespace r3d {
 
 class Runtime : public Sender<ModelEvent, ByRef>,
 				public Sender<ViewEvent, ByRef> {
-	using WindowPtr = std::unique_ptr<sf::RenderWindow>;
-	using WindowRawPtr = sf::RenderWindow*;
-
 public:
 	using ModelSender = Sender<ModelEvent, ByRef>;
 	using ViewSender = Sender<ViewEvent, ByRef>;
 
 	explicit Runtime(const std::string& win_title);
 
-	WindowRawPtr window() const noexcept;
+	sf::RenderWindow* window() noexcept;
 
 	void run();
 
@@ -31,7 +28,7 @@ private:
 	void send(const ModelEvent& event);
 	void send(const ViewEvent& event);
 
-	WindowPtr window_;
+	sf::RenderWindow window_;
 
 	static constexpr sf::Vector2u kDefaultSize = sf::Vector2u{1440, 900};
 };
