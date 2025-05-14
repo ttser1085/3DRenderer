@@ -2,16 +2,15 @@
 
 #include "Communication.h"
 #include "Core/Frame.h"
-#include "ViewEvent.h"
 
 #include <SFML/Graphics.hpp>
 
 namespace r3d {
 
 class View : public HotReceiver<FrozenFrame, ByVal>,
-			 public ColdReceiver<ViewEvent, ByRef> {
+			 public ColdReceiver<sf::Event::Resized, ByRef> {
 	using FrameReceiver = HotReceiver<FrozenFrame, ByVal>;
-	using EventReceiver = ColdReceiver<ViewEvent, ByRef>;
+	using EventReceiver = ColdReceiver<sf::Event::Resized, ByRef>;
 
 	using WindowPtr = sf::RenderWindow*;
 

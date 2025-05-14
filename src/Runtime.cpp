@@ -34,8 +34,7 @@ void Runtime::onEvent(sf::Event event) {
 		window_.close();
 		exit(EXIT_SUCCESS);
 	} else if (event.is<sf::Event::Resized>()) {
-		ViewEvent view_event{std::move(*event.getIf<sf::Event::Resized>())};
-		send(view_event);
+		ViewSender::set(*event.getIf<sf::Event::Resized>());
 	} else if (event.is<sf::Event::MouseMovedRaw>()) {
 		MouseMoved mouse_event{event.getIf<sf::Event::MouseMovedRaw>()->delta,
 							   window_.getSize()};
@@ -85,8 +84,5 @@ void Runtime::checkKeysPressed() {
 		KeySender::set(KeyPressed{Key::RControl});
 	}
 }
-
-
-void Runtime::send(const ViewEvent& event) { ViewSender::set(event); }
 
 } // namespace r3d

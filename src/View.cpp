@@ -1,20 +1,12 @@
 #include "View.h"
 
-#include "Utils/Overloaded.h"
-
 namespace r3d {
 
 View::View(WindowPtr window)
 	: window_(window),
 	  FrameReceiver([this](FrozenFrame frame) { showFrame(std::move(frame)); }),
-	  EventReceiver([this](const ViewEvent& event) {
-		  utils::Visit(
-			  event,
-			  [this](const sf::Event::Resized& resized) {
-				  handleResize(resized);
-			  },
-			  [this](const LoadFont& load) { loadFont(load.path); },
-			  [this](const RenderText& text) { renderText(text.text); });
+	  EventReceiver([this](const sf::Event::Resized& resized) {
+		  handleResize(resized);
 	  }) {}
 
 View::WindowPtr View::window() const noexcept { return window_; }
@@ -58,9 +50,7 @@ void View::handleResize(const sf::Event::Resized& resized) {
 	window_->setView(sf::View(area));
 }
 
-void View::loadFont(const std::string& path) {
-	font_.openFromFile(path);
-}
+void View::loadFont(const std::string& path) { font_.openFromFile(path); }
 
 void View::renderText(const std::string& str) {
 	sf::Text text(font_, str);
