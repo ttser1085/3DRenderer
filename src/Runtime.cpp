@@ -23,7 +23,7 @@ void Runtime::run() {
 		checkKeysPressed();
 
 		sf::Time dtime = clock.restart();
-		send(Tick{dtime});
+		TickSender::set(Tick{dtime});
 
 		window()->display();
 	}
@@ -39,7 +39,7 @@ void Runtime::onEvent(sf::Event event) {
 	} else if (event.is<sf::Event::MouseMovedRaw>()) {
 		MouseMoved mouse_event{event.getIf<sf::Event::MouseMovedRaw>()->delta,
 							   window_.getSize()};
-		send(mouse_event);
+		MouseSender::set(mouse_event);
 		sf::Mouse::setPosition(
 			sf::Vector2i{kDefaultSize.x / 2, kDefaultSize.y / 2}, window_);
 	}
@@ -54,39 +54,38 @@ void Runtime::checkKeysPressed() {
 	}
 
 	if (isKeyPressed(Key::W)) {
-		send(KeyPressed{Key::W});
+		KeySender::set(KeyPressed{Key::W});
 	}
 
 	if (isKeyPressed(Key::A)) {
-		send(KeyPressed{Key::A});
+		KeySender::set(KeyPressed{Key::A});
 	}
 
 	if (isKeyPressed(Key::S)) {
-		send(KeyPressed{Key::S});
+		KeySender::set(KeyPressed{Key::S});
 	}
 
 	if (isKeyPressed(Key::D)) {
-		send(KeyPressed{Key::D});
+		KeySender::set(KeyPressed{Key::D});
 	}
 
 	if (isKeyPressed(Key::LShift)) {
-		send(KeyPressed{Key::LShift});
+		KeySender::set(KeyPressed{Key::LShift});
 	}
 
 	if (isKeyPressed(Key::RShift)) {
-		send(KeyPressed{Key::RShift});
+		KeySender::set(KeyPressed{Key::RShift});
 	}
 
 	if (isKeyPressed(Key::LControl)) {
-		send(KeyPressed{Key::LControl});
+		KeySender::set(KeyPressed{Key::LControl});
 	}
 
 	if (isKeyPressed(Key::RControl)) {
-		send(KeyPressed{Key::RControl});
+		KeySender::set(KeyPressed{Key::RControl});
 	}
 }
 
-void Runtime::send(const ModelEvent& event) { ModelSender::set(event); }
 
 void Runtime::send(const ViewEvent& event) { ViewSender::set(event); }
 

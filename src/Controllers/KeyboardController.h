@@ -1,49 +1,57 @@
 #pragma once
 
-#include "Broker.h"
+#include "Communication.h"
+#include "CoreEvent.h"
 #include "ModelEvent.h"
 
 namespace r3d {
 
-auto KeyboardController = [](Broker& broker, const KeyPressed& pressed) {
-	using sf::Keyboard::Key;
+class KeyboardController : public ColdReceiver<KeyPressed, ByRef>,
+						   public Sender<MoveCamera, ByRef> {
+public:
+	using Receiver = ColdReceiver<KeyPressed, ByRef>;
 
-	switch (pressed.key) {
-	case Key::W: {
-		broker.handle(MoveCamera{-lalg::Vec3::UnitZ()});
-		break;
-	}
+	KeyboardController()
+		: Receiver([this](const KeyPressed& pressed) {
+			  using sf::Keyboard::Key;
 
-	case Key::A: {
-		broker.handle(MoveCamera{-lalg::Vec3::UnitX()});
-		break;
-	}
+			  switch (pressed.key) {
+			  case Key::W: {
+				  set(MoveCamera{-lalg::Vec3::UnitZ()});
+				  break;
+			  }
 
-	case Key::S: {
-		broker.handle(MoveCamera{lalg::Vec3::UnitZ()});
-		break;
-	}
+			  case Key::A: {
+				  set(MoveCamera{-lalg::Vec3::UnitX()});
+				  break;
+			  }
 
-	case Key::D: {
-		broker.handle(MoveCamera{lalg::Vec3::UnitX()});
-		break;
-	}
+			  case Key::S: {
+				  set(MoveCamera{lalg::Vec3::UnitZ()});
+				  break;
+			  }
 
-	case Key::LShift:
-	case Key::RShift: {
-		broker.handle(MoveCamera{lalg::Vec3::UnitY()});
-		break;
-	}
+			  case Key::D: {
+				  set(MoveCamera{lalg::Vec3::UnitX()});
+				  break;
+			  }
 
-	case Key::LControl:
-	case Key::RControl: {
-		broker.handle(MoveCamera{-lalg::Vec3::UnitY()});
-		break;
-	}
+			  case Key::LShift:
+			  case Key::RShift: {
+				  set(MoveCamera{lalg::Vec3::UnitY()});
+				  break;
+			  }
 
-	default:
-		break;
-	}
+			  case Key::LControl:
+			  case Key::RControl: {
+				  set(MoveCamera{-lalg::Vec3::UnitY()});
+				  break;
+			  }
+
+			  default:
+				  break;
+			  }
+		  }) {}
 };
 
 } // namespace r3d

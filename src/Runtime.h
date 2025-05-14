@@ -9,10 +9,14 @@
 
 namespace r3d {
 
-class Runtime : public Sender<ModelEvent, ByRef>,
+class Runtime : public Sender<KeyPressed, ByRef>,
+				public Sender<MouseMoved, ByRef>,
+				public Sender<Tick, ByRef>,
 				public Sender<ViewEvent, ByRef> {
 public:
-	using ModelSender = Sender<ModelEvent, ByRef>;
+	using TickSender = Sender<Tick, ByRef>;
+	using MouseSender = Sender<MouseMoved, ByRef>;
+	using KeySender = Sender<KeyPressed, ByRef>;
 	using ViewSender = Sender<ViewEvent, ByRef>;
 
 	explicit Runtime(const std::string& win_title);
@@ -25,7 +29,6 @@ private:
 	void onEvent(sf::Event event);
 	void checkKeysPressed();
 
-	void send(const ModelEvent& event);
 	void send(const ViewEvent& event);
 
 	sf::RenderWindow window_;

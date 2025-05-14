@@ -1,10 +1,13 @@
 #pragma once
 
 #include "Broker.h"
-#include "ControllerManager.h"
 #include "Model.h"
 #include "Runtime.h"
 #include "View.h"
+
+#include "Controllers/KeyboardController.h"
+#include "Controllers/MouseController.h"
+#include "Controllers/TickController.h"
 
 namespace r3d {
 
@@ -19,7 +22,11 @@ private:
 
 	Model model_;
 	View view_;
-	ControllerManager manager_;
+	
+	TickController tick_controller;
+	KeyboardController key_controller;
+	MouseController mouse_controller;
+
 	Broker broker_;
 };
 
