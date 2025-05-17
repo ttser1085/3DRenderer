@@ -6,45 +6,42 @@
 
 namespace r3d {
 
-class KeyboardController : public ColdReceiver<KeyPressed, ByRef>,
-						   public Sender<MoveCamera, ByRef> {
+class KeyboardController {
 public:
-	using Receiver = ColdReceiver<KeyPressed, ByRef>;
-
 	KeyboardController()
-		: Receiver([this](const KeyPressed& pressed) {
+		: input_([this](const KeyPressed& pressed) {
 			  using sf::Keyboard::Key;
 
 			  switch (pressed.key) {
 			  case Key::W: {
-				  set(MoveCamera{-lalg::Vec3::UnitZ()});
+				  output_.set(MoveCamera{-lalg::Vec3::UnitZ()});
 				  break;
 			  }
 
 			  case Key::A: {
-				  set(MoveCamera{-lalg::Vec3::UnitX()});
+				  output_.set(MoveCamera{-lalg::Vec3::UnitX()});
 				  break;
 			  }
 
 			  case Key::S: {
-				  set(MoveCamera{lalg::Vec3::UnitZ()});
+				  output_.set(MoveCamera{lalg::Vec3::UnitZ()});
 				  break;
 			  }
 
 			  case Key::D: {
-				  set(MoveCamera{lalg::Vec3::UnitX()});
+				  output_.set(MoveCamera{lalg::Vec3::UnitX()});
 				  break;
 			  }
 
 			  case Key::LShift:
 			  case Key::RShift: {
-				  set(MoveCamera{lalg::Vec3::UnitY()});
+				  output_.set(MoveCamera{lalg::Vec3::UnitY()});
 				  break;
 			  }
 
 			  case Key::LControl:
 			  case Key::RControl: {
-				  set(MoveCamera{-lalg::Vec3::UnitY()});
+				  output_.set(MoveCamera{-lalg::Vec3::UnitY()});
 				  break;
 			  }
 
@@ -52,6 +49,14 @@ public:
 				  break;
 			  }
 		  }) {}
+
+	ColdInput<KeyPressed>* input() { return &input_; }
+
+	void subscribe(Input<MoveCamera>* input) { output_.subscribe(input); }
+
+private:
+	ColdInput<KeyPressed> input_;
+	Output<MoveCamera> output_;
 };
 
 } // namespace r3d

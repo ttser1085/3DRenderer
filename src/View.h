@@ -7,18 +7,18 @@
 
 namespace r3d {
 
-class View : public HotReceiver<FrozenFrame, ByVal>,
-			 public ColdReceiver<sf::Event::Resized, ByRef> {
-	using FrameReceiver = HotReceiver<FrozenFrame, ByVal>;
-	using EventReceiver = ColdReceiver<sf::Event::Resized, ByRef>;
-
-	using WindowPtr = sf::RenderWindow*;
+class View {
+	using FrameInput = HotInput<FrozenFrame, ByVal>;
+	using ResizeInput = ColdInput<sf::Event::Resized, ByRef>;
 
 public:
-	explicit View(WindowPtr window);
+	explicit View(sf::RenderWindow* window);
+
+	FrameInput* frameInput();
+	ResizeInput* resizeInput();
 
 private:
-	WindowPtr window() const noexcept;
+	sf::RenderWindow* window() const noexcept;
 
 	void showFrame(FrozenFrame frame);
 	void scaleAndCentrilize(sf::Sprite& sprite) const;
@@ -26,8 +26,11 @@ private:
 	void loadFont(const std::string& path);
 	void renderText(const std::string& str);
 
-	WindowPtr window_;
+	sf::RenderWindow* window_;
 	sf::Font font_;
+
+	FrameInput frame_input_;
+	ResizeInput resize_input_;
 };
 
 } // namespace r3d

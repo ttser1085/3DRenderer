@@ -23,7 +23,7 @@ void Runtime::run() {
 		checkKeysPressed();
 
 		sf::Time dtime = clock.restart();
-		TickSender::set(Tick{dtime});
+		tick_output_.set(Tick{dtime});
 
 		window()->display();
 	}
@@ -34,11 +34,11 @@ void Runtime::onEvent(sf::Event event) {
 		window_.close();
 		exit(EXIT_SUCCESS);
 	} else if (event.is<sf::Event::Resized>()) {
-		ViewSender::set(*event.getIf<sf::Event::Resized>());
+		resize_output_.set(*event.getIf<sf::Event::Resized>());
 	} else if (event.is<sf::Event::MouseMovedRaw>()) {
 		MouseMoved mouse_event{event.getIf<sf::Event::MouseMovedRaw>()->delta,
 							   window_.getSize()};
-		MouseSender::set(mouse_event);
+		mouse_output_.set(mouse_event);
 		sf::Mouse::setPosition(
 			sf::Vector2i{kDefaultSize.x / 2, kDefaultSize.y / 2}, window_);
 	}
@@ -53,36 +53,52 @@ void Runtime::checkKeysPressed() {
 	}
 
 	if (isKeyPressed(Key::W)) {
-		KeySender::set(KeyPressed{Key::W});
+		key_output_.set(KeyPressed{Key::W});
 	}
 
 	if (isKeyPressed(Key::A)) {
-		KeySender::set(KeyPressed{Key::A});
+		key_output_.set(KeyPressed{Key::A});
 	}
 
 	if (isKeyPressed(Key::S)) {
-		KeySender::set(KeyPressed{Key::S});
+		key_output_.set(KeyPressed{Key::S});
 	}
 
 	if (isKeyPressed(Key::D)) {
-		KeySender::set(KeyPressed{Key::D});
+		key_output_.set(KeyPressed{Key::D});
 	}
 
 	if (isKeyPressed(Key::LShift)) {
-		KeySender::set(KeyPressed{Key::LShift});
+		key_output_.set(KeyPressed{Key::LShift});
 	}
 
 	if (isKeyPressed(Key::RShift)) {
-		KeySender::set(KeyPressed{Key::RShift});
+		key_output_.set(KeyPressed{Key::RShift});
 	}
 
 	if (isKeyPressed(Key::LControl)) {
-		KeySender::set(KeyPressed{Key::LControl});
+		key_output_.set(KeyPressed{Key::LControl});
 	}
 
 	if (isKeyPressed(Key::RControl)) {
-		KeySender::set(KeyPressed{Key::RControl});
+		key_output_.set(KeyPressed{Key::RControl});
 	}
+}
+
+void Runtime::subscribe(Input<Tick, ByRef>* input) {
+	tick_output_.subscribe(input);
+}
+
+void Runtime::subscribe(Input<MouseMoved, ByRef>* input) {
+	mouse_output_.subscribe(input);
+}
+
+void Runtime::subscribe(Input<KeyPressed, ByRef>* input) {
+	key_output_.subscribe(input);
+}
+
+void Runtime::subscribe(Input<sf::Event::Resized, ByRef>* input) {
+	resize_output_.subscribe(input);
 }
 
 } // namespace r3d

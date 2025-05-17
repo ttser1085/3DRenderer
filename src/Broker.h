@@ -7,14 +7,14 @@
 
 namespace r3d {
 
-class Broker : public StreamSender<CoreEvent>,
-			   public ColdReceiver<MoveCamera, ByRef>,
-			   public ColdReceiver<RotateCamera, ByRef>,
-			   public ColdReceiver<Update, ByRef> {
+class Broker : public StreamOutput<CoreEvent>,
+			   public ColdInput<MoveCamera, ByRef>,
+			   public ColdInput<RotateCamera, ByRef>,
+			   public ColdInput<Update, ByRef> {
 public:
-	using MoveReceiver = ColdReceiver<MoveCamera, ByRef>;
-	using RotateReceiver = ColdReceiver<RotateCamera, ByRef>;
-	using UpdateReceiver = ColdReceiver<Update, ByRef>;
+	using MoveReceiver = ColdInput<MoveCamera, ByRef>;
+	using RotateReceiver = ColdInput<RotateCamera, ByRef>;
+	using UpdateReceiver = ColdInput<Update, ByRef>;
 
 	Broker();
 };

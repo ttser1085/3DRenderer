@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Utils/Tagged.h"
-
 #include <Observer.h>
 
 #include <vector>
@@ -14,23 +12,25 @@ using ByRef = NSLibrary::CByReference;
 template<typename T>
 using ByAuto = NSLibrary::NSObserverDetail::AutoSendBy<T>;
 
-template<typename T, typename SendBy = ByAuto<T>,
-		 typename Tag = utils::DefaultTag>
-using Sender = utils::Tagged<NSLibrary::CObservableData<T, SendBy>, Tag>;
+template<typename T, typename SendBy = ByAuto<T>>
+using Output = NSLibrary::CObservableData<T, SendBy>;
 
-template<typename T, typename SendBy = ByAuto<T>,
-		 typename Tag = utils::DefaultTag>
-using HotReceiver = utils::Tagged<NSLibrary::CHotInput<T, SendBy>, Tag>;
+template<typename T, typename SendBy = ByAuto<T>>
+using Input = NSLibrary::CObserver<T, SendBy>;
 
-template<typename T, typename SendBy = ByAuto<T>,
-		 typename Tag = utils::DefaultTag>
-using ColdReceiver = utils::Tagged<NSLibrary::CColdInput<T, SendBy>, Tag>;
+template<typename T, typename SendBy = ByAuto<T>>
+using HotInput = NSLibrary::CHotInput<T, SendBy>;
 
-template<typename T, typename Tag = utils::DefaultTag>
-class StreamSender : public Sender<std::vector<T>, ByRef, Tag> {
-	using Base = Sender<std::vector<T>, ByRef, Tag>;
+template<typename T, typename SendBy = ByAuto<T>>
+using ColdInput = NSLibrary::CColdInput<T, SendBy>;
+
+template<typename T>
+class StreamOutput : private Output<std::vector<T>, ByRef> {
+	using Base = Output<std::vector<T>, ByRef>;
 
 public:
+	using Base::subscribe;
+
 	template<class... Args>
 	void append(Args&&... args) {
 		data_.emplace_back(std::forward<Args>(args)...);
@@ -42,10 +42,10 @@ private:
 	std::vector<T> data_;
 };
 
-template<typename T, typename Tag = utils::DefaultTag>
-using HotStreamReceiver = HotReceiver<std::vector<T>, ByRef, Tag>;
+template<typename T>
+using HotStreamInput = HotInput<std::vector<T>, ByRef>;
 
-template<typename T, typename Tag = utils::DefaultTag>
-using ColdStreamReceiver = ColdReceiver<std::vector<T>, ByRef, Tag>;
+template<typename T>
+using ColdStreamInput = ColdInput<std::vector<T>, ByRef>;
 
 } // namespace r3d

@@ -6,11 +6,17 @@ namespace r3d {
 
 Model::Model()
 	: movement_dir_(Vec3::Zero()),
-	  EventReceiver([this](const Events& events) { handle(events); }) {}
+	  input_([this](const Events& events) { handle(events); }) {}
 
 void Model::initFromConfig(CoreConfig config) {
 	core_.renderer().setMode(config.mode);
 	core_.scene().addObjects(std::move(config.objects));
+}
+
+Model::EventInput* Model::input() { return &input_; }
+
+void Model::subscribe(Input<FrozenFrame, ByVal>* input) {
+	output_.subscribe(input);
 }
 
 void Model::handle(const Events& events) {
@@ -23,7 +29,7 @@ void Model::handle(const Events& events) {
 			[this](const Update& update) {
 				core_.camera().move(movement_dir_.normalized(), update.dtime);
 				movement_dir_ = Vec3::Zero();
-				set(core_.renderFrame());
+				output_.set(core_.renderFrame());
 			},
 			[this](const MoveCamera& move) { movement_dir_ += move.dir; },
 			[this](const RotateCamera& rotate) {

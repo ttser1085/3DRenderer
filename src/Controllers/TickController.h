@@ -6,15 +6,22 @@
 
 namespace r3d {
 
-class TickController : public ColdReceiver<Tick, ByRef>,
-					   public Sender<Update, ByRef> {
+class TickController {
 public:
-	using Receiver = ColdReceiver<Tick, ByRef>;
-
 	TickController()
-		: Receiver([this](const Tick& tick) {
-			  set(Update{tick.dtime.asSeconds()});
+		: input_([this](const Tick& tick) {
+			  output_.set(Update{tick.dtime.asSeconds()});
 		  }) {}
+
+	ColdInput<Tick>* input() { return &input_; }
+
+	void subscribe(Input<Update>* input) {
+		output_.subscribe(input);
+	}
+
+private:
+	ColdInput<Tick> input_;
+	Output<Update> output_;
 };
 
 } // namespace r3d

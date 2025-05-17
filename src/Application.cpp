@@ -6,18 +6,17 @@ namespace r3d {
 
 Application::Application(int argc, char* argv[])
 	: runtime_("3D Renderer"), view_(runtime_.window()) {
-	model_.subscribe(&view_);
-	broker_.subscribe(&model_);
+	model_.subscribe(view_.frameInput());
+	broker_.subscribe(model_.input());
 
 	tick_controller.subscribe(&broker_);
 	mouse_controller.subscribe(&broker_);
 	key_controller.subscribe(&broker_);
 
-	runtime_.TickSender::subscribe(&tick_controller);
-	runtime_.MouseSender::subscribe(&mouse_controller);
-	runtime_.KeySender::subscribe(&key_controller);
-
-	runtime_.ViewSender::subscribe(&view_);
+	runtime_.subscribe(tick_controller.input());
+	runtime_.subscribe(mouse_controller.input());
+	runtime_.subscribe(key_controller.input());
+	runtime_.subscribe(view_.resizeInput());
 
 	if (argc >= 2) {
 		Loader loader(argv[1]);

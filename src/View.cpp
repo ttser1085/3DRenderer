@@ -2,14 +2,14 @@
 
 namespace r3d {
 
-View::View(WindowPtr window)
+View::View(sf::RenderWindow* window)
 	: window_(window),
-	  FrameReceiver([this](FrozenFrame frame) { showFrame(std::move(frame)); }),
-	  EventReceiver([this](const sf::Event::Resized& resized) {
+	  frame_input_([this](FrozenFrame frame) { showFrame(std::move(frame)); }),
+	  resize_input_([this](const sf::Event::Resized& resized) {
 		  handleResize(resized);
 	  }) {}
 
-View::WindowPtr View::window() const noexcept { return window_; }
+sf::RenderWindow* View::window() const noexcept { return window_; }
 
 void View::showFrame(FrozenFrame frame) {
 	if (frame == nullptr) {
@@ -62,5 +62,9 @@ void View::renderText(const std::string& str) {
 
 	window_->draw(text);
 }
+
+View::FrameInput* View::frameInput() { return &frame_input_; }
+
+View::ResizeInput* View::resizeInput() { return &resize_input_; }
 
 } // namespace r3d
