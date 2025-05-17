@@ -43,6 +43,9 @@ private:
 };
 
 template<typename T>
+using StreamInput = Input<std::vector<T>, ByRef>;
+
+template<typename T>
 using HotStreamInput = HotInput<std::vector<T>, ByRef>;
 
 template<typename T>

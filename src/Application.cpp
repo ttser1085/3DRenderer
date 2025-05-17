@@ -9,9 +9,9 @@ Application::Application(int argc, char* argv[])
 	model_.subscribe(view_.frameInput());
 	broker_.subscribe(model_.input());
 
-	tick_controller.subscribe(&broker_);
-	mouse_controller.subscribe(&broker_);
-	key_controller.subscribe(&broker_);
+	tick_controller.subscribe(broker_.updateInput());
+	mouse_controller.subscribe(broker_.rotateInput());
+	key_controller.subscribe(broker_.moveInput());
 
 	runtime_.subscribe(tick_controller.input());
 	runtime_.subscribe(mouse_controller.input());

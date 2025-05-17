@@ -7,16 +7,21 @@
 
 namespace r3d {
 
-class Broker : public StreamOutput<CoreEvent>,
-			   public ColdInput<MoveCamera, ByRef>,
-			   public ColdInput<RotateCamera, ByRef>,
-			   public ColdInput<Update, ByRef> {
+class Broker {
 public:
-	using MoveReceiver = ColdInput<MoveCamera, ByRef>;
-	using RotateReceiver = ColdInput<RotateCamera, ByRef>;
-	using UpdateReceiver = ColdInput<Update, ByRef>;
-
 	Broker();
+
+	ColdInput<MoveCamera>* moveInput();
+	ColdInput<RotateCamera>* rotateInput();
+	ColdInput<Update>* updateInput();
+
+	void subscribe(StreamInput<CoreEvent>* input);
+
+private:
+	StreamOutput<CoreEvent> output_;
+	ColdInput<MoveCamera> move_input_;
+	ColdInput<RotateCamera> rotate_input_;
+	ColdInput<Update> update_input_;
 };
 
 } // namespace r3d
