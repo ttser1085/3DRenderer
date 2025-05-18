@@ -1,17 +1,21 @@
 #pragma once
 
 #include "Communication.h"
-#include "ModelEvent.h"
+#include "Messages/Keyboard.h"
+#include "Messages/Mouse.h"
+#include "Messages/Tick.h"
+
 #include <Observer.h>
 #include <SFML/Graphics.hpp>
 
 namespace r3d {
 
 class Runtime {
-	using TickOutput = Output<Tick, ByRef>;
-	using MouseOutput = Output<MouseMoved, ByRef>;
-	using KeyOutput = Output<KeyPressed, ByRef>;
-	using ResizeOutput = Output<sf::Event::Resized, ByRef>;
+	using TickOutput = Output<Tick>;
+	using MouseOutput = Output<MouseMoved>;
+	using KeyOutput = Output<KeyPressed>;
+	using ResizeOutput = Output<sf::Event::Resized>;
+	using PrintOutput = Output<std::variant<std::string, Tick>>;
 
 public:
 	explicit Runtime(const std::string& win_title);
@@ -20,10 +24,11 @@ public:
 
 	void run();
 
-	void subscribe(Input<Tick, ByRef>*);
-	void subscribe(Input<MouseMoved, ByRef>*);
-	void subscribe(Input<KeyPressed, ByRef>*);
-	void subscribe(Input<sf::Event::Resized, ByRef>*);
+	void subscribe(Input<Tick>*);
+	void subscribe(Input<MouseMoved>*);
+	void subscribe(Input<KeyPressed>*);
+	void subscribe(Input<sf::Event::Resized>*);
+	void subscribe(Input<std::variant<std::string, Tick>>*);
 
 private:
 	void onEvent(sf::Event event);
@@ -37,6 +42,7 @@ private:
 	MouseOutput mouse_output_;
 	KeyOutput key_output_;
 	ResizeOutput resize_output_;
+	PrintOutput print_output_;
 };
 
 } // namespace r3d

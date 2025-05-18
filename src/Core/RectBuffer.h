@@ -15,6 +15,12 @@ public:
 	explicit RectBuffer(SizePair size, const T& value = T())
 		: size_(size), storage_(area(size), value) {}
 
+	RectBuffer(const RectBuffer&) = delete;
+	RectBuffer& operator=(const RectBuffer&) = delete;
+
+	RectBuffer(RectBuffer&&) noexcept = default;
+	RectBuffer& operator=(RectBuffer&&) noexcept = default;
+
 	inline Width width() const noexcept { return size_.x; }
 
 	inline Height height() const noexcept { return size_.y; }
@@ -41,7 +47,7 @@ protected:
 	}
 
 private:
-	SizePair size_;
+	const SizePair size_;
 	Storage storage_;
 };
 

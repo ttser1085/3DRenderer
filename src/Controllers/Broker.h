@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Communication.h"
-#include "CoreEvent.h"
-
-#include <Observer.h>
+#include "Messages/Core.h"
 
 namespace r3d {
 

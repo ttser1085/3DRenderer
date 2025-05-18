@@ -24,6 +24,4 @@ public:
 	const Byte* data() const;
 };
 
-using FrozenFrame = std::shared_ptr<const Frame>;
-
 } // namespace r3d

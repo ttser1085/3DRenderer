@@ -8,7 +8,7 @@ class Core {
 public:
 	Core() = default;
 
-    FrozenFrame renderFrame() const;
+    Frame renderFrame() const;
 
 	Renderer& renderer();
 	Camera& camera();

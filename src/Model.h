@@ -2,7 +2,8 @@
 
 #include "Communication.h"
 #include "Core/Core.h"
-#include "CoreEvent.h"
+#include "Messages/Core.h"
+#include "Messages/FrozenFrame.h"
 #include "CoreConfig.h"
 
 namespace r3d {

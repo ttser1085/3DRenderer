@@ -2,8 +2,8 @@
 
 namespace r3d {
 
-FrozenFrame Core::renderFrame() const {
-	return std::make_shared<Frame>(renderer_.makeFrame(camera_, scene_));
+Frame Core::renderFrame() const {
+	return renderer_.makeFrame(camera_, scene_);
 }
 
 Renderer& Core::renderer() { return renderer_; }

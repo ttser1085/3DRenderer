@@ -5,14 +5,15 @@ namespace r3d {
 View::View(sf::RenderWindow* window)
 	: window_(window),
 	  frame_input_([this](FrozenFrame frame) { showFrame(std::move(frame)); }),
-	  resize_input_([this](const sf::Event::Resized& resized) {
-		  handleResize(resized);
-	  }) {}
+	  resize_input_(
+		  [this](const sf::Event::Resized& resized) { handleResize(resized); }),
+	  text_input_(
+		  [this](const std::vector<sf::Text>& texts) { renderTexts(texts); }) {}
 
 sf::RenderWindow* View::window() const noexcept { return window_; }
 
 void View::showFrame(FrozenFrame frame) {
-	if (frame == nullptr) {
+	if (!frame.hasData()) {
 		// model didn't send frame - for example in
 		// subscribe notification
 		return;
@@ -50,21 +51,16 @@ void View::handleResize(const sf::Event::Resized& resized) {
 	window_->setView(sf::View(area));
 }
 
-void View::loadFont(const std::string& path) { font_.openFromFile(path); }
-
-void View::renderText(const std::string& str) {
-	sf::Text text(font_, str);
-	text.setPosition(sf::Vector2f{10.0f, 10.0f});
-	text.setCharacterSize(30);
-	text.setFillColor(sf::Color::White);
-	text.setOutlineThickness(1);
-	text.setOutlineColor(sf::Color::Red);
-
-	window_->draw(text);
+void View::renderTexts(const std::vector<sf::Text>& texts) {
+	for (const auto& text : texts) {
+		window_->draw(text);
+	}
 }
 
 View::FrameInput* View::frameInput() { return &frame_input_; }
 
 View::ResizeInput* View::resizeInput() { return &resize_input_; }
+
+View::TextInput* View::textInput() { return &text_input_; }
 
 } // namespace r3d

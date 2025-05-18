@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Communication.h"
-#include "CoreEvent.h"
-#include "ModelEvent.h"
+#include "Messages/Core.h"
+#include "Messages/Tick.h"
 
 namespace r3d {
 

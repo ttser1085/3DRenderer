@@ -29,7 +29,7 @@ void Model::handle(const Events& events) {
 			[this](const Update& update) {
 				core_.camera().move(movement_dir_.normalized(), update.dtime);
 				movement_dir_ = Vec3::Zero();
-				output_.set(core_.renderFrame());
+				output_.set(FrozenFrame(core_.renderFrame()));
 			},
 			[this](const MoveCamera& move) { movement_dir_ += move.dir; },
 			[this](const RotateCamera& rotate) {

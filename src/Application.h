@@ -1,12 +1,14 @@
 #pragma once
 
-#include "Broker.h"
 #include "Model.h"
+#include "Printer.h"
 #include "Runtime.h"
 #include "View.h"
 
+#include "Controllers/Broker.h"
 #include "Controllers/KeyboardController.h"
 #include "Controllers/MouseController.h"
+#include "Controllers/PrintController.h"
 #include "Controllers/TickController.h"
 
 namespace r3d {
@@ -20,13 +22,18 @@ public:
 private:
 	Runtime runtime_;
 
+	// models:
 	Model model_;
-	View view_;
-	
-	TickController tick_controller;
-	KeyboardController key_controller;
-	MouseController mouse_controller;
+	Printer printer_;
 
+	// views:
+	View view_;
+
+	// controllers:
+	TickController tick_controller_;
+	KeyboardController key_controller_;
+	MouseController mouse_controller_;
+	PrintController print_controller_;
 	Broker broker_;
 };
 

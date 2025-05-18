@@ -9,19 +9,24 @@ Application::Application(int argc, char* argv[])
 	model_.subscribe(view_.frameInput());
 	broker_.subscribe(model_.input());
 
-	tick_controller.subscribe(broker_.updateInput());
-	mouse_controller.subscribe(broker_.rotateInput());
-	key_controller.subscribe(broker_.moveInput());
+	printer_.subscribe(view_.textInput());
 
-	runtime_.subscribe(tick_controller.input());
-	runtime_.subscribe(mouse_controller.input());
-	runtime_.subscribe(key_controller.input());
+	tick_controller_.subscribe(broker_.updateInput());
+	mouse_controller_.subscribe(broker_.rotateInput());
+	key_controller_.subscribe(broker_.moveInput());
+	print_controller_.subscribe(printer_.input());
+
+	runtime_.subscribe(tick_controller_.input());
+	runtime_.subscribe(mouse_controller_.input());
+	runtime_.subscribe(key_controller_.input());
+	runtime_.subscribe(print_controller_.input());
 	runtime_.subscribe(view_.resizeInput());
 
 	if (argc >= 2) {
 		Loader loader(argv[1]);
 		CoreConfig config = loader.parseCoreConfig();
 		model_.initFromConfig(std::move(config));
+		printer_.setFont(loader.parseFont());
 	}
 }
 

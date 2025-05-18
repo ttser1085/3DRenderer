@@ -25,6 +25,10 @@ void Runtime::run() {
 		sf::Time dtime = clock.restart();
 		tick_output_.set(Tick{dtime});
 
+		int fps = static_cast<int>(1.0f / dtime.asSeconds());
+		print_output_.set("FPS: " + std::to_string(fps));
+		print_output_.set(Tick{dtime});
+
 		window()->display();
 	}
 }
@@ -85,20 +89,24 @@ void Runtime::checkKeysPressed() {
 	}
 }
 
-void Runtime::subscribe(Input<Tick, ByRef>* input) {
+void Runtime::subscribe(Input<Tick>* input) {
 	tick_output_.subscribe(input);
 }
 
-void Runtime::subscribe(Input<MouseMoved, ByRef>* input) {
+void Runtime::subscribe(Input<MouseMoved>* input) {
 	mouse_output_.subscribe(input);
 }
 
-void Runtime::subscribe(Input<KeyPressed, ByRef>* input) {
+void Runtime::subscribe(Input<KeyPressed>* input) {
 	key_output_.subscribe(input);
 }
 
-void Runtime::subscribe(Input<sf::Event::Resized, ByRef>* input) {
+void Runtime::subscribe(Input<sf::Event::Resized>* input) {
 	resize_output_.subscribe(input);
+}
+
+void Runtime::subscribe(Input<std::variant<std::string, Tick>>* input) {
+	print_output_.subscribe(input);
 }
 
 } // namespace r3d
