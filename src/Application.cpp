@@ -2,6 +2,8 @@
 
 #include "Loader.h"
 
+#include <iostream>
+
 namespace r3d {
 
 Application::Application(int argc, char* argv[])
@@ -23,10 +25,14 @@ Application::Application(int argc, char* argv[])
 	runtime_.subscribe(view_.resizeInput());
 
 	if (argc >= 2) {
-		Loader loader(argv[1]);
-		CoreConfig config = loader.parseCoreConfig();
-		model_.initFromConfig(std::move(config));
-		printer_.setFont(loader.parseFont());
+		try {
+			Loader loader(argv[1]);
+			CoreConfig config = loader.parseCoreConfig();
+			model_.initFromConfig(std::move(config));
+			printer_.setFont(loader.parseFont());
+		} catch (const std::exception& e) {
+			std::cerr << e.what() << '\n';
+		}
 	}
 }
 
